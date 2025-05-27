@@ -181,7 +181,7 @@
   }
   h1{
         position: relative;
-    left: -50px !important;
+    left: -45px !important;
     top: 0 !important;
     font-size: 24px !important;
     font-family: "Noto Sans", sans-serif;
@@ -202,7 +202,7 @@
   p{
         position: relative;
     top: 0 !important;
-    left: -27.4% !important;
+    left: -29.4% !important;
     color: rgb(0, 0, 0);
     font-family: "Noto Sans", sans-serif;
   }
