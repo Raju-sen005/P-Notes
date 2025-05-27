@@ -175,7 +175,7 @@
   img {
     max-width: 320px !important;
     position: relative;
-    left: -53px !important;
+    left: -50px !important;
     top: -25px;
     filter: hue-rotate(280deg);
   }
