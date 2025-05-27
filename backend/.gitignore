@@ -1,0 +1,3 @@
+# .gitignore में जोड़ें
+.env
+/uploads
