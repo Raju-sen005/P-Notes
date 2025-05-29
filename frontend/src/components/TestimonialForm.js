@@ -23,7 +23,7 @@ const TestimonialForm = ({ onAdd }) => {
     setStatus("submitting");
 
     try {
-      await axios.post("http://localhost:5000/api/testimonials", formData);
+      await axios.post("/api/testimonials", formData);
       setStatus("success");
       setFormData({ name: "", tag: "", message: "" });
       if (onAdd) {
