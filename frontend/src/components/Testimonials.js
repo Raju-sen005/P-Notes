@@ -8,7 +8,7 @@ const Testimonials = () => {
 
   const fetchTestimonials = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/testimonials");
+      const response = await axios.get("/api/testimonials");
       if (Array.isArray(response.data)) {
         setTestimonials(response.data);
       } else {
