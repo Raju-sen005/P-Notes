@@ -3,8 +3,9 @@ import Hero from "../components/Hero";
 import Stats from "../components/Stats";
 import Downloads from "../components/Downloads";
 import Features from "../components/Features";
-// import Testimonials from "../components/Testimonials";
+import Testimonials from "../components/Testimonials";
 import Socials from "../components/Socials";
+
 
 const Home = () => {
   return (
@@ -13,7 +14,7 @@ const Home = () => {
       <Stats />
       <Downloads />
       <Features />
-      {/* <Testimonials /> */}
+      <Testimonials />
       <Socials />
     </div>
   );

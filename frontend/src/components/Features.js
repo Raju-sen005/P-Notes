@@ -29,31 +29,47 @@ const Features = () => {
   ];
 
   return (
-    <div className="features-container text-center py-5" style={{ position: 'relative', top: '-13pc' }}>
-      <h1 className="mb-4">What's in for You?</h1>
+    <div className="py-5 text-center" style={{ fontFamily: 'Poppins, sans-serif' }}>
+      <h2 className="fw-bold mb-5" style={{ fontSize: '2.3rem', color: '#00b894' }}>
+        What's in for You?
+      </h2>
+
       <div className="container">
         <div className="row justify-content-center g-4">
           {features.map((item, index) => (
-            <div className="col-12 col-md-6 col-lg-6" key={index}>
+            <div className="col-12 col-md-6 col-lg-5" key={index}>
               <div
-                className="card p-4 h-100"
+                className="h-100 p-4"
                 style={{
-                  borderRadius: '0',
-                  border: '1px solid #247e84',
+                  borderRadius: '1rem',
+                  border: '1px solid #dceae9',
+                  boxShadow: '0 8px 20px rgba(0, 184, 148, 0.1)',
+                  transition: 'transform 0.3s ease',
+                  backgroundColor: '#ffffff',
                 }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
               >
-                <h2 className="h5">{item.title}</h2>
-                <p>{item.description}</p>
+                <h4 style={{ fontWeight: 600, color: '#00b894' }}>{item.title}</h4>
+                <p style={{ color: '#2d3436', fontSize: '1rem', marginTop: '0.5rem' }}>
+                  {item.description}
+                </p>
+
                 <a
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-success mt-3 w-100"
+                  className="btn w-100 mt-3"
                   style={{
+                    backgroundColor: '#00b894',
+                    color: '#fff',
+                    fontWeight: 600,
                     padding: '0.6rem 1rem',
-                    fontSize: '1rem',
-                    borderRadius: '0.25rem',
+                    borderRadius: '0.5rem',
+                    transition: 'background-color 0.3s ease',
                   }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#019875'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#00b894'}
                 >
                   {item.buttonText}
                 </a>

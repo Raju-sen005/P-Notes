@@ -12,8 +12,7 @@ const Navbar = () => {
     const offcanvasEl = offcanvasRef.current;
     if (!offcanvasEl) return;
 
-bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
-
+    bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
 
     const handleShow = () => setIsOpen(true);
     const handleHide = () => setIsOpen(false);
@@ -40,42 +39,42 @@ bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
     <>
       {/* Top Navbar */}
       <nav
-        className="navbar navbar-light bg-light shadow-sm sticky-top"
-        style={{ height: navbarHeight }}
+        className="navbar navbar-light bg-white shadow-sm sticky-top border-bottom"
+        style={{ height: navbarHeight, zIndex: 1045 }}
       >
-        <div className="container-fluid d-flex justify-content-between align-items-center">
+        <div className="container-fluid d-flex justify-content-between align-items-center px-3">
           <Link
             className="navbar-brand d-flex flex-column align-items-start"
             to="/"
             style={{ lineHeight: "1" }}
           >
             <div className="d-flex flex-column">
-              <span className="fw-bold fs-5">NotesKarts</span>
+              <span className="fw-bold fs-5 text-success">Perfect Pharmacy</span>
               <span
                 className="text-muted small"
                 style={{ fontSize: "11px", fontWeight: "400", marginTop: "-2px" }}
               >
-                MAKING NOTES SIMPLE
+                by Sunita
               </span>
             </div>
           </Link>
 
           <button
-            className="btn btn-outline-secondary border-0 btn-sm"
+            className="btn btn-outline-success btn-sm rounded-pill px-3"
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasMenu"
             aria-controls="offcanvasMenu"
             aria-label="Toggle menu"
           >
-            <i className="bi bi-list fs-6 me-1"></i> {isOpen ? "Close" : "Menu"}
+            <i className="bi bi-list me-2"></i> {isOpen ? "Close" : "Menu"}
           </button>
         </div>
       </nav>
 
-      {/* Offcanvas Top Menu */}
+      {/* Offcanvas Menu */}
       <div
-        className="offcanvas offcanvas-top"
+        className="offcanvas offcanvas-start"
         tabIndex="-1"
         id="offcanvasMenu"
         aria-labelledby="offcanvasMenuLabel"
@@ -83,11 +82,12 @@ bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
         data-bs-scroll="false"
         ref={offcanvasRef}
         style={{
-          height: "250px",
-          top: `${navbarHeight}px`,
+          width: "260px",
         }}
       >
-        <div className="offcanvas-header">
+
+        <div className="offcanvas-header border-bottom">
+          <h5 className="offcanvas-title fw-semibold text-success">Navigation</h5>
           <button
             type="button"
             className="btn-close"
@@ -95,21 +95,21 @@ bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
             aria-label="Close"
           ></button>
         </div>
-        <div className="offcanvas-body d-flex flex-column gap-3">
-          <Link to="/" className="text-decoration-none text-dark">
-            Home
+        <div className="offcanvas-body d-flex flex-column gap-3 px-4 py-3">
+          <Link to="/" className="text-decoration-none text-dark fw-medium">
+            <i className="bi bi-house me-2 text-success"></i> Home
           </Link>
-          <Link to="/articles" className="text-decoration-none text-dark">
-            Articles
+          <Link to="/articles" className="text-decoration-none text-dark fw-medium">
+            <i className="bi bi-journal-text me-2 text-success"></i> Articles
           </Link>
-          <Link to="/videos" className="text-decoration-none text-dark">
-            Videos
+          <Link to="/videos" className="text-decoration-none text-dark fw-medium">
+            <i className="bi bi-play-circle me-2 text-success"></i> Videos
           </Link>
-          <Link to="/about" className="text-decoration-none text-dark">
-            About
+          <Link to="/quizzes" className="text-decoration-none text-dark fw-medium">
+            <i className="bi bi-question-circle me-2 text-success"></i> MCQ Quizzes
           </Link>
-          <Link to="/contact" className="text-decoration-none text-dark">
-            Contact
+          <Link to="/contact" className="text-decoration-none text-dark fw-medium">
+            <i className="bi bi-envelope me-2 text-success"></i> Contact
           </Link>
         </div>
       </div>
