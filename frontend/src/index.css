@@ -171,3 +171,100 @@
   transform: scale(1.1);
   background-color: #1e6c70;
 }
+@media (max-width: 768px) {
+  img {
+    max-width: 320px !important;
+    position: relative;
+    left: -53px !important;
+    top: -25px;
+    filter: hue-rotate(280deg);
+  }
+  h1{
+        position: relative;
+    left: -50px !important;
+    top: 0 !important;
+    font-size: 24px !important;
+    font-family: "Noto Sans", sans-serif;
+  }
+  h4{
+        position: relative;
+    left: -7.4% !important;
+    font-size: 1.5em;
+    top: 0 !important;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 600;
+  }
+  .bg-light{
+        position: relative;
+    top: 0pc !important;
+    font-family: "Noto Sans", sans-serif;
+  }
+  p{
+        position: relative;
+    top: 0 !important;
+    left: -27.4% !important;
+    color: rgb(0, 0, 0);
+    font-family: "Noto Sans", sans-serif;
+  }
+  a.btn{
+        position: relative;
+    top: 0 !important;
+    left: -28.5% !important;
+    font-family: "Noto Sans", sans-serif;
+  }
+  .text-center{
+            position: relative;
+    top: 0 !important;
+    font-family: Poppins, sans-serif;
+  }
+  .card-body img{
+    position: initial !important;
+  }
+  .text-center a{
+    position: initial;
+  }
+  .features-container h1{
+    position: initial !important;
+  }
+  .features-container p{
+        position: relative;
+    top: 0 !important;
+    left: 0 !important;
+    color: rgb(0, 0, 0);
+    font-family: "Noto Sans", sans-serif;
+  }
+  .text-center h4{
+    position: initial !important;
+  }
+  .watch-now-btn {
+      position: fixed !important;
+    left: 34px;
+    top: 60%;
+    transform: rotate(90deg);
+    transform-origin: left top;
+    background-color: #000;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: 600;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    text-decoration: none;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
+    font-family: 'Noto Sans', sans-serif;
+}
+.chat-icon {
+  position: fixed !important;
+  bottom: 20px;
+  right: 20px;
+  background-color: #247E84;
+  color: white;
+  border-radius: 50%;
+  padding: 15px;
+  font-size: 24px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transition: transform 0.2s ease-in-out;
+}
+}
