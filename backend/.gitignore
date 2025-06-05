@@ -1,3 +1,4 @@
 # .gitignore में जोड़ें
+node_modules
 .env
 /uploads

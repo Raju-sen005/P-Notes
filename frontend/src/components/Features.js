@@ -6,25 +6,25 @@ const Features = () => {
       title: 'Noteskarts Test Series',
       description: 'Join this Test Series to improve your knowledge.',
       buttonText: 'GO TO TEST',
-      link: 'https://noteskarts.com/noteskarts-test-series/',
+      link: '',
     },
     {
       title: 'AKTU Paper',
       description: 'Download Previous Year Paper PDF.',
       buttonText: 'GO TO PAPER',
-      link: 'https://noteskarts.com/d-pharma-1st-year-question-paper-pdf/',
+      link: '',
     },
     {
       title: 'Noteskarts D.Pharma App',
       description: 'Install Our App From Play Store.',
       buttonText: 'INSTALL NOW',
-      link: 'https://play.google.com/store/apps/details?id=com.notekarts.dpharma',
+      link: '',
     },
     {
       title: 'Question & Answers',
       description: 'Ask a question. Get a verified answer.',
       buttonText: 'GO TO QUESTION ANSWERS',
-      link: 'https://noteskarts.com/question-answers/',
+      link: '',
     },
   ];
 

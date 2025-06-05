@@ -81,11 +81,8 @@ const Navbar = () => {
         data-bs-backdrop="false"
         data-bs-scroll="false"
         ref={offcanvasRef}
-        style={{
-          width: "260px",
-        }}
+        style={{ width: "260px" }}
       >
-
         <div className="offcanvas-header border-bottom">
           <h5 className="offcanvas-title fw-semibold text-success">Navigation</h5>
           <button
@@ -110,6 +107,21 @@ const Navbar = () => {
           </Link>
           <Link to="/contact" className="text-decoration-none text-dark fw-medium">
             <i className="bi bi-envelope me-2 text-success"></i> Contact
+          </Link>
+
+          <hr />
+
+          {/* User Auth Links */}
+          <Link to="/login" className="text-decoration-none text-dark fw-medium">
+            <i className="bi bi-box-arrow-in-right me-2 text-success"></i> User Login
+          </Link>
+          <Link to="/register" className="text-decoration-none text-dark fw-medium">
+            <i className="bi bi-person-plus me-2 text-success"></i> Register
+          </Link>
+
+          {/* Admin Auth Link */}
+          <Link to="/admin/login" className="text-decoration-none text-dark fw-medium">
+            <i className="bi bi-person-lock me-2 text-success"></i> Admin Login
           </Link>
         </div>
       </div>

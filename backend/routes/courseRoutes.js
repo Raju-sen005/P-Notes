@@ -2,6 +2,7 @@ import express from "express";
 import Course from "../models/Course.js";
 import { verifyToken, isAdmin } from "../middlewares/auth.js";
 
+
 const router = express.Router();
 
 // Add a new course (Admin only)

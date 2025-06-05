@@ -1,4 +1,3 @@
-// server.js
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -13,11 +12,7 @@ import bookRoutes from "./routes/bookRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import testimonialsRouter from "./routes/testimonials.js";
-import statsRoutes from "./routes/statsRoutes.js"; // ✅ correct path
-
-
-
-
+import statsRoutes from "./routes/statsRoutes.js";
 
 dotenv.config();
 
@@ -25,9 +20,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 // Routes
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes); // ✅ बस एक बार
 app.use("/api/courses", courseRoutes);
 app.use("/api/notes", noteRoutes);
 app.use("/api/quizzes", quizRoutes);
@@ -36,8 +30,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use("/api/admin", adminRoutes);
 app.use("/api/testimonials", testimonialsRouter);
-app.use("/api/stats", statsRoutes); // ✅ register route
-
+app.use("/api/stats", statsRoutes);
 
 // 404 Middleware
 app.use((req, res) => {
@@ -49,10 +42,6 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: "Internal Server Error" });
 });
-
-
-
-
 
 // DB Connection
 mongoose

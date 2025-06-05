@@ -13,8 +13,11 @@ import Books from './pages/Books';
 import Dashboard from './pages/admin/Dashboard';
 import UploadNotes from './pages/admin/UploadNotes';
 import QuizAttempt from './pages/QuizAttempt';
+import Stats from './components/Stats';
+import AdminLogin from "./pages/admin/AdminLogin"; 
 
 import ProtectedRoute from './components/ProtectedRoute';
+
 
 function App() {
   return (
@@ -28,6 +31,10 @@ function App() {
           <Route path="/courses" element={<Courses />} />
           <Route path="/courses/:id" element={<CourseDetail />} />
           <Route path="/books" element={<Books />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/stats" element={<Stats />} />
+<Route path="/admin/login" element={<AdminLogin />} />
+
           <Route
             path="/quiz/:id"
             element={
