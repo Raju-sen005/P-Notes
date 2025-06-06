@@ -36,7 +36,10 @@ const Testimonials = () => {
         ) : testimonials.length > 0 ? (
           <div className="row">
             {testimonials.map((testimonial, index) => (
-              <div className="col-md-6 col-lg-4 mb-4" key={index}>
+              <div className="col-md-6 col-lg-4 mb-4" key={index} style={{
+                position: "relative",
+                top: "-30pc"
+              }}>
                 <div className="card h-100 shadow-sm">
                   <div className="card-body d-flex flex-column">
                     <p className="card-text flex-grow-1">"{testimonial.message}"</p>

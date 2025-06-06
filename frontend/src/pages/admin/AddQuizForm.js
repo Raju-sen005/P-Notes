@@ -55,7 +55,13 @@ const AddQuizForm = ({ onAdd, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded w-96 space-y-4">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded w-96 space-y-4" style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "50%",
+        textAlign: "center",
+        margin: "auto"
+      }}>
         <h2 className="text-lg font-semibold">Add New Quiz</h2>
 
         <select
@@ -63,6 +69,9 @@ const AddQuizForm = ({ onAdd, onClose }) => {
           onChange={(e) => setCourseId(e.target.value)}
           required
           className="w-full border p-2 rounded"
+          style={{
+            marginBottom: "10px"
+          }}
         >
           <option value="">Select Course</option>
           {courses.map((c) => (
@@ -79,6 +88,9 @@ const AddQuizForm = ({ onAdd, onClose }) => {
           onChange={(e) => setTitle(e.target.value)}
           required
           className="w-full border p-2 rounded"
+          style={{
+            marginBottom: "10px"
+          }}
         />
 
         <input
@@ -88,6 +100,9 @@ const AddQuizForm = ({ onAdd, onClose }) => {
           onChange={(e) => setQuestion(e.target.value)}
           required
           className="w-full border p-2 rounded"
+          style={{
+            marginBottom: "10px"
+          }}
         />
 
         {options.map((opt, index) => (
@@ -98,6 +113,9 @@ const AddQuizForm = ({ onAdd, onClose }) => {
             value={opt}
             onChange={(e) => handleOptionChange(e.target.value, index)}
             className="w-full border p-2 rounded"
+            style={{
+              marginBottom: "10px"
+            }}
           />
         ))}
 
@@ -108,13 +126,26 @@ const AddQuizForm = ({ onAdd, onClose }) => {
           onChange={(e) => setCorrectAnswer(e.target.value)}
           required
           className="w-full border p-2 rounded"
+          style={{
+            marginBottom: "10px"
+          }}
         />
 
         <div className="flex justify-end gap-2">
-          <button type="button" onClick={onClose} className="px-3 py-1 bg-gray-400 text-white rounded">
+          <button type="button" onClick={onClose} className="px-3 py-1 bg-gray-400 text-white rounded" style={{
+            background: "#198754",
+            border: "1px solid #ccc",
+            marginInline: "7px",
+            color: "white"
+          }}>
             Cancel
           </button>
-          <button type="submit" className="px-3 py-1 bg-blue-600 text-white rounded">
+          <button type="submit" className="px-3 py-1 bg-blue-600 text-white rounded" style={{
+            background: "#198754",
+            border: "1px solid #ccc",
+            marginInline: "7px",
+            color: "white"
+          }}>
             Add
           </button>
         </div>

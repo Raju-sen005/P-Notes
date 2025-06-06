@@ -175,13 +175,11 @@
   img {
     max-width: 320px !important;
     position: relative;
-    left: -53px !important;
     top: -25px;
     filter: hue-rotate(280deg);
   }
   h1{
         position: relative;
-    left: -50px !important;
     top: 0 !important;
     font-size: 24px !important;
     font-family: "Noto Sans", sans-serif;
@@ -194,6 +192,9 @@
     font-family: "Noto Sans", sans-serif;
     font-weight: 600;
   }
+  h4 span{
+    text-align: center !important;
+  }
   .bg-light{
         position: relative;
     top: 0pc !important;
@@ -202,7 +203,7 @@
   p{
         position: relative;
     top: 0 !important;
-    left: -27.4% !important;
+    left: -2% !important;
     color: rgb(0, 0, 0);
     font-family: "Noto Sans", sans-serif;
   }

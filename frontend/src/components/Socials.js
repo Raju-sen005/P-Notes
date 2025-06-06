@@ -1,75 +1,90 @@
 import React from 'react';
 
-const Socials = () => {
+const Footer = () => {
   return (
-    <div className="text-center mt-5" style={{ position: 'relative' }}>
-      <h4 className="mb-3 fw-bold" style={{ color: '#247E84', fontFamily: 'Poppins, sans-serif' }}>
-        Stay Connected with <span style={{ color: '#0984e3' }}>Perfect Pharmacy</span>
-      </h4>
+    <footer className="bg-light text-dark pt-5 pb-4 border-top">
+      <div className="container">
+        <div className="row">
 
-      <div className="d-flex justify-content-center gap-4 fs-3">
-        <a
-          href="https://t.me/perfectpharmacy"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary"
-          aria-label="Telegram"
-        >
-          <i className="bi bi-telegram"></i>
-        </a>
+          {/* Company Information */}
+          <div className="col-md-3 mb-4">
+            <h5 className="fw-bold" style={{ color: '#247E84' }}>Perfect Pharmacy</h5>
+            <p style={{ fontSize: '0.9rem' }}><br />
+              Jaipur, Rajasthan, India<br />
+              📞 +91 98876 95555<br />
+              ✉️ pharmacyperfect20@gmail.com
+            </p>
+          </div>
 
-        <a
-          href="https://youtube.com/@perfectpharmacy"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-danger"
-          aria-label="YouTube"
-        >
-          <i className="bi bi-youtube"></i>
-        </a>
+          {/* Navigation Links */}
+          <div className="col-md-3 mb-4">
+            <h6 className="fw-bold">Quick Links</h6>
+            <ul className="list-unstyled">
+              <li><a href="/about" className="text-dark text-decoration-none">About Us</a></li>
+              <li><a href="/products" className="text-dark text-decoration-none">Products</a></li>
+              <li><a href="/contact" className="text-dark text-decoration-none">Contact</a></li>
+              <li><a href="/faq" className="text-dark text-decoration-none">FAQs</a></li>
+            </ul>
+          </div>
 
-        <a
-          href="https://instagram.com/perfectpharmacy.in"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-danger"
-          aria-label="Instagram"
-        >
-          <i className="bi bi-instagram"></i>
-        </a>
+          {/* Legal Links */}
+          <div className="col-md-3 mb-4">
+            <h6 className="fw-bold">Legal</h6>
+            <ul className="list-unstyled">
+              <li><a href="/privacy-policy" className="text-dark text-decoration-none">Privacy Policy</a></li>
+              <li><a href="/terms" className="text-dark text-decoration-none">Terms & Conditions</a></li>
+              <li><a href="/refund-policy" className="text-dark text-decoration-none">Refund Policy</a></li>
+            </ul>
+          </div>
 
-        <a
-          href="https://wa.me/919000000000"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-success"
-          aria-label="WhatsApp"
-        >
-          <i className="bi bi-whatsapp"></i>
-        </a>
+          {/* Newsletter Subscription */}
+          {/* <div className="col-md-3 mb-4">
+            <h6 className="fw-bold">Subscribe to Our Newsletter</h6>
+            <form>
+              <div className="mb-2">
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+              <button type="submit" className="btn btn-primary btn-sm">Subscribe</button>
+            </form>
+          </div> */}
 
-        <a
-          href="https://play.google.com/store/apps/details?id=com.perfectpharmacy"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-success"
-          aria-label="Android App"
-        >
-          <i className="bi bi-android2"></i>
-        </a>
+        </div>
 
-        <a
-          href="https://facebook.com/perfectpharmacy"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary"
-          aria-label="Facebook"
-        >
-          <i className="bi bi-facebook"></i>
-        </a>
+        <hr />
+
+        {/* Footer Bottom */}
+        <div className="row">
+          <div className="col-md-6 text-center text-md-start">
+            <p className="mb-0" style={{ fontSize: '0.9rem' }}>
+              &copy; {new Date().getFullYear()} Perfect Pharmacy. All rights reserved.
+            </p>
+          </div>
+          <div className="col-md-6 text-center text-md-end">
+            <a href="https://facebook.com/perfectpharmacy" className="text-dark me-3" aria-label="Facebook">
+              <i className="bi bi-facebook fs-5"></i>
+            </a>
+            <a href="https://instagram.com/perfectpharmacy.in" className="text-dark me-3" aria-label="Instagram">
+              <i className="bi bi-instagram fs-5"></i>
+            </a>
+            <a href="https://wa.me/919000000000" className="text-dark me-3" aria-label="WhatsApp">
+              <i className="bi bi-whatsapp fs-5"></i>
+            </a>
+            <a href="https://t.me/perfectpharmacy" className="text-dark me-3" aria-label="Telegram">
+              <i className="bi bi-telegram fs-5"></i>
+            </a>
+            <a href="https://youtube.com/@perfectpharmacy" className="text-dark me-3" aria-label="YouTube">
+              <i className="bi bi-youtube fs-5"></i>
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
-export default Socials;
+export default Footer;

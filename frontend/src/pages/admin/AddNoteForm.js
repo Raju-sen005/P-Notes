@@ -55,7 +55,13 @@ const AddNoteForm = ({ onAdd, onClose }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded">
+    <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded"style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "50%",
+          textAlign: "center",
+          margin: "auto"
+        }}>
       <h2 className="text-xl font-bold">📝 Upload Note</h2>
 
       {error && <p className="text-red-600">{error}</p>}
@@ -67,6 +73,9 @@ const AddNoteForm = ({ onAdd, onClose }) => {
         onChange={(e) => setTitle(e.target.value)}
         required
         className="w-full border px-2 py-1"
+         style={{
+            marginBottom: "10px"
+          }}
       />
 
       <input
@@ -75,6 +84,9 @@ const AddNoteForm = ({ onAdd, onClose }) => {
         value={subject}
         onChange={(e) => setSubject(e.target.value)}
         className="w-full border px-2 py-1"
+         style={{
+            marginBottom: "10px"
+          }}
       />
 
       {loading ? (
@@ -87,6 +99,9 @@ const AddNoteForm = ({ onAdd, onClose }) => {
           onChange={(e) => setCourse(e.target.value)}
           required
           className="w-full border px-2 py-1"
+           style={{
+            marginBottom: "10px"
+          }}
         >
           <option value="">Select Course</option>
           {courses.map((c) => (
@@ -95,6 +110,7 @@ const AddNoteForm = ({ onAdd, onClose }) => {
             </option>
           ))}
         </select>
+        
       )}
 
       <input
@@ -103,6 +119,9 @@ const AddNoteForm = ({ onAdd, onClose }) => {
         onChange={(e) => setPdf(e.target.files[0])}
         required
         className="w-full border px-2 py-1"
+         style={{
+            marginBottom: "10px"
+          }}
       />
 
       <div className="flex justify-between">
@@ -110,10 +129,22 @@ const AddNoteForm = ({ onAdd, onClose }) => {
           type="submit"
           className="bg-blue-600 text-white px-4 py-1 rounded"
           disabled={courses.length === 0}
+          style={{
+                  background: "#198754",
+                  border: "1px solid #ccc",
+                  marginInline: "7px",
+                  color:"white"
+                }}
         >
           Upload
         </button>
-        <button onClick={onClose} className="text-red-600 px-4 py-1">
+        <button onClick={onClose} className="text-red-600 px-4 py-1 rounded"
+        style={{
+                  background: "#198754",
+                  border: "1px solid #ccc",
+                  marginInline: "7px",
+                  color:"white"
+                }}>
           Cancel
         </button>
       </div>

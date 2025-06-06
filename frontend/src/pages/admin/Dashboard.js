@@ -2,9 +2,9 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
 import AddCourseForm from "./AddCourseForm";
-import AddBookForm   from "./AddBookForm";
-import AddNoteForm   from "./AddNoteForm";
-import AddQuizForm   from "./AddQuizForm";
+import AddBookForm from "./AddBookForm";
+import AddNoteForm from "./AddNoteForm";
+import AddQuizForm from "./AddQuizForm";
 
 const PER_PAGE = 10;
 const cfg = token => ({ headers: { Authorization: `Bearer ${token}` } });
@@ -37,12 +37,12 @@ const Dashboard = () => {
   const [view, setView] = useState("dashboard");
 
   const initMeta = { items: [], page: 1, totalPages: 1, search: "", loading: false };
-  const [users, setUsers]     = useState(initMeta);
+  const [users, setUsers] = useState(initMeta);
   const [courses, setCourses] = useState(initMeta);
-  const [books, setBooks]     = useState(initMeta);
-  const [notes, setNotes]     = useState(initMeta);
+  const [books, setBooks] = useState(initMeta);
+  const [notes, setNotes] = useState(initMeta);
   const [quizzes, setQuizzes] = useState(initMeta);
-  const [orders, setOrders]   = useState(initMeta);
+  const [orders, setOrders] = useState(initMeta);
 
   const [showAddCourse, setShowAddCourse] = useState(false);
   const [editCourse, setEditCourse] = useState(null);
@@ -133,7 +133,7 @@ const Dashboard = () => {
   };
 
   const NavButton = ({ tab, label }) => (
-    <button onClick={() => setView(tab)} className={`px-3 py-1 rounded ${view === tab ? "bg-white-800 text-danger" : "bg-gray-200"} mx-2`}>
+    <button onClick={() => setView(tab)} className={`px-3 py-1 rounded ${view === tab ? "bg-white-800 text-white" : "bg-gray-200"} mx-2`} style={{ border: "1px solid #ccc", background: "#198754", color: "white" }}>
       {label}
     </button>
   );
@@ -216,29 +216,29 @@ const Dashboard = () => {
       )}
 
       {view === "quizzes" && (
-  <PaginatedSection
-    title="🧠 Quizzes"
-    meta={quizzes}
-    setMeta={setQuizzes}
-    onSearch={s => setQuizzes({ ...quizzes, search: s, page: 1 })}
-    renderItem={q => q?.question?.slice ? q.question.slice(0, 60) + "…" : "No question"}
+        <PaginatedSection
+          title="🧠 Quizzes"
+          meta={quizzes}
+          setMeta={setQuizzes}
+          onSearch={s => setQuizzes({ ...quizzes, search: s, page: 1 })}
+          renderItem={q => q?.question?.slice ? q.question.slice(0, 60) + "…" : "No question"}
 
-    onDelete={id => handleDelete(id, `/api/admin/quizzes/${id}`, fetchQuizzes)}
-    onEdit={quiz => { setEditQuiz(quiz); setShowAddQuiz(true); }}
-    addBtnLabel="Add Quiz"
-  >
-    {showAddQuiz && (
-      <AddQuizForm
-        onAdd={submitQuiz}
-        onClose={() => {
-          setShowAddQuiz(false);
-          setEditQuiz(null);
-        }}
-        initialValues={editQuiz}
-      />
-    )}
-  </PaginatedSection>
-)}
+          onDelete={id => handleDelete(id, `/api/admin/quizzes/${id}`, fetchQuizzes)}
+          onEdit={quiz => { setEditQuiz(quiz); setShowAddQuiz(true); }}
+          addBtnLabel="Add Quiz"
+        >
+          {showAddQuiz && (
+            <AddQuizForm
+              onAdd={submitQuiz}
+              onClose={() => {
+                setShowAddQuiz(false);
+                setEditQuiz(null);
+              }}
+              initialValues={editQuiz}
+            />
+          )}
+        </PaginatedSection>
+      )}
 
 
       {view === "orders" && (
@@ -290,26 +290,37 @@ const PaginatedSection = ({
           onChange={e => onSearch(e.target.value)}
         />
         {!readOnly && (
-          <button onClick={() => { if (onEdit) onEdit(null); }} className="bg-green-600 text-white px-3 py-1 rounded">
+          <button onClick={() => { if (onEdit) onEdit(null); }} className="bg-green-600 text-white px-3 py-1 rounded" style={{
+            background: "#198754",
+            border: "1px solid #ccc",
+            marginInline: "9px"
+          }}>
             {addBtnLabel}
           </button>
         )}
       </div>
 
       <ul className="mt-4 space-y-2 min-h-[120px]">
-        {loading && <li>Loading...</li>}
+        {loading && <li style={{ listStyle: "none" }}>Loading...</li>}
         {!loading && items.map(it => (
-          <li key={it._id} className="flex justify-between items-center border-b pb-1">
+          <li key={it._id} className="flex justify-between items-center border-b pb-1" style={{ listStyle: "none" }}>
             <span>{renderItem(it)}</span>
             {!readOnly && (
               <span className="flex gap-2">
-                {onEdit && <button onClick={() => onEdit(it)} className="bg-blue-600 text-white px-2 py-0.5 rounded text-xs">Edit</button>}
-                {onDelete && <button onClick={() => onDelete(it._id)} className="bg-red-600 text-white px-2 py-0.5 rounded text-xs">Delete</button>}
+                {onEdit && <button onClick={() => onEdit(it)} className="bg-blue-600 text-white px-2 py-0.5 rounded text-xs" style={{
+                  background: "#198754",
+                  border: "1px solid #ccc",
+                  marginInline: "7px"
+                }}>Edit</button>}
+                {onDelete && <button onClick={() => onDelete(it._id)} className="bg-red-600 text-white px-2 py-0.5 rounded text-xs"style={{
+                  background: "#198754",
+                  border: "1px solid #ccc",
+                }}>Delete</button>}
               </span>
             )}
           </li>
         ))}
-        {!loading && items.length === 0 && <li>No data</li>}
+        {!loading && items.length === 0 && <li style={{ listStyle: "none" }}>No data</li>}
       </ul>
 
       {totalPages > 1 && (

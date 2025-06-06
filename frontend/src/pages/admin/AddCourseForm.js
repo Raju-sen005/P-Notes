@@ -19,9 +19,14 @@ const AddCourseForm = ({ onAdd, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" >
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded w-96 space-y-4" style={{
-      display: "flex !important",
-      flexDirection: "column !important"
-    }}>
+
+        textAlign: "center",
+        display: "flex",
+        flexDirection: "column",
+        width: "50%",
+        margin: "auto"
+
+      }}>
         <h2 className="text-lg font-semibold">Add New Course</h2>
 
         <input
@@ -31,6 +36,7 @@ const AddCourseForm = ({ onAdd, onClose }) => {
           onChange={handleChange}
           className="w-full border p-2 rounded"
           required
+          style={{marginBottom: "10px"}}
         />
         <textarea
           name="description"
@@ -39,6 +45,7 @@ const AddCourseForm = ({ onAdd, onClose }) => {
           onChange={handleChange}
           className="w-full border p-2 rounded"
           required
+          style={{marginBottom: "10px"}}
         ></textarea>
         <input
           type="number"
@@ -48,13 +55,23 @@ const AddCourseForm = ({ onAdd, onClose }) => {
           onChange={handleChange}
           className="w-full border p-2 rounded"
           required
+          style={{marginBottom: "10px"}}
         />
 
         <div className="flex justify-end gap-2">
-          <button type="button" onClick={onClose} className="px-3 py-1 rounded bg-gray-300">
+          <button type="button" onClick={onClose} className="px-3 py-1 rounded bg-gray-300"style={{
+                  background: "#198754",
+                  border: "1px solid #ccc",
+                  marginInline: "7px",
+                  color:"white"
+                }}>
             Cancel
           </button>
-          <button type="submit" className="px-3 py-1 rounded bg-blue-600 text-white">
+          <button type="submit" className="px-3 py-1 rounded bg-blue-600 text-white"style={{
+                  background: "#198754",
+                  border: "1px solid #ccc",
+                  marginInline: "7px"
+                }}>
             Add
           </button>
         </div>

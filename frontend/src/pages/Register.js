@@ -24,7 +24,7 @@ const Register = () => {
   };
 
   return (
-    <div className="container" style={{ maxWidth: "400px", marginTop: "80px" }}>
+    <div className="container" style={{ maxWidth: "400px", marginTop: "80px",textAlign: "center" }}>
       <h2>Register</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
@@ -35,6 +35,7 @@ const Register = () => {
           required
           value={formData.name}
           onChange={handleChange}
+          style={{ borderRadius: "5px", marginBottom: "11px", padding: "3px", border: "1px solid #ccc" }}
         /><br />
         <input
           type="email"
@@ -42,7 +43,7 @@ const Register = () => {
           placeholder="Email"
           required
           value={formData.email}
-          onChange={handleChange}
+          onChange={handleChange}style={{ borderRadius: "5px", marginBottom: "11px", padding: "3px", border: "1px solid #ccc" }}
         /><br />
         <input
           type="password"
@@ -51,8 +52,9 @@ const Register = () => {
           required
           value={formData.password}
           onChange={handleChange}
+          style={{ borderRadius: "5px", marginBottom: "11px", padding: "3px", border: "1px solid #ccc" }}
         /><br />
-        <button type="submit">Register</button>
+        <button type="submit"style={{ borderRadius: "5px", marginBottom: "11px !important", padding: "3px", background: "#198754", color: "#ffffff", border: "1px solid #ccc" }}>Register</button>
       </form>
     </div>
   );

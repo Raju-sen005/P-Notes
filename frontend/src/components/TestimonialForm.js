@@ -36,11 +36,14 @@ const TestimonialForm = ({ onAdd }) => {
   };
 
   return (
-    <div className="container my-5">
+    <div className="container my-5" style={{
+      position: "relative",
+      top: "12pc"
+    }}>
       <h2 className="text-success mb-4">Share your experience</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
+      <form onSubmit={handleSubmit} className="m-auto w-50">
+        <div className="mb-3 ">
+          <label htmlFor="name" className="form-label ">
             Name
           </label>
           <input
@@ -53,13 +56,13 @@ const TestimonialForm = ({ onAdd }) => {
             required
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="tag" className="form-label">
+        <div className="mb-3 ">
+          <label htmlFor="tag" className="form-label  ">
             Tag
           </label>
           <input
             type="text"
-            className="form-control"
+            className="form-control "
             id="tag"
             name="tag"
             value={formData.tag}
@@ -67,8 +70,8 @@ const TestimonialForm = ({ onAdd }) => {
             required
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="message" className="form-label">
+        <div className="mb-3 ">
+          <label htmlFor="message" className="form-label  ">
             Message
           </label>
           <textarea
