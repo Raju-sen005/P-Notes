@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CountUp from 'react-countup';
-import axios from 'axios';
+import API from "../api/axios";
 
 const Stats = () => {
   const [stats, setStats] = useState({
