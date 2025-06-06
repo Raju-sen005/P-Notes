@@ -8,7 +8,7 @@ const Testimonials = () => {
 
   const fetchTestimonials = async () => {
     try {
-      const response = await axios.get("/api/testimonials");
+      const response = await axios.get("https://p-notes-backend.onrender.com/api/testimonials");
       if (Array.isArray(response.data)) {
         setTestimonials(response.data);
       } else {
