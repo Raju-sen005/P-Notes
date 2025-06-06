@@ -53,7 +53,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("https://p-notes-backend.onrender.com/stats", verifyToken, verifyAdmin, async (_req, res) => {
+router.get("https://p-notes-backend.onrender.com/api/admin/stats", verifyToken, verifyAdmin, async (_req, res) => {
   try {
     const [users, courses, notes, quizzes, books, orders] = await Promise.all([
       User.countDocuments(),
