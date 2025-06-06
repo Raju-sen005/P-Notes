@@ -18,7 +18,7 @@ const AdminLogin = () => {
     }
 
     try {
-      const res = await axios.post("/api/admin/login", { email, password });
+      const res = await axios.post("https://p-notes-backend.onrender.com/api/admin/login", { email, password });
 
       const decoded = jwtDecode(res.data.token);
       if (decoded.role !== "admin") {
