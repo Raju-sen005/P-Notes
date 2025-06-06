@@ -35,7 +35,7 @@ const Books = () => {
             }}
           >
             <img
-              src={book.coverImage || "https://localhost:50000/api/books"}
+              src={book.coverImage || "https://p-notes-backend.onrender.com/api/books"}
               alt={book.title}
               style={{ width: "100%", height: "150px", objectFit: "cover" }}
             />
