@@ -23,7 +23,7 @@ const TestimonialForm = ({ onAdd }) => {
     setStatus("submitting");
 
     try {
-      await axios.post("/api/testimonials", formData);
+      await axios.post("https://p-notes-backend.onrender.com/api/testimonials", formData);
       setStatus("success");
       setFormData({ name: "", tag: "", message: "" });
       if (onAdd) {
