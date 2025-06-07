@@ -68,7 +68,7 @@ const Dashboard = () => {
     }
   };
 
-  const fetchUsers = useCallback(() => handleFetch("/api/admin/users", users, setUsers), [token, users.page, users.search]);
+  const fetchUsers = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/users", users, setUsers), [token, users.page, users.search]);
   const fetchCourses = useCallback(() => handleFetch("/api/admin/courses", courses, setCourses), [token, courses.page, courses.search]);
   const fetchBooks = useCallback(() => handleFetch("/api/admin/books", books, setBooks), [token, books.page, books.search]);
   const fetchNotes = useCallback(() => handleFetch("/api/admin/notes", notes, setNotes), [token, notes.page, notes.search]);
