@@ -29,7 +29,7 @@ const Dashboard = () => {
       setError("No token found. Please login.");
       return;
     }
-    axios.get("https://p-notes-backend.onrender.com/api/admin/stats", cfg(token))
+    axios.get("https://p-notes-backend.onrender.com/api/stats", cfg(token))
       .then(r => setStats(r.data))
       .catch(() => setError("Failed to load stats"));
   }, [token]);
