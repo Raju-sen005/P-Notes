@@ -28,7 +28,7 @@ const verifyAdmin = async (req, res, next) => {
 };
 
 /* ────────────────────── Auth & Stats ───────────────────── */
-router.post("/admin/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)
     return res.status(400).json({ msg: "Email और password ज़रूरी है" });
