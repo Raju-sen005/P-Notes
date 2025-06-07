@@ -64,7 +64,7 @@ const Dashboard = () => {
       setter({ ...meta, loading: false, ...res, items: res.data });
     } catch {
       setError("Load failed");
-      setter({ ...meta, loading: false });
+     setter({ ...meta, loading: false, items: [] });
     }
   };
 
@@ -302,7 +302,7 @@ const PaginatedSection = ({
 
       <ul className="mt-4 space-y-2 min-h-[120px]">
         {loading && <li style={{ listStyle: "none" }}>Loading...</li>}
-        {!loading && items.map(it => (
+        {!loading && Array.isArray(items) && items.map(it => (
           <li key={it._id} className="flex justify-between items-center border-b pb-1" style={{ listStyle: "none" }}>
             <span>{renderItem(it)}</span>
             {!readOnly && (
