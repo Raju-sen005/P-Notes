@@ -277,7 +277,7 @@ const PaginatedSection = ({
   readOnly = false,
   children
 }) => {
-  const { items, page, totalPages, loading } = meta;
+ const { items = [], page, totalPages, loading } = meta;
   return (
     <div>
       <div className="flex justify-between items-center flex-wrap gap-2">
@@ -320,7 +320,10 @@ const PaginatedSection = ({
             )}
           </li>
         ))}
-        {!loading && items.length === 0 && <li style={{ listStyle: "none" }}>No data</li>}
+       {!loading && Array.isArray(items) && items.length === 0 && (
+  <li style={{ listStyle: "none" }}>No data</li>
+)}
+
       </ul>
 
       {totalPages > 1 && (
