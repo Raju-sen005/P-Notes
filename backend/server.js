@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
-import OpenAI from "openai"; // ✅ सही तरीका (OpenAI v4 compatible)
+// import OpenAI from "openai"; 
 
 // Route imports
 import authRoutes from "./routes/authRoutes.js";
@@ -49,28 +49,28 @@ app.use("/api/previous-papers", previousPaperRoutes);
 // app.use("/api/tests", testRoutes);
 
 // 🤖 OpenAI Setup
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// const openai = new OpenAI({
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
 
 // 🤖 AI Question Answering Endpoint
-app.post("/api/ask", async (req, res) => {
-  const { question } = req.body;
-  if (!question) return res.status(400).json({ msg: "Question is required" });
+// app.post("/api/ask", async (req, res) => {
+//   const { question } = req.body;
+//   if (!question) return res.status(400).json({ msg: "Question is required" });
 
-  try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: question }],
-    });
+//   try {
+//     const completion = await openai.chat.completions.create({
+//       model: "gpt-3.5-turbo",
+//       messages: [{ role: "user", content: question }],
+//     });
 
-    const answer = completion.choices[0].message.content;
-    res.json({ answer });
-  } catch (err) {
-    console.error("AI Error:", err.message);
-    res.status(500).json({ msg: "Failed to get answer from AI" });
-  }
-});
+//     const answer = completion.choices[0].message.content;
+//     res.json({ answer });
+//   } catch (err) {
+//     console.error("AI Error:", err.message);
+//     res.status(500).json({ msg: "Failed to get answer from AI" });
+//   }
+// });
 
 // ❌ 404 Route
 app.use((req, res, next) => {
