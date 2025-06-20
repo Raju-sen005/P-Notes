@@ -36,7 +36,7 @@ const PharmacySubjectsPage = () => {
     } else {
       setLoadingSubjects((prev) => ({ ...prev, [subject]: true }));
       try {
-        const res = await axios.get(`http://localhost:5000/api/quizzes?subject=${subject}`);
+        const res = await axios.get(`https://p-notes-backend.onrender.com/api/quizzes?subject=${subject}`);
         setExpandedSubjects((prev) => ({ ...prev, [subject]: res.data }));
       } catch (err) {
         console.error("Failed to fetch quizzes", err);
