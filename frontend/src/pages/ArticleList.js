@@ -8,7 +8,7 @@ const ArticleList = () => {
   const [expanded, setExpanded] = useState({});
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/articles')
+    axios.get('https://p-notes-backend.onrender.com/api/articles')
       .then(res => setArticles(res.data))
       .catch(err => console.error("Error fetching articles:", err))
       .finally(() => setLoading(false));
