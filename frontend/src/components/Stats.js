@@ -27,7 +27,7 @@ const Stats = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/stats")
+    axios.get("https://p-notes-backend.onrender.com/api/stats")
       .then((res) => setStats(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
