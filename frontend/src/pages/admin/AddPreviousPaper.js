@@ -30,7 +30,7 @@ const AddPreviousPaper = () => {
     if (pdfFile) data.append("pdfFile", pdfFile);
 
     try {
-      await axios.post("http://localhost:5000/api/previous-papers", data, {
+      await axios.post("https://p-notes-backend.onrender.com/api/previous-papers", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

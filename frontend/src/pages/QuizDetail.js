@@ -8,7 +8,7 @@ const AllQuizzes = () => {
   const [userAnswers, setUserAnswers] = useState({});
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/quizzes")
+    axios.get("https://p-notes-backend.onrender.com/api/quizzes")
       .then(res => setQuizzes(res.data))
       .catch(err => console.error("Failed to fetch quizzes", err))
       .finally(() => setLoading(false));

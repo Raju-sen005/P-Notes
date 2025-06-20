@@ -40,7 +40,7 @@ const AddSamplePaper = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/sample-papers", data, {
+      await axios.post("https://p-notes-backend.onrender.com/api/sample-papers", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

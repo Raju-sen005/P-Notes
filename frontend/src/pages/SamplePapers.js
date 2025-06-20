@@ -21,7 +21,7 @@ const SamplePapers = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/sample-papers")
+      .get("https://p-notes-backend.onrender.com/api/sample-papers")
       .then((res) => setPapers(res.data))
       .catch((err) => console.error("Error fetching sample papers:", err));
   }, []);

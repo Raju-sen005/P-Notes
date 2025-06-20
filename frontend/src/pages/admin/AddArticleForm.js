@@ -13,7 +13,7 @@ const AddArticleForm = () => {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        'http://localhost:5000/api/admin/articles',
+        'https://p-notes-backend.onrender.com/api/admin/articles',
         { title, content },
         { headers: { Authorization: `Bearer ${token}` } }
       );

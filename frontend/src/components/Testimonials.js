@@ -19,7 +19,7 @@ const Testimonials = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/testimonials")
+      .get("https://p-notes-backend.onrender.com/api/testimonials")
       .then(res => setTestimonials(Array.isArray(res.data) ? res.data : []))
       .catch(err => {
         console.error("Error fetching testimonials:", err);
