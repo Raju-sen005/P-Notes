@@ -10,7 +10,7 @@ const Books = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/books")
+      .get("https://p-notes-backend.onrender.com/api/books")
       .then((res) => {
         setBooks(res.data);
         setLoading(false);
