@@ -35,7 +35,7 @@ const Dashboard = () => {
       setError("No token found. Please login.");
       return;
     }
-    axios.get("/api/admin/stats", cfg(token))
+    axios.get("https://p-notes-backend.onrender.com/api/stats", cfg(token))
       .then(r => setStats(r.data))
       .catch(() => setError("Failed to load stats"));
   }, [token]);
@@ -91,7 +91,7 @@ const Dashboard = () => {
       setter({ ...meta, loading: false, ...res, items: res.data });
     } catch {
       setError("Load failed");
-      setter({ ...meta, loading: false });
+     setter({ ...meta, loading: false, items: [] });
     }
   };
 
@@ -202,9 +202,9 @@ const Dashboard = () => {
   const submitCourse = async (data) => {
     try {
       if (editCourse) {
-        await axios.put(`/api/admin/courses/${editCourse._id}`, data, cfg(token));
+        await axios.put(`/api/courses/${editCourse._id}`, data, cfg(token));
       } else {
-        await axios.post("/api/admin/courses", data, cfg(token));
+        await axios.post("/api/courses", data, cfg(token));
       }
       setShowAddCourse(false); setEditCourse(null); fetchCourses();
     } catch { setError("Save failed"); }
@@ -213,9 +213,9 @@ const Dashboard = () => {
   const submitBook = async (data) => {
     try {
       if (editBook) {
-        await axios.put(`/api/admin/books/${editBook._id}`, data, cfg(token));
+        await axios.put(`/api/books/${editBook._id}`, data, cfg(token));
       } else {
-        await axios.post("/api/admin/books", data, cfg(token));
+        await axios.post("/api/books", data, cfg(token));
       }
       setShowAddBook(false); setEditBook(null); fetchBooks();
     } catch { setError("Save failed"); }
@@ -224,9 +224,9 @@ const Dashboard = () => {
   const submitNote = async (formData) => {
     try {
       if (editNote) {
-        await axios.put(`/api/admin/notes/${editNote._id}`, formData, cfg(token));
+        await axios.put(`/api/notes/${editNote._id}`, formData, cfg(token));
       } else {
-        await axios.post("/api/admin/notes", formData, cfg(token));
+        await axios.post("/api/notes", formData, cfg(token));
       }
       setShowAddNote(false); setEditNote(null); fetchNotes();
     } catch { setError("Save failed"); }
@@ -235,9 +235,9 @@ const Dashboard = () => {
   const submitQuiz = async (data) => {
     try {
       if (editQuiz) {
-        await axios.put(`/api/admin/quizzes/${editQuiz._id}`, data, cfg(token));
+        await axios.put(`/api/quizzes/${editQuiz._id}`, data, cfg(token));
       } else {
-        await axios.post("/api/admin/quizzes", data, cfg(token));
+        await axios.post("/api/quizzes", data, cfg(token));
       }
       setShowAddQuiz(false); setEditQuiz(null); fetchQuizzes();
     } catch { setError("Save failed"); }
@@ -400,8 +400,9 @@ const Dashboard = () => {
           meta={courses}
           setMeta={setCourses}
           onSearch={s => setCourses({ ...courses, search: s, page: 1 })}
-          renderItem={c => { console.log(c); return `${c.title} – ${c.description} – ₹${c.price}` }}
-          onDelete={id => handleDelete(id, `/api/admin/courses/${id}`, fetchCourses)}
+
+          renderItem={c => `${c.title} – ₹${c.price}`}
+          onDelete={id => handleDelete(id, `/api/courses/${id}`, fetchCourses)}
           onEdit={course => { setEditCourse(course); setShowAddCourse(true); }}
           addBtnLabel="Add Course"
         >
@@ -415,8 +416,8 @@ const Dashboard = () => {
           meta={books}
           setMeta={setBooks}
           onSearch={s => setBooks({ ...books, search: s, page: 1 })}
-          renderItem={b => { console.log(b); return `${b.title} – ${b.name} – ₹${b.price}` }}
-          onDelete={id => handleDelete(id, `/api/admin/books/${id}`, fetchBooks)}
+          renderItem={b => `${b.title} – ${b.author} – ₹${b.price}`}
+          onDelete={id => handleDelete(id, `/api/books/${id}`, fetchBooks)}
           onEdit={book => { setEditBook(book); setShowAddBook(true); }}
           addBtnLabel="Add Book"
         >
@@ -431,7 +432,7 @@ const Dashboard = () => {
           setMeta={setNotes}
           onSearch={s => setNotes({ ...notes, search: s, page: 1 })}
           renderItem={n => `${n.title} – ${n.subject}`}
-          onDelete={id => handleDelete(id, `/api/admin/notes/${id}`, fetchNotes)}
+          onDelete={id => handleDelete(id, `/api/notes/${id}`, fetchNotes)}
           onEdit={note => { setEditNote(note); setShowAddNote(true); }}
           addBtnLabel="Add Note"
         >
@@ -447,7 +448,7 @@ const Dashboard = () => {
           onSearch={s => setQuizzes({ ...quizzes, search: s, page: 1 })}
           renderItem={q => { console.log(q); const Q = q?.questions?.[0]?.question; return Q ? Q.slice(0, 60) + "…" : "No question" }}
 
-          onDelete={id => handleDelete(id, `/api/admin/quizzes/${id}`, fetchQuizzes)}
+          onDelete={id => handleDelete(id, `/api/quizzes/${id}`, fetchQuizzes)}
           onEdit={quiz => { setEditQuiz(quiz); setShowAddQuiz(true); }}
           addBtnLabel="Add Quiz"
         >
@@ -507,7 +508,7 @@ const PaginatedSection = ({
   readOnly = false,
   children
 }) => {
-  const { items, page, totalPages, loading } = meta;
+ const { items = [], page, totalPages, loading } = meta;
   return (
     <div>
       <div className="flex justify-between items-center flex-wrap gap-2" style={{ textAlign: "end" }}>
@@ -533,7 +534,7 @@ const PaginatedSection = ({
 
       <ul className="mt-4 space-y-2 min-h-[120px]" style={{ textAlign: "end" }}>
         {loading && <li style={{ listStyle: "none" }}>Loading...</li>}
-        {!loading && items.map(it => (
+        {!loading && Array.isArray(items) && items.map(it => (
           <li key={it._id} className="flex justify-between items-center border-b pb-1" style={{ listStyle: "none" }}>
             <span>{renderItem(it)}</span>
             {!readOnly && (
@@ -554,7 +555,10 @@ const PaginatedSection = ({
             )}
           </li>
         ))}
-        {!loading && items.length === 0 && <li style={{ listStyle: "none" }}>No data</li>}
+       {!loading && Array.isArray(items) && items.length === 0 && (
+  <li style={{ listStyle: "none" }}>No data</li>
+)}
+
       </ul>
 
       {totalPages > 1 && (

@@ -6,6 +6,7 @@ import Testimonials from "./Testimonials";
 const TestimonialPage = () => {
   const [testimonials, setTestimonials] = useState([]);
 
+
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {

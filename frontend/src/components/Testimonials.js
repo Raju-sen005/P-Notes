@@ -16,6 +16,7 @@ const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/testimonials")
