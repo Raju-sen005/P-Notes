@@ -12,10 +12,10 @@ const CourseDetails = () => {
   useEffect(() => {
     const fetchCourseAndNotes = async () => {
       try {
-        const courseRes = await axios.get(`http://localhost:5000/api/courses/${id}`);
+        const courseRes = await axios.get(`https://p-notes-backend.onrender.com/api/courses/${id}`);
         setCourseTitle(courseRes.data.title);
 
-        const notesRes = await axios.get(`http://localhost:5000/api/notes/course/${id}`);
+        const notesRes = await axios.get(`https://p-notes-backend.onrender.com/api/notes/course/${id}`);
         setNotes(notesRes.data);
       } catch (err) {
         console.error("Fetch error:", err);
@@ -72,7 +72,7 @@ const CourseDetails = () => {
           >
             {notes.map((note) => {
               const filename = note.pdfUrl.split("/").pop();
-              const downloadUrl = `http://localhost:5000/api/notes/download/${filename}`;
+              const downloadUrl = `https://p-notes-backend.onrender.com/api/notes/download/${filename}`;
 
               return (
                 <motion.div
