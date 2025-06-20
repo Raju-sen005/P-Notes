@@ -10,7 +10,7 @@ const CourseDetails = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/courses/${id}`);
+        const res = await axios.get(`https://p-notes-backend.onrender.com/api/courses/${id}`);
         setCourse(res.data);
       } catch (err) {
         console.error("Course not found", err);
@@ -31,7 +31,7 @@ const CourseDetails = () => {
   );
 
   const filename = course.fileUrl?.split("/").pop();
-  const downloadUrl = `http://localhost:5000/api/courses/download/${filename}`;
+  const downloadUrl = `https://p-notes-backend.onrender.com/api/courses/download/${filename}`;
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
