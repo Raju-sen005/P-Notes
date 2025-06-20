@@ -12,22 +12,17 @@ const Navbar = () => {
     const offcanvasEl = offcanvasRef.current;
     if (!offcanvasEl) return;
 
-    bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
-
-    const handleShow = () => setIsOpen(true);
-    const handleHide = () => setIsOpen(false);
-
-    offcanvasEl.addEventListener("show.bs.offcanvas", handleShow);
-    offcanvasEl.addEventListener("hide.bs.offcanvas", handleHide);
+    const instance = bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
+    offcanvasEl.addEventListener("show.bs.offcanvas", () => setIsOpen(true));
+    offcanvasEl.addEventListener("hide.bs.offcanvas", () => setIsOpen(false));
 
     return () => {
-      offcanvasEl.removeEventListener("show.bs.offcanvas", handleShow);
-      offcanvasEl.removeEventListener("hide.bs.offcanvas", handleHide);
+      offcanvasEl.removeEventListener("show.bs.offcanvas", () => setIsOpen(true));
+      offcanvasEl.removeEventListener("hide.bs.offcanvas", () => setIsOpen(false));
     };
   }, []);
 
   useEffect(() => {
-    // Close offcanvas on route change
     const offcanvasEl = offcanvasRef.current;
     if (offcanvasEl) {
       const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
@@ -39,8 +34,11 @@ const Navbar = () => {
     <>
       {/* Top Navbar */}
       <nav
-        className="navbar navbar-light bg-white shadow-sm sticky-top border-bottom"
-        style={{ height: navbarHeight, zIndex: 1045 }}
+        className="navbar navbar-light bg-primary shadow-sm sticky-top border-bottom"
+        style={{
+          height: navbarHeight,
+          zIndex: 1045,
+        }}
       >
         <div className="container-fluid d-flex justify-content-between align-items-center px-3">
           <Link
@@ -49,10 +47,30 @@ const Navbar = () => {
             style={{ lineHeight: "1" }}
           >
             <div className="d-flex flex-column">
-              <span className="fw-bold fs-5 text-success">Perfect Pharmacy</span>
+              <img
+                src="https://ik.imagekit.io/galffwd0jy/IMG-20250527-WA0015.jpg?updatedAt=1748351017935"
+                alt="Perfect Pharmacy"
+                style={{
+                  width: "36px",
+                  borderRadius: "100%",
+                  marginInline: "5px",
+                }}
+              />
               <span
-                className="text-muted small"
-                style={{ fontSize: "11px", fontWeight: "400", marginTop: "-2px" }}
+                className="fw-bold fs-5 text-white"
+                style={{ position: "absolute", left: "59px" }}
+              >
+                Perfect Pharmacy
+              </span>
+              <span
+                className="text-white"
+                style={{
+                  fontSize: "11px",
+                  fontWeight: "400",
+                  marginTop: "-14px",
+                  letterSpacing: "0.3px",
+                  marginInline: "44px",
+                }}
               >
                 by Sunita
               </span>
@@ -60,31 +78,36 @@ const Navbar = () => {
           </Link>
 
           <button
-            className="btn btn-outline-success btn-sm rounded-pill px-3"
+            className="btn btn-outline-white btn-sm rounded-pill px-3"
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasMenu"
             aria-controls="offcanvasMenu"
             aria-label="Toggle menu"
           >
-            <i className="bi bi-list me-2"></i> {isOpen ? "Close" : "Menu"}
+            <i className="bi bi-list me-2 text-white"></i>
           </button>
         </div>
       </nav>
 
       {/* Offcanvas Menu */}
       <div
-        className="offcanvas offcanvas-start"
+        className={`offcanvas offcanvas-start ${isOpen ? "show" : ""}`}
         tabIndex="-1"
         id="offcanvasMenu"
         aria-labelledby="offcanvasMenuLabel"
         data-bs-backdrop="false"
         data-bs-scroll="false"
         ref={offcanvasRef}
-        style={{ width: "260px" }}
+        style={{
+          width: "270px",
+          backgroundColor: "#f8f9fa",
+          boxShadow: "2px 0 10px rgba(0, 0, 0, 0.05)",
+          transition: "transform 0.3s ease-in-out",
+        }}
       >
         <div className="offcanvas-header border-bottom">
-          <h5 className="offcanvas-title fw-semibold text-success">Navigation</h5>
+          <h5 className="offcanvas-title fw-semibold text-primary">Navigation</h5>
           <button
             type="button"
             className="btn-close"
@@ -92,36 +115,39 @@ const Navbar = () => {
             aria-label="Close"
           ></button>
         </div>
+
         <div className="offcanvas-body d-flex flex-column gap-3 px-4 py-3">
-          <Link to="/" className="text-decoration-none text-dark fw-medium">
-            <i className="bi bi-house me-2 text-success"></i> Home
-          </Link>
-          <Link to="/articles" className="text-decoration-none text-dark fw-medium">
-            <i className="bi bi-journal-text me-2 text-success"></i> Articles
-          </Link>
-          <Link to="/videos" className="text-decoration-none text-dark fw-medium">
-            <i className="bi bi-play-circle me-2 text-success"></i> Videos
-          </Link>
-          <Link to="/quizzes" className="text-decoration-none text-dark fw-medium">
-            <i className="bi bi-question-circle me-2 text-success"></i> MCQ Quizzes
-          </Link>
-          <Link to="/contact" className="text-decoration-none text-dark fw-medium">
-            <i className="bi bi-envelope me-2 text-success"></i> Contact
-          </Link>
+          {[
+            { to: "/", icon: "house", text: "Home" },
+            { to: "/articles", icon: "journal-text", text: "Articles" },
+            { to: "/videos", icon: "play-circle", text: "Videos" },
+            { to: "/quizzes", icon: "question-circle", text: "MCQ Quizzes" },
+            { to: "/contact", icon: "envelope", text: "Contact" },
+            { to: "/review", icon: "person-plus", text: "Review" },
+          ].map((link, idx) => (
+            <Link
+              key={idx}
+              to={link.to}
+              className="text-decoration-none text-primary fw-medium d-flex align-items-center"
+            >
+              <i className={`bi bi-${link.icon} me-2 text-primary`}></i> {link.text}
+            </Link>
+          ))}
 
-          <hr />
+          <hr className="my-2" />
 
-          {/* User Auth Links */}
-          <Link to="/login" className="text-decoration-none text-dark fw-medium">
-            <i className="bi bi-box-arrow-in-right me-2 text-success"></i> User Login
+          {/* Auth Links */}
+          {/* <h6 className="text-muted fw-bold mt-2">User Access</h6>
+          <Link to="/login" className="text-decoration-none text-primary fw-medium d-flex align-items-center">
+            <i className="bi bi-box-arrow-in-right me-2 text-primary"></i> User Login
           </Link>
-          <Link to="/register" className="text-decoration-none text-dark fw-medium">
-            <i className="bi bi-person-plus me-2 text-success"></i> Register
-          </Link>
+          <Link to="/register" className="text-decoration-none text-primary fw-medium d-flex align-items-center">
+            <i className="bi bi-person-plus me-2 text-primary"></i> Register
+          </Link> */}
 
-          {/* Admin Auth Link */}
-          <Link to="/admin/login" className="text-decoration-none text-dark fw-medium">
-            <i className="bi bi-person-lock me-2 text-success"></i> Admin Login
+          {/* <h6 className="text-muted fw-bold mt-3">Admin Panel</h6> */}
+          <Link to="/admin/login" className="text-decoration-none text-primary fw-medium d-flex align-items-center">
+            <i className="bi bi-person-lock me-2 text-primary"></i> Admin Login
           </Link>
         </div>
       </div>

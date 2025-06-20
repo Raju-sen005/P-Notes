@@ -14,16 +14,25 @@ import Dashboard from './pages/admin/Dashboard';
 import UploadNotes from './pages/admin/UploadNotes';
 import QuizAttempt from './pages/QuizAttempt';
 import Stats from './components/Stats';
-import AdminLogin from "./pages/admin/AdminLogin"; 
-
+import AdminLogin from "./pages/admin/AdminLogin";
+import NoteDetail from './pages/NoteDetail';
+import CoursesDetail from './pages/CoursesDetail';
+import QuizDetail from './pages/QuizDetail';
 import ProtectedRoute from './components/ProtectedRoute';
-
-
+import ContactPage from './pages/ContactPage';
+import ArticleList from './pages/ArticleList';
+import SamplePaper from './pages/SamplePapers';
+import PreviousPapers from './pages/PreviousPapers';
+import Review from './pages/Review';
+import TestPage from './pages/TestPage';
+import PharmacySubjects from './pages/PharmacySubjects';
+import AskPage from './pages/AskPage';
+import BookOrderForm from './pages/BookOrderForm';
 function App() {
   return (
     <>
       <Navbar />
-      <div className="px-4 py-6">
+      <div className="px-0 py-0 ">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -33,8 +42,19 @@ function App() {
           <Route path="/books" element={<Books />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/stats" element={<Stats />} />
-<Route path="/admin/login" element={<AdminLogin />} />
-
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/notes" element={<NoteDetail />} />
+          <Route path="/courses" element={<CoursesDetail />} />
+          <Route path="/quizzes" element={<QuizDetail />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/articles" element={<ArticleList />} />
+          <Route path="/sample-papers" element={<SamplePaper />} />
+          <Route path="/previous-papers" element={<PreviousPapers />} />
+          <Route path="/review" element={<Review />} />
+          <Route path="/tests" element={<TestPage />} />
+          <Route path="/pharmacy" element={<PharmacySubjects />} />
+          <Route path="/ask" element={<AskPage />} />
+          <Route path="/book-order" element={<BookOrderForm />} />
           <Route
             path="/quiz/:id"
             element={

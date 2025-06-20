@@ -5,13 +5,19 @@ import mongoose from "mongoose";
 
 import { verifyToken } from "../middlewares/auth.js";
 
-import User   from "../models/User.js";
+import User from "../models/User.js";
 import Course from "../models/Course.js";
-import Note   from "../models/Note.js";
-import Quiz   from "../models/Quiz.js";
-import Book   from "../models/Book.js";
-import Order  from "../models/Order.js";
-import upload from "../middlewares/upload.js"; // PDF / image upload middleware
+import Note from "../models/Note.js";
+import Quiz from "../models/Quiz.js";
+import Book from "../models/Book.js";
+import Order from "../models/Order.js";
+import upload from "../middlewares/upload.js";
+import Article from "../models/Article.js";
+import SamplePaper from "../models/SamplePaper.js";
+import PreviousPaper from '../models/PreviousPaper.js';
+// import Test from '../models/Test.js'; // ✅ Test model import
+
+// import SamplePaper from "../models/SamplePaper.js";
 
 const router = express.Router();
 
@@ -75,10 +81,12 @@ router.get("/stats", verifyToken, verifyAdmin, async (_req, res) => {
  * Build a case‑insensitive $or regex query for provided fields
  */
 const buildSearchQuery = (fields, search) => {
-  if (!search) return {};
+  if (!search || !fields.length) return {};  // अगर search नहीं या fields खाली तो खाली object लौटाओ
   const regex = new RegExp(search.trim(), "i");
   return { $or: fields.map((f) => ({ [f]: regex })) };
 };
+
+
 
 /**
  * Generic paginator helper
@@ -404,17 +412,290 @@ router.get("/orders", verifyToken, verifyAdmin, async (req, res) => {
       Model: Order,
       page: req.query.page,
       limit: req.query.limit,
-      search: req.query.search,
-      searchFields: [], // orders don't support text search; but pagination works
+      searchFields: [], search: req.query.search,
       populate: [
-        { path: "user", select: "name email" },
+        { path: "userId", select: "name email" },  // <-- यही सही path है
         { path: "items.product", select: "title price" },
       ],
+      sort: { createdAt: -1 },
+    });
+    res.json(result);
+  } catch (err) {
+    console.error("Error fetching orders:", err);
+    res.status(500).json({ message: "Failed to fetch orders", error: err.message });
+  }
+});
+
+/* ────────────────────── ARTICLES ───────────────────── */
+router.get("/articles", verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    const result = await paginate({
+      Model: Article,
+      page: req.query.page,
+      limit: req.query.limit,
+      search: req.query.search,
+      searchFields: ["title", "author", "content"],
+      sort: { createdAt: -1 },
     });
     res.json(result);
   } catch {
-    res.status(500).json({ message: "Failed to fetch orders" });
+    res.status(500).json({ message: "Failed to fetch articles" });
   }
 });
+
+router.post("/articles", verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    const { title, content, author, imageUrl } = req.body;
+    if (!title || !content)
+      return res.status(400).json({ message: "Title and content are required" });
+
+    const newArticle = await Article.create({ title, content, author, imageUrl });
+    res.status(201).json(newArticle);
+  } catch {
+    res.status(500).json({ message: "Failed to add article" });
+  }
+});
+
+router.put("/articles/:id", verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    const article = await Article.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!article) return res.status(404).json({ message: "Article not found" });
+    res.json(article);
+  } catch {
+    res.status(500).json({ message: "Failed to update article" });
+  }
+});
+
+router.delete("/articles/:id", verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    await Article.findByIdAndDelete(req.params.id);
+    res.json({ message: "Article deleted" });
+  } catch {
+    res.status(500).json({ message: "Failed to delete article" });
+  }
+});
+
+/* ────────────────────── SAMPLE PAPERS ───────────────────── */
+router.get("/sample-papers", verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    const result = await paginate({
+      Model: SamplePaper,
+      page: req.query.page,
+      limit: req.query.limit,
+      search: req.query.search,
+      searchFields: ["title", "subject"],
+      sort: { createdAt: -1 },
+    });
+    res.json(result);
+  } catch {
+    res.status(500).json({ message: "Failed to fetch sample papers" });
+  }
+});
+
+router.post("/sample-papers", verifyToken, verifyAdmin, upload.single("pdf"), async (req, res) => {
+  try {
+    const { title, subject, externalLink } = req.body;
+    if (!title) return res.status(400).json({ message: "Title is required" });
+
+    const pdfUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+    const newSample = await SamplePaper.create({
+      title,
+      subject,
+      pdfUrl,
+      externalLink,
+    });
+
+    res.status(201).json(newSample);
+  } catch (err) {
+    console.error("Error adding sample paper:", err);
+    res.status(500).json({ message: "Failed to add sample paper" });
+  }
+});
+
+router.put("/sample-papers/:id", verifyToken, verifyAdmin, upload.single("pdf"), async (req, res) => {
+  try {
+    const updates = req.body;
+    if (req.file) {
+      updates.pdfUrl = `/uploads/${req.file.filename}`;
+    }
+
+    const sample = await SamplePaper.findByIdAndUpdate(req.params.id, updates, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!sample) return res.status(404).json({ message: "Sample paper not found" });
+
+    res.json(sample);
+  } catch {
+    res.status(500).json({ message: "Failed to update sample paper" });
+  }
+});
+
+router.delete("/sample-papers/:id", verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    await SamplePaper.findByIdAndDelete(req.params.id);
+    res.json({ message: "Sample paper deleted" });
+  } catch {
+    res.status(500).json({ message: "Failed to delete sample paper" });
+  }
+});
+/* ────────────────────── PREVIOUS PAPERS ───────────────────── */
+router.get("/previous-papers", verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    const result = await paginate({
+      Model: PreviousPaper,
+      page: req.query.page,
+      limit: req.query.limit,
+      search: req.query.search,
+      searchFields: ["title", "description", "year"],
+      sort: { createdAt: -1 },
+    });
+    res.json(result);
+  } catch {
+    res.status(500).json({ message: "Failed to fetch previous papers" });
+  }
+});
+
+router.post("/previous-papers", verifyToken, verifyAdmin, upload.single("pdf"), async (req, res) => {
+  try {
+    const { title, description, year, externalLink } = req.body;
+    if (!title) return res.status(400).json({ message: "Title is required" });
+
+    const pdfUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+    const newPaper = await PreviousPaper.create({
+      title,
+      description,
+      year,
+      pdfUrl,
+      externalLink,
+    });
+
+    res.status(201).json(newPaper);
+  } catch (err) {
+    console.error("Error adding previous paper:", err);
+    res.status(500).json({ message: "Failed to add previous paper" });
+  }
+});
+
+router.put("/previous-papers/:id", verifyToken, verifyAdmin, upload.single("pdf"), async (req, res) => {
+  try {
+    const updates = req.body;
+    if (req.file) {
+      updates.pdfUrl = `/uploads/${req.file.filename}`;
+    }
+
+    const updated = await PreviousPaper.findByIdAndUpdate(req.params.id, updates, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updated) return res.status(404).json({ message: "Previous paper not found" });
+
+    res.json(updated);
+  } catch {
+    res.status(500).json({ message: "Failed to update previous paper" });
+  }
+});
+
+router.delete("/previous-papers/:id", verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    await PreviousPaper.findByIdAndDelete(req.params.id);
+    res.json({ message: "Previous paper deleted" });
+  } catch {
+    res.status(500).json({ message: "Failed to delete previous paper" });
+  }
+});
+
+
+
+
+// CREATE Test
+router.post("/", async (req, res) => {
+  try {
+    const newTest = new Test(req.body);
+    await newTest.save();
+    res.status(201).json(newTest);
+  } catch (err) {
+    res.status(400).json({ error: "Failed to create test", details: err });
+  }
+});
+
+// GET All Tests with Pagination and Search
+router.get("/", async (req, res) => {
+  try {
+    const { page = 1, limit = 10, search = "" } = req.query;
+
+    const query = {
+      title: { $regex: search, $options: "i" },
+    };
+
+    const tests = await Test.find(query)
+      .populate("courseId", "title")
+      .skip((parseInt(page) - 1) * parseInt(limit))
+      .limit(parseInt(limit));
+
+    const total = await Test.countDocuments(query);
+
+    res.json({
+      data: tests,
+      total,
+      page: parseInt(page),
+      totalPages: Math.ceil(total / limit),
+    });
+  } catch (err) {
+    console.error("❌ Error in GET /api/admin/tests:", err); // Add this
+    res.status(500).json({ error: "Failed to fetch tests", details: err.message });
+  }
+});
+
+
+
+// GET Single Test by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const test = await Test.findById(req.params.id).populate("courseId", "title");
+    if (!test) return res.status(404).json({ error: "Test not found" });
+    res.json(test);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch test", details: err });
+  }
+});
+
+// UPDATE Test
+router.put("/:id", async (req, res) => {
+  try {
+    // अगर payload में updatedAt था तो उसे हटा दो
+    delete req.body.updatedAt;
+    const updatedTest = await Test.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }  // updatedAt अपडेट और नया डॉक्यूमेंट वापस पाने के लिए ज़रूरी
+    );
+    if (!updatedTest) {
+      return res.status(404).json({ error: "Test not found" });
+    }
+    res.json(updatedTest);
+  } catch (err) {
+    res.status(400).json({ error: "Failed to update test", details: err });
+  }
+});
+
+
+// DELETE Test
+router.delete("/:id", async (req, res) => {
+  try {
+    await Test.findByIdAndDelete(req.params.id);
+    res.json({ message: "Test deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to delete test", details: err });
+  }
+});
+
 
 export default router;

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {jwtDecode }from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -19,8 +20,8 @@ const AdminLogin = () => {
 
     try {
       const res = await axios.post("/api/admin/login", { email, password });
-
       const decoded = jwtDecode(res.data.token);
+
       if (decoded.role !== "admin") {
         setError("आपको admin के रूप में अनुमति नहीं है");
         return;
@@ -34,29 +35,66 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "400px" }}>
-      <h2>Admin Login</h2>
-      {error && <p className="text-danger">{error}</p>}
+    <motion.div
+      className="container mt-5"
+      style={{
+        maxWidth: "400px",
+      }}
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+
+    >
+      <motion.h2
+        className="text-center mb-3"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        Admin Login
+      </motion.h2>
+
+      {error && (
+        <motion.p
+          className="text-danger"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          {error}
+        </motion.p>
+      )}
+
       <form onSubmit={handleSubmit}>
-        <input
+        <motion.input
           type="email"
           className="form-control my-2"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          whileFocus={{ scale: 1.03 }}
         />
-        <input
+
+        <motion.input
           type="password"
           className="form-control my-2"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          whileFocus={{ scale: 1.03 }}
         />
-        <button type="submit" className="btn btn-success w-100">
+
+        <motion.button
+          type="submit"
+          className="btn btn-primary w-100"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+
+        >
           Login
-        </button>
+        </motion.button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

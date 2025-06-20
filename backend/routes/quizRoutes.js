@@ -3,6 +3,15 @@ import Quiz from "../models/Quiz.js";
 import { verifyToken, isAdmin } from "../middlewares/auth.js";
 
 const router = express.Router();
+// ✅ Get all quizzes (for listing)
+router.get("/", async (req, res) => {
+  try {
+    const quizzes = await Quiz.find();
+    res.status(200).json(quizzes);
+  } catch (err) {
+    res.status(500).json({ msg: "Failed to fetch quizzes" });
+  }
+});
 
 // Admin creates quiz
 router.post("/", verifyToken, isAdmin, async (req, res) => {
@@ -13,6 +22,17 @@ router.post("/", verifyToken, isAdmin, async (req, res) => {
     res.status(201).json(quiz);
   } catch (err) {
     res.status(500).json({ msg: "Failed to create quiz" });
+  }
+});
+
+// ✅ Get quiz by ID (admin/dashboard)
+router.get("/id/:quizId", verifyToken, async (req, res) => {
+  try {
+    const quiz = await Quiz.findById(req.params.quizId);
+    if (!quiz) return res.status(404).json({ msg: "Quiz not found" });
+    res.status(200).json(quiz);
+  } catch (err) {
+    res.status(500).json({ msg: "Failed to fetch quiz" });
   }
 });
 
@@ -58,5 +78,7 @@ router.post("/attempt/:quizId", verifyToken, async (req, res) => {
     res.status(500).json({ msg: "Failed to process quiz attempt" });
   }
 });
+
+
 
 export default router;

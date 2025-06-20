@@ -1,271 +1,33 @@
-.typed-text {
-  color: #247e84;
-  font-weight: bold;
-  font-size: 1.25rem;
-  min-width: 180px;
-  text-align: left;
-  white-space: nowrap;
-  display: inline-block;
-  position: relative;
-  top: 0px;
-}
-
-.typed-cursor {
-  font-weight: 900;
-  font-size: 28px;
-  color: #247e84;
-  animation: blink 1.2s steps(2, start) infinite;
-}
-
-@keyframes blink {
-  0%, 50% {
-    opacity: 1;
-  }
-  50.01%, 100% {
-    opacity: 0;
-  }
-}
-
-.stat-number {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.hover-scale:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease-in-out;
-  cursor: pointer;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: 2fr 2fr;
-  gap: 20px;
-  padding: 0 20px;
-  max-width: 1000px;
-  margin: auto;
-}
-
-.feature-card {
-  border: 2px solid #00ced1;
-  padding: 40px;
-  /* border-radius: 10px; */
-  background-color: #fff;
-  transition: box-shadow 0.3s ease-in-out;
-}
-
-.feature-card:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.feature-button {
-  background-color: black;
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 5px;
-  display: inline-block;
-  margin-top: 10px;
-}
-
-.feature-button:hover {
-  background-color: #247e84;
-}
-.testimonials-section {
-  background: linear-gradient(to bottom, #000000, #003333);
-  color: white;
-  padding: 60px 20px;
-  text-align: center;
-}
-
-.testimonials-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-}
-
-.testimonials-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.testimonial-box {
-  border: 1px solid teal;
-  padding: 20px;
-  max-width: 300px;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-.testimonial-message {
-  font-size: 1rem;
-  margin-bottom: 10px;
-}
-
-.testimonial-tag {
-  color: #007bff;
-  font-weight: bold;
-  font-size: 0.9rem;
-  margin-bottom: 10px;
-}
-
-.testimonial-name {
-  color: #00cccc;
-  font-weight: bold;
-  font-size: 1rem;
-}
-.custom-hover-button {
-  background-color: black; /* Default dark background */
-  color: #ffffff; /* White text */
-  border: none;
-  transition: background-color 0.3s ease;
-}
-
-.custom-hover-button:hover {
-  background-color: #247e84; /* Lighter shade on hover */
-}
-/* Disable hover effect for Menu and Close buttons */
-.btn-outline-secondary:hover,
-.btn-outline-secondary:focus {
-  background-color: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-  color: black;
-}
-.watch-now-btn {
-      position: fixed;
-    left: 34px;
-    top: 60%;
-    transform: rotate(90deg);
-    transform-origin: left top;
-    background-color: #000;
-    color: #fff;
-    padding: 5px 10px;
-    font-weight: 600;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-    text-decoration: none;
-    z-index: 1000;
-    box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
-    font-family: 'Noto Sans', sans-serif;
-}
-.chat-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #247E84;
-  color: white;
-  border-radius: 50%;
-  padding: 15px;
-  font-size: 24px;
-  z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-decoration: none;
-  transition: transform 0.2s ease-in-out;
-}
-
-.chat-icon:hover {
-  transform: scale(1.1);
-  background-color: #1e6c70;
-}
 @media (max-width: 768px) {
   img {
     max-width: 320px !important;
     position: relative;
-    top: -25px;
-    filter: hue-rotate(280deg);
   }
-  h1{
-        position: relative;
+  h1 {
+    font-size: 2.1rem !important;
+    position: relative;
     top: 0 !important;
-    font-size: 24px !important;
-    font-family: "Noto Sans", sans-serif;
+    width: 100% !important;
   }
-  h4{
-        position: relative;
-    left: -7.4% !important;
-    font-size: 1.5em;
-    top: 0 !important;
-    font-family: "Noto Sans", sans-serif;
-    font-weight: 600;
+  p.mt-3 {
+    font-size: 1.3rem;
+    color: rgb(99, 110, 114);
+    position: absolute;
+    top: 150px !important;
+    width: 75% !important;
+    text-align: initial;
   }
-  h4 span{
-    text-align: center !important;
-  }
-  .bg-light{
-        position: relative;
-    top: 0pc !important;
-    font-family: "Noto Sans", sans-serif;
-  }
-  p{
-        position: relative;
-    top: 0 !important;
-    left: -2% !important;
-    color: rgb(0, 0, 0);
-    font-family: "Noto Sans", sans-serif;
-  }
-  a.btn{
-        position: relative;
-    top: 0 !important;
-    left: -28.5% !important;
-    font-family: "Noto Sans", sans-serif;
-  }
-  .text-center{
-            position: relative;
-    top: 0 !important;
+ a.btn {
     font-family: Poppins, sans-serif;
+    position: relative;
+    top: -80px;
   }
-  .card-body img{
-    position: initial !important;
+  .container{
+    display: none;
   }
-  .text-center a{
-    position: initial;
+  h2{
+        font-size: 2rem !important;
+    opacity: 1;
+    transform: none;
   }
-  .features-container h1{
-    position: initial !important;
-  }
-  .features-container p{
-        position: relative;
-    top: 0 !important;
-    left: 0 !important;
-    color: rgb(0, 0, 0);
-    font-family: "Noto Sans", sans-serif;
-  }
-  .text-center h4{
-    position: initial !important;
-  }
-  .watch-now-btn {
-      position: fixed !important;
-    left: 34px;
-    top: 60%;
-    transform: rotate(90deg);
-    transform-origin: left top;
-    background-color: #000;
-    color: #fff;
-    padding: 5px 10px;
-    font-weight: 600;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-    text-decoration: none;
-    z-index: 1000;
-    box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
-    font-family: 'Noto Sans', sans-serif;
-}
-.chat-icon {
-  position: fixed !important;
-  bottom: 20px;
-  right: 20px;
-  background-color: #247E84;
-  color: white;
-  border-radius: 50%;
-  padding: 15px;
-  font-size: 24px;
-  z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-decoration: none;
-  transition: transform 0.2s ease-in-out;
-}
 }

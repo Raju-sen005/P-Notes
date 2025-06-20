@@ -2,7 +2,6 @@ import express from "express";
 import Course from "../models/Course.js";
 import { verifyToken, isAdmin } from "../middlewares/auth.js";
 
-
 const router = express.Router();
 
 // Add a new course (Admin only)
@@ -24,6 +23,32 @@ router.get("/", async (req, res) => {
     res.status(200).json(courses);
   } catch (err) {
     res.status(500).json({ msg: "Failed to fetch courses" });
+  }
+});
+
+// ✅ Get a course by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) return res.status(404).json({ msg: "Course not found" });
+    res.status(200).json(course);
+  } catch (err) {
+    res.status(500).json({ msg: "Failed to fetch course" });
+  }
+});
+router.get("/by-subject", verifyToken, async (req, res) => {
+  const subjectName = req.query.subject;
+  if (!subjectName) return res.status(400).json({ message: "Subject is required" });
+
+  try {
+    const course = await Course.findOne({ title: subjectName });
+    if (!course) return res.status(404).json({ message: "Course not found" });
+
+    const quizzes = await Quiz.find({ courseId: course._id });
+    res.json(quizzes);
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ message: "Failed to fetch quizzes by subject" });
   }
 });
 

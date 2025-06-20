@@ -1,10 +1,16 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import { motion, AnimatePresence } from "framer-motion";
 
 import AddCourseForm from "./AddCourseForm";
 import AddBookForm from "./AddBookForm";
 import AddNoteForm from "./AddNoteForm";
 import AddQuizForm from "./AddQuizForm";
+import AddSamplePaperForm from "./AddSamplePaperForm";
+import AddArticleForm from "./AddArticleForm";
+import AddPreviousPaper from "./AddPreviousPaper";
+// import AddTestForm from "./AddTestForm";
+// import AddQuestion from "./AddQuestion";
 
 const PER_PAGE = 10;
 const cfg = token => ({ headers: { Authorization: `Bearer ${token}` } });
@@ -43,6 +49,27 @@ const Dashboard = () => {
   const [notes, setNotes] = useState(initMeta);
   const [quizzes, setQuizzes] = useState(initMeta);
   const [orders, setOrders] = useState(initMeta);
+  const [samples, setSamples] = useState(initMeta);
+  const [articles, setArticles] = useState(initMeta);
+  const [previous, setPrevious] = useState(initMeta);
+  // const [tests, setTests] = useState(initMeta);
+  // const [questions, setQuestions] = useState(initMeta);
+
+  // const [showAddQuestion, setShowAddQuestion] = useState(false);
+  // const [editQuestion, setEditQuestion] = useState(null);
+
+  const [showAddArticle, setShowAddArticle] = useState(false);
+  const [editArticle, setEditArticle] = useState(null);
+
+  // const [showAddTest, setShowAddTest] = useState(false);
+  // const [editTest, setEditTest] = useState(null);
+
+  const [showAddprevious, setShowAddprevious] = useState(false);
+  const [editprevious, setEditprevious] = useState(null);
+
+
+  const [showAddSample, setShowAddSample] = useState(false);
+  const [editSample, setEditSample] = useState(null);
 
   const [showAddCourse, setShowAddCourse] = useState(false);
   const [editCourse, setEditCourse] = useState(null);
@@ -73,20 +100,104 @@ const Dashboard = () => {
   const fetchBooks = useCallback(() => handleFetch("/api/admin/books", books, setBooks), [token, books.page, books.search]);
   const fetchNotes = useCallback(() => handleFetch("/api/admin/notes", notes, setNotes), [token, notes.page, notes.search]);
   const fetchQuizzes = useCallback(() => handleFetch("/api/admin/quizzes", quizzes, setQuizzes), [token, quizzes.page, quizzes.search]);
-  const fetchOrders = useCallback(() => handleFetch("/api/admin/orders", orders, setOrders), [token, orders.page]);
+  const fetchOrders = useCallback(() => handleFetch("http://localhost:5000/api/admin/orders", orders, setOrders), [token, orders.page]);
+  const fetchArticles = useCallback(() => handleFetch("/api/admin/articles", articles, setArticles), [token, articles.page, articles.search]);
+  const fetchSamples = useCallback(() => handleFetch("/api/admin/sample-papers", samples, setSamples), [token, samples.page, samples.search]);
+  const fetchPrevious = useCallback(() => handleFetch("/api/admin/previous-papers", previous, setPrevious), [token, previous.page, previous.search]);
+  // const fetchTests = useCallback(() => handleFetch("/api/admin/tests", tests, setTests), [token, tests.page, tests.search]);
+  // const fetchQuestions = useCallback(() => handleFetch("/api/admin/questions", questions, setQuestions), [token, questions.page, questions.search]);
 
+  useEffect(() => { if (view === "articles") fetchArticles(); }, [view, fetchArticles]);
   useEffect(() => { if (view === "users") fetchUsers(); }, [view, fetchUsers]);
   useEffect(() => { if (view === "courses") fetchCourses(); }, [view, fetchCourses]);
   useEffect(() => { if (view === "books") fetchBooks(); }, [view, fetchBooks]);
   useEffect(() => { if (view === "notes") fetchNotes(); }, [view, fetchNotes]);
   useEffect(() => { if (view === "quizzes") fetchQuizzes(); }, [view, fetchQuizzes]);
   useEffect(() => { if (view === "orders") fetchOrders(); }, [view, fetchOrders]);
+  useEffect(() => { if (view === "samples") fetchSamples(); }, [view, fetchSamples]);
+  useEffect(() => { if (view === "previous") fetchPrevious(); }, [view, fetchPrevious]);
+  // useEffect(() => { if (view === "tests") fetchTests(); }, [view, fetchTests]);
+  // useEffect(() => { if (view === "questions") fetchQuestions(); }, [view, fetchQuestions]);
 
   const handleDelete = async (id, url, fetchAgain) => {
     if (!window.confirm("Confirm delete?")) return;
     try { await del(url, token); fetchAgain(); }
     catch { setError("Delete failed"); }
   };
+  const submitArticle = async (data) => {
+    try {
+      if (editArticle) {
+        await axios.put(`/api/admin/articles/${editArticle._id}`, data, cfg(token));
+      } else {
+        await axios.post("/api/admin/articles", data, cfg(token));
+      }
+      setShowAddArticle(false);
+      setEditArticle(null);
+      fetchArticles();
+    } catch {
+      setError("Save failed");
+    }
+  };
+
+  const submitSample = async (formData) => {
+    try {
+      if (editSample) {
+        await axios.put(`/api/admin/sample-papers/${editSample._id}`, formData, cfg(token));
+      } else {
+        await axios.post("/api/admin/sample-papers", formData, cfg(token));
+      }
+      setShowAddSample(false);
+      setEditSample(null);
+      fetchSamples();
+    } catch {
+      setError("Save failed");
+    }
+  };
+
+  const submitPrevious = async (data) => {
+    try {
+      if (editprevious) {
+        await axios.put(`/api/admin/previous-papers/${editprevious._id}`, data, cfg(token));
+      } else {
+        await axios.post("/api/admin/previous-papers", data, cfg(token));
+      }
+      setShowAddprevious(false);
+      setEditprevious(null);
+      fetchPrevious();
+    } catch {
+      setError("Save failed");
+    }
+  };
+
+  // const submitTest = async (data) => {
+  //   try {
+  //     if (editTest) {
+  //       await axios.put(`/api/admin/tests/${editTest._id}`, data, cfg(token));
+  //     } else {
+  //       await axios.post("/api/admin/tests", data, cfg(token));
+  //     }
+  //     setShowAddTest(false);
+  //     setEditTest(null);
+  //     fetchTests();
+  //   } catch {
+  //     setError("Save failed");
+  //   }
+  // };
+
+  // const submitQuestion = async (data) => {
+  //   try {
+  //     if (editQuestion) {
+  //       await axios.put(`/api/admin/questions/${editQuestion._id}`, data, cfg(token));
+  //     } else {
+  //       await axios.post("/api/admin/questions", data, cfg(token));
+  //     }
+  //     setShowAddQuestion(false);
+  //     setEditQuestion(null);
+  //     fetchQuestions();
+  //   } catch {
+  //     setError("Save failed");
+  //   }
+  // };
 
   const submitCourse = async (data) => {
     try {
@@ -133,7 +244,7 @@ const Dashboard = () => {
   };
 
   const NavButton = ({ tab, label }) => (
-    <button onClick={() => setView(tab)} className={`px-3 py-1 rounded ${view === tab ? "bg-white-800 text-white" : "bg-gray-200"} mx-2`} style={{ border: "1px solid #ccc", background: "#198754", color: "white" }}>
+    <button onClick={() => setView(tab)} className={`px-1 py-1 rounded ${view === tab ? "bg-white-800 text-white" : "bg-gray-200"} mx-2`} style={{ border: "0.5px solid white", background: "transparent", color: "white" }}>
       {label}
     </button>
   );
@@ -142,7 +253,17 @@ const Dashboard = () => {
   if (!stats) return <p className="p-4">Loading...</p>;
 
   return (
-    <div className="p-6 space-y-6">
+
+    <div className="p-6 space-y-6 text-white"
+      style={{
+  minHeight: "100vh", 
+  width: "100%",
+  padding: "11px",
+  backgroundImage: "url(https://img.freepik.com/free-vector/gradient-abstract-wireframe-background_23-2149009903.jpg?uid=R196801159&ga=GA1.1.1714141213.1744818376&semt=ais_hybrid&w=740)",
+  backgroundSize: "cover",            
+  zIndex: 1,
+}}>
+
       <h1 className="text-2xl font-bold">📊 Admin Dashboard</h1>
 
       <div className="flex gap-4 text-sm font-medium flex-wrap">
@@ -153,6 +274,12 @@ const Dashboard = () => {
         <NavButton tab="notes" label="Notes" />
         <NavButton tab="quizzes" label="Quizzes" />
         <NavButton tab="orders" label="Orders" />
+        <NavButton tab="articles" label="Articles" />
+        <NavButton tab="samples" label="Sample Papers" />
+        <NavButton tab="previous" label="Previous Year Papers" />
+        {/* <NavButton tab="tests" label="Tests" /> */}
+        {/* <NavButton tab="questions" label="Questions" /> */}
+
       </div>
 
       <hr />
@@ -169,6 +296,103 @@ const Dashboard = () => {
           onDelete={id => handleDelete(id, `/api/admin/users/${id}`, fetchUsers)}
         />
       )}
+      {view === "articles" && (
+        <PaginatedSection
+          title="📰 Articles"
+          meta={articles}
+          setMeta={setArticles}
+          onSearch={s => setArticles({ ...articles, search: s, page: 1 })}
+          renderItem={a => `${a.title} – ${a.description?.slice(0, 40)}…`}
+          onDelete={id => handleDelete(id, `/api/admin/articles/${id}`, fetchArticles)}
+          onEdit={article => { setEditArticle(article); setShowAddArticle(true); }}
+          addBtnLabel="Add Article"
+        >
+          {showAddArticle && (
+            <AddArticleForm
+              onAdd={submitArticle}
+              onClose={() => {
+                setShowAddArticle(false);
+                setEditArticle(null);
+              }}
+              initialValues={editArticle}
+            />
+          )}
+        </PaginatedSection>
+      )}
+
+      {/* {view === "tests" && (
+        <PaginatedSection
+          title="📝Test"
+          meta={tests}
+          setMeta={setTests}
+          onSearch={s => setTests({ ...tests, search: s, page: 1 })}
+          renderItem={t => `${t.title} – ${t.courseId?.name} – ${t.questions.length} questions`}
+          onDelete={id => handleDelete(id, `/api/admin/tests/${id}`, fetchTests)}
+          onEdit={test => { setEditTest(test); setShowAddTest(true); }}
+          addBtnLabel="Add Test"
+        >
+          {showAddTest && (
+            <AddTestForm
+              onAdd={submitTest}
+              onClose={() => {
+                setShowAddTest(false);
+                setEditTest(null);
+              }}
+              initialValues={editTest}
+            />
+          )}
+        </PaginatedSection>
+      )} */}
+
+
+
+      {view === "samples" && (
+        <PaginatedSection
+          title="📄 Sample Papers"
+          meta={samples}
+          setMeta={setSamples}
+          onSearch={s => setSamples({ ...samples, search: s, page: 1 })}
+          renderItem={s => `${s.title} – ${s.description} `}
+          onDelete={id => handleDelete(id, `/api/admin/sample-papers/${id}`, fetchSamples)}
+          onEdit={sample => { setEditSample(sample); setShowAddSample(true); }}
+          addBtnLabel="Add Sample"
+        >
+          {showAddSample && (
+            <AddSamplePaperForm
+              onAdd={submitSample}
+              onClose={() => {
+                setShowAddSample(false);
+                setEditSample(null);
+              }}
+              initialValues={editSample}
+            />
+          )}
+        </PaginatedSection>
+      )}
+
+      {view === "previous" && (
+        <PaginatedSection
+          title="📚 previous year Paper"
+          meta={previous}
+          setMeta={setPrevious}
+          onSearch={s => setPrevious({ ...previous, search: s, page: 1 })}
+          renderItem={p => `${p.title} – ${p.description} – ${p.year}`}
+          onDelete={id => handleDelete(id, `/api/admin/previous-papers/${id}`, fetchPrevious)}
+          onEdit={paper => { setEditprevious(paper); setShowAddprevious(true); }}
+          addBtnLabel="Add Previous Paper"
+        >
+          {showAddprevious && (
+            <AddPreviousPaper
+              onAdd={submitPrevious}
+              onClose={() => {
+                setShowAddprevious(false);
+                setEditprevious(null);
+              }}
+              initialValues={editprevious}
+            />
+          )}
+        </PaginatedSection>
+      )}
 
       {view === "courses" && (
         <PaginatedSection
@@ -176,7 +400,7 @@ const Dashboard = () => {
           meta={courses}
           setMeta={setCourses}
           onSearch={s => setCourses({ ...courses, search: s, page: 1 })}
-          renderItem={c => `${c.title} – ₹${c.price}`}
+          renderItem={c => { console.log(c); return `${c.title} – ${c.description} – ₹${c.price}` }}
           onDelete={id => handleDelete(id, `/api/admin/courses/${id}`, fetchCourses)}
           onEdit={course => { setEditCourse(course); setShowAddCourse(true); }}
           addBtnLabel="Add Course"
@@ -191,7 +415,7 @@ const Dashboard = () => {
           meta={books}
           setMeta={setBooks}
           onSearch={s => setBooks({ ...books, search: s, page: 1 })}
-          renderItem={b => `${b.title} – ${b.author} – ₹${b.price}`}
+          renderItem={b => { console.log(b); return `${b.title} – ${b.name} – ₹${b.price}` }}
           onDelete={id => handleDelete(id, `/api/admin/books/${id}`, fetchBooks)}
           onEdit={book => { setEditBook(book); setShowAddBook(true); }}
           addBtnLabel="Add Book"
@@ -221,7 +445,7 @@ const Dashboard = () => {
           meta={quizzes}
           setMeta={setQuizzes}
           onSearch={s => setQuizzes({ ...quizzes, search: s, page: 1 })}
-          renderItem={q => q?.question?.slice ? q.question.slice(0, 60) + "…" : "No question"}
+          renderItem={q => { console.log(q); const Q = q?.questions?.[0]?.question; return Q ? Q.slice(0, 60) + "…" : "No question" }}
 
           onDelete={id => handleDelete(id, `/api/admin/quizzes/${id}`, fetchQuizzes)}
           onEdit={quiz => { setEditQuiz(quiz); setShowAddQuiz(true); }}
@@ -240,18 +464,23 @@ const Dashboard = () => {
         </PaginatedSection>
       )}
 
-
       {view === "orders" && (
         <PaginatedSection
           title="🛒 Orders"
           meta={orders}
           setMeta={setOrders}
-          renderItem={o => `#${o._id.substr(-6)} – Items:${o.items.length} – User:${o.user?.name}`}
+          renderItem={o => {
+            console.log(o);
+            return `${o.address} – ${o.name} – ${o.mobile}`
+          }}
           readOnly
         />
       )}
+
+
     </div>
-  );
+
+  )
 };
 
 const DashboardStats = ({ users, courses, books, notes, quizzes, orders }) => (
@@ -262,6 +491,7 @@ const DashboardStats = ({ users, courses, books, notes, quizzes, orders }) => (
     <p>📝 Notes:   {notes}</p>
     <p>🧠 Quizzes: {quizzes}</p>
     <p>🛒 Orders:  {orders}</p>
+
   </div>
 );
 
@@ -280,7 +510,7 @@ const PaginatedSection = ({
   const { items, page, totalPages, loading } = meta;
   return (
     <div>
-      <div className="flex justify-between items-center flex-wrap gap-2">
+      <div className="flex justify-between items-center flex-wrap gap-2" style={{ textAlign: "end" }}>
         <h2 className="text-xl font-semibold">{title}</h2>
         <input
           type="text"
@@ -290,31 +520,35 @@ const PaginatedSection = ({
           onChange={e => onSearch(e.target.value)}
         />
         {!readOnly && (
-          <button onClick={() => { if (onEdit) onEdit(null); }} className="bg-green-600 text-white px-3 py-1 rounded" style={{
-            background: "#198754",
-            border: "1px solid #ccc",
-            marginInline: "9px"
+          <button onClick={() => { if (onEdit) onEdit(null); }} className="bg-green-600 text-white px-3 py-1 rounded mx-2" style={{
+            background: "#0D6EFD",
+            border: "transparent",
+            // position:"fixed",
+            // left:"285px"
           }}>
             {addBtnLabel}
           </button>
         )}
       </div>
 
-      <ul className="mt-4 space-y-2 min-h-[120px]">
+      <ul className="mt-4 space-y-2 min-h-[120px]" style={{ textAlign: "end" }}>
         {loading && <li style={{ listStyle: "none" }}>Loading...</li>}
         {!loading && items.map(it => (
           <li key={it._id} className="flex justify-between items-center border-b pb-1" style={{ listStyle: "none" }}>
             <span>{renderItem(it)}</span>
             {!readOnly && (
               <span className="flex gap-2">
-                {onEdit && <button onClick={() => onEdit(it)} className="bg-blue-600 text-white px-2 py-0.5 rounded text-xs" style={{
-                  background: "#198754",
-                  border: "1px solid #ccc",
-                  marginInline: "7px"
+                {onEdit && <button onClick={() => onEdit(it)} className="bg-blue-600 text-white px-2 py-0.5 rounded text-xs mx-2 mb-2" style={{
+                  background: "#0D6EFD",
+                  border: "transparent",
+                  // position:"fixed",
+                  // left:"285px"
                 }}>Edit</button>}
-                {onDelete && <button onClick={() => onDelete(it._id)} className="bg-red-600 text-white px-2 py-0.5 rounded text-xs"style={{
-                  background: "#198754",
-                  border: "1px solid #ccc",
+                {onDelete && <button onClick={() => onDelete(it._id)} className="bg-red-600 text-white px-0.5 py-0.5 rounded text-xs mx-2 mb-2" style={{
+                  background: "#0D6EFD",
+                  border: "transparent",
+                  // position:"fixed",
+                  // left:"340px"
                 }}>Delete</button>}
               </span>
             )}
@@ -332,6 +566,7 @@ const PaginatedSection = ({
       )}
 
       {children}
+
     </div>
   );
 };

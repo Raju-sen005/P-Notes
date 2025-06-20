@@ -5,7 +5,7 @@ const bookSchema = new mongoose.Schema({
   description: String,
   price: { type: Number, required: true },
   coverImage: String,
-  // courseId: { type: mongoose.Schema.Types.ObjectId, ref: "Course" }
+  courseId: { type: mongoose.Schema.Types.ObjectId, ref: "Course" } // ✅ ये line active करें
 });
 
 export default mongoose.model("Book", bookSchema);

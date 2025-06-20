@@ -27,6 +27,50 @@ router.post("/upload", verifyToken, isAdmin, async (req, res) => {
     res.status(500).json({ msg: "Failed to upload note" });
   }
 });
+// 📥 Force download PDF
+router.get("/download/:filename", (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.resolve("uploads", filename); // Absolute path to file
+
+  // Check if file exists
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ msg: "File not found" });
+  }
+
+  // Set headers and send file
+  res.set({
+    "Content-Disposition": `attachment; filename="${filename}"`,
+    "Content-Type": "application/pdf",
+  });
+
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      console.error("Error sending file:", err);
+      res.status(500).send("Error sending file.");
+    }
+  });
+});
+
+// ✅ नया route - सारे notes लाने के लिए
+router.get("/", async (req, res) => {
+  try {
+    const notes = await Note.find();
+    res.status(200).json(notes);
+  } catch (err) {
+    res.status(500).json({ msg: "Failed to fetch notes" });
+  }
+});
+
+// Get note by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const note = await Note.findById(req.params.id);
+    if (!note) return res.status(404).json({ msg: "Note not found" });
+    res.status(200).json(note);
+  } catch (err) {
+    res.status(500).json({ msg: "Failed to fetch note" });
+  }
+});
 
 // Get notes by course
 router.get("/course/:courseId", async (req, res) => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const AddQuizForm = ({ onAdd, onClose }) => {
   const [courseId, setCourseId] = useState("");
@@ -36,9 +37,9 @@ const AddQuizForm = ({ onAdd, onClose }) => {
         {
           question,
           options,
-          correctAnswer
-        }
-      ]
+          correctAnswer,
+        },
+      ],
     };
 
     try {
@@ -54,24 +55,28 @@ const AddQuizForm = ({ onAdd, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded w-96 space-y-4" style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "50%",
-        textAlign: "center",
-        margin: "auto"
-      }}>
+    <div className="fixed inset-0 bg-transparent flex items-center justify-center z-50">
+      <motion.form
+        onSubmit={handleSubmit}
+        initial={{ opacity: 0, y: -40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="bg-transparent p-6 rounded w-96 space-y-4"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "50%",
+          textAlign: "center",
+          margin: "auto",
+        }}
+      >
         <h2 className="text-lg font-semibold">Add New Quiz</h2>
 
         <select
           value={courseId}
           onChange={(e) => setCourseId(e.target.value)}
           required
-          className="w-full border p-2 rounded"
-          style={{
-            marginBottom: "10px"
-          }}
+          className="w-full border p-2 rounded mb-2"
         >
           <option value="">Select Course</option>
           {courses.map((c) => (
@@ -87,10 +92,7 @@ const AddQuizForm = ({ onAdd, onClose }) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
-          className="w-full border p-2 rounded"
-          style={{
-            marginBottom: "10px"
-          }}
+          className="w-full border p-2 rounded mb-2"
         />
 
         <input
@@ -99,10 +101,7 @@ const AddQuizForm = ({ onAdd, onClose }) => {
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           required
-          className="w-full border p-2 rounded"
-          style={{
-            marginBottom: "10px"
-          }}
+          className="w-full border p-2 rounded mb-2"
         />
 
         {options.map((opt, index) => (
@@ -112,10 +111,7 @@ const AddQuizForm = ({ onAdd, onClose }) => {
             placeholder={`Option ${index + 1}`}
             value={opt}
             onChange={(e) => handleOptionChange(e.target.value, index)}
-            className="w-full border p-2 rounded"
-            style={{
-              marginBottom: "10px"
-            }}
+            className="w-full border p-2 rounded mb-2"
           />
         ))}
 
@@ -125,31 +121,37 @@ const AddQuizForm = ({ onAdd, onClose }) => {
           value={correctAnswer}
           onChange={(e) => setCorrectAnswer(e.target.value)}
           required
-          className="w-full border p-2 rounded"
-          style={{
-            marginBottom: "10px"
-          }}
+          className="w-full border p-2 rounded mb-2"
         />
 
         <div className="flex justify-end gap-2">
-          <button type="button" onClick={onClose} className="px-3 py-1 bg-gray-400 text-white rounded" style={{
-            background: "#198754",
-            border: "1px solid #ccc",
-            marginInline: "7px",
-            color: "white"
-          }}>
+          <motion.button
+            type="button"
+            onClick={onClose}
+            whileHover={{ scale: 1.05 }}
+            className="px-3 py-1 text-white rounded"
+            style={{
+              background: "#0D6EFD",
+              border: "transparent",
+              marginInline: "7px",
+            }}
+          >
             Cancel
-          </button>
-          <button type="submit" className="px-3 py-1 bg-blue-600 text-white rounded" style={{
-            background: "#198754",
-            border: "1px solid #ccc",
-            marginInline: "7px",
-            color: "white"
-          }}>
+          </motion.button>
+          <motion.button
+            type="submit"
+            whileHover={{ scale: 1.05 }}
+            className="px-3 py-1 text-white rounded"
+            style={{
+              background: "#0D6EFD",
+              border: "transparent",
+              marginInline: "7px",
+            }}
+          >
             Add
-          </button>
+          </motion.button>
         </div>
-      </form>
+      </motion.form>
     </div>
   );
 };

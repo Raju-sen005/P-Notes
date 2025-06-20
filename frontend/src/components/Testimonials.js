@@ -1,59 +1,135 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import TestimonialForm from "./TestimonialForm";
+import { motion, AnimatePresence } from "framer-motion";
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: i => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.5 },
+  }),
+  hover: { y: -5, boxShadow: "0 12px 28px rgba(0, 0, 0, 0.1)" },
+};
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchTestimonials = async () => {
-    try {
-      const response = await axios.get("/api/testimonials");
-      if (Array.isArray(response.data)) {
-        setTestimonials(response.data);
-      } else {
-        setTestimonials([]);
-      }
-    } catch (error) {
-      console.error("Error fetching testimonials:", error);
-      setTestimonials([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchTestimonials();
+    axios
+      .get("http://localhost:5000/api/testimonials")
+      .then(res => setTestimonials(Array.isArray(res.data) ? res.data : []))
+      .catch(err => {
+        console.error("Error fetching testimonials:", err);
+        setTestimonials([]);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   return (
-    <section className="testimonials-section py-5 bg-light">
-      <div className="container">
-        <h2 className="text-center text-success mb-4">What Our Customers Say</h2>
-        <TestimonialForm onAdd={fetchTestimonials} />
+    <section
+      className="testimonials-section py-5"
+      style={{
+        backgroundColor: "#f9fdfd",
+        backgroundImage: "url('https://img.freepik.com/free-vector/pharmacy-concept-illustration_114360-8892.jpg')",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+        position: "relative",
+        top: "0px",
+        zIndex: 1,
+
+      }}
+    >
+      <div
+        className="container text-center"
+        style={{ borderRadius: "1rem", padding: "2rem" }}
+      >
+        <motion.h2
+          className="fw-bold mb-5 text-primary"
+          style={{ fontSize: "2.3rem" }}
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+        >
+          Users Review
+        </motion.h2>
+
         {loading ? (
-          <p className="text-center">Loading testimonials...</p>
-        ) : testimonials.length > 0 ? (
-          <div className="row">
-            {testimonials.map((testimonial, index) => (
-              <div className="col-md-6 col-lg-4 mb-4" key={index} style={{
-                position: "relative",
-                top: "-30pc"
-              }}>
-                <div className="card h-100 shadow-sm">
-                  <div className="card-body d-flex flex-column">
-                    <p className="card-text flex-grow-1">"{testimonial.message}"</p>
-                    <div className="mt-3">
-                      <h5 className="card-title mb-0 text-success">{testimonial.name}</h5>
-                      <small className="text-muted">{testimonial.tag}</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <motion.p
+            className="text-muted"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            Loading testimonials...
+          </motion.p>
         ) : (
-          <p className="text-center">No testimonials found.</p>
+          <div className="row g-4">
+            <AnimatePresence>
+              {testimonials.length > 0 ? (
+                testimonials.map((t, i) => (
+                  <motion.div
+                    className="col-md-6 col-lg-4"
+                    key={t.id || i}
+                    custom={i}
+                    initial="hidden"
+                    whileInView="visible"
+                    exit={{ opacity: 0, y: 20 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    variants={cardVariants}
+                    whileHover="hover"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <motion.div
+                      className="card h-100 border-0 shadow-sm p-4"
+                      style={{
+                        borderRadius: "1rem",
+                        boxShadow: "0 8px 20px rgba(0,0,0,0.05)",
+                        backgroundColor: "#ffffff",
+                      }}
+                    >
+                      <motion.p
+                        className="card-text text-dark"
+                        style={{ fontStyle: "italic", fontSize: "1.05rem" }}
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
+                      >
+                        "{t.message}"
+                      </motion.p>
+                      <hr className="my-3" />
+                      <motion.div
+                        className="d-flex flex-column align-items-start"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
+                      >
+                        <h5 className="fw-bold text-success mb-0">{t.name}</h5>
+                        <small className="text-muted">{t.tag}</small>
+                      </motion.div>
+                    </motion.div>
+                  </motion.div>
+                ))
+              ) : (
+                <motion.p
+                  className="text-muted"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4 }}
+                >
+                  No testimonials found.
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
         )}
       </div>
     </section>
