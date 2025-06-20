@@ -10,7 +10,7 @@ const TestimonialPage = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/testimonials");
+        const res = await axios.get("https://p-notes-backend.onrender.com/api/testimonials");
         setTestimonials(res.data);
       } catch (err) {
         console.error("Error fetching testimonials:", err);
