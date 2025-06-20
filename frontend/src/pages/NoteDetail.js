@@ -9,7 +9,7 @@ const NotesDetail = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/notes");
+        const res = await axios.get("https://p-notes-backend.onrender.com/api/notes");
         setNotes(res.data);
       } catch (err) {
         console.error("Error fetching notes", err);
@@ -62,7 +62,7 @@ const NotesDetail = () => {
             <AnimatePresence>
               {notes.map((note, index) => {
                 const filename = note.pdfUrl.split("/").pop();
-                const downloadUrl = `http://localhost:5000/api/notes/download/${filename}`;
+                const downloadUrl = `https://p-notes-backend.onrender.com/api/notes/download/${filename}`;
 
                 return (
                   <motion.div
