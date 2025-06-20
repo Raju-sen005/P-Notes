@@ -50,7 +50,7 @@ const AddTestForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/tests", formData);
+      await axios.post("https://p-notes-backend.onrender.com/api/tests", formData);
       setMessage("✅ Test added successfully!");
     } catch (error) {
       setMessage("❌ Failed to add test.");
