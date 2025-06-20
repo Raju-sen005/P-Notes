@@ -18,7 +18,7 @@ const AskPage = () => {
     setError("");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/ask", { question });
+      const res = await axios.post("https://p-notes-backend.onrender.com/api/ask", { question });
       setAnswer(res.data.answer);
     } catch {
       setError("❌ Failed to get answer. Please try again.");
