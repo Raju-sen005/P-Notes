@@ -37,7 +37,7 @@ const AdminLogin = () => {
 
   return (
     <motion.div
-      className="container mt-5"
+      className="containe mt-5"
       style={{
         maxWidth: "400px",
       }}
