@@ -202,9 +202,9 @@ const Dashboard = () => {
   const submitCourse = async (data) => {
     try {
       if (editCourse) {
-        await axios.put(`/api/courses/${editCourse._id}`, data, cfg(token));
+        await axios.put(`https://p-notes-backend.onrender.com/api/courses/${editCourse._id}`, data, cfg(token));
       } else {
-        await axios.post("/api/courses", data, cfg(token));
+        await axios.post("https://p-notes-backend.onrender.com/api/courses", data, cfg(token));
       }
       setShowAddCourse(false); setEditCourse(null); fetchCourses();
     } catch { setError("Save failed"); }
@@ -213,9 +213,9 @@ const Dashboard = () => {
   const submitBook = async (data) => {
     try {
       if (editBook) {
-        await axios.put(`/api/books/${editBook._id}`, data, cfg(token));
+        await axios.put(`https://p-notes-backend.onrender.com/api/books/${editBook._id}`, data, cfg(token));
       } else {
-        await axios.post("/api/books", data, cfg(token));
+        await axios.post("https://p-notes-backend.onrender.com/api/books", data, cfg(token));
       }
       setShowAddBook(false); setEditBook(null); fetchBooks();
     } catch { setError("Save failed"); }
@@ -224,9 +224,9 @@ const Dashboard = () => {
   const submitNote = async (formData) => {
     try {
       if (editNote) {
-        await axios.put(`/api/notes/${editNote._id}`, formData, cfg(token));
+        await axios.put(`https://p-notes-backend.onrender.com/api/notes/${editNote._id}`, formData, cfg(token));
       } else {
-        await axios.post("/api/notes", formData, cfg(token));
+        await axios.post("https://p-notes-backend.onrender.com/api/notes", formData, cfg(token));
       }
       setShowAddNote(false); setEditNote(null); fetchNotes();
     } catch { setError("Save failed"); }
@@ -235,9 +235,9 @@ const Dashboard = () => {
   const submitQuiz = async (data) => {
     try {
       if (editQuiz) {
-        await axios.put(`/api/quizzes/${editQuiz._id}`, data, cfg(token));
+        await axios.put(`https://p-notes-backend.onrender.com/api/quizzes/${editQuiz._id}`, data, cfg(token));
       } else {
-        await axios.post("/api/quizzes", data, cfg(token));
+        await axios.post("https://p-notes-backend.onrender.com/api/quizzes", data, cfg(token));
       }
       setShowAddQuiz(false); setEditQuiz(null); fetchQuizzes();
     } catch { setError("Save failed"); }
@@ -402,7 +402,7 @@ const Dashboard = () => {
           onSearch={s => setCourses({ ...courses, search: s, page: 1 })}
 
           renderItem={c => `${c.title} – ₹${c.price}`}
-          onDelete={id => handleDelete(id, `/api/courses/${id}`, fetchCourses)}
+          onDelete={id => handleDelete(id, `https://p-notes-backend.onrender.com/api/courses/${id}`, fetchCourses)}
           onEdit={course => { setEditCourse(course); setShowAddCourse(true); }}
           addBtnLabel="Add Course"
         >
@@ -417,7 +417,7 @@ const Dashboard = () => {
           setMeta={setBooks}
           onSearch={s => setBooks({ ...books, search: s, page: 1 })}
           renderItem={b => `${b.title} – ${b.author} – ₹${b.price}`}
-          onDelete={id => handleDelete(id, `/api/books/${id}`, fetchBooks)}
+          onDelete={id => handleDelete(id, `https://p-notes-backend.onrender.com/api/books/${id}`, fetchBooks)}
           onEdit={book => { setEditBook(book); setShowAddBook(true); }}
           addBtnLabel="Add Book"
         >
@@ -432,7 +432,7 @@ const Dashboard = () => {
           setMeta={setNotes}
           onSearch={s => setNotes({ ...notes, search: s, page: 1 })}
           renderItem={n => `${n.title} – ${n.subject}`}
-          onDelete={id => handleDelete(id, `/api/notes/${id}`, fetchNotes)}
+          onDelete={id => handleDelete(id, `https://p-notes-backend.onrender.com/api/notes/${id}`, fetchNotes)}
           onEdit={note => { setEditNote(note); setShowAddNote(true); }}
           addBtnLabel="Add Note"
         >
@@ -448,7 +448,7 @@ const Dashboard = () => {
           onSearch={s => setQuizzes({ ...quizzes, search: s, page: 1 })}
           renderItem={q => { console.log(q); const Q = q?.questions?.[0]?.question; return Q ? Q.slice(0, 60) + "…" : "No question" }}
 
-          onDelete={id => handleDelete(id, `/api/quizzes/${id}`, fetchQuizzes)}
+          onDelete={id => handleDelete(id, `https://p-notes-backend.onrender.com/api/quizzes/${id}`, fetchQuizzes)}
           onEdit={quiz => { setEditQuiz(quiz); setShowAddQuiz(true); }}
           addBtnLabel="Add Quiz"
         >
