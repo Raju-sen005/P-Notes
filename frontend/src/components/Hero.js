@@ -70,7 +70,7 @@ const Hero = () => {
           position: "relative",
           top: "100px",
           textAlign: "initial",
-          width:"50px"
+          width:"50%"
         }}
       >
         Welcome to your Perfect Pharmacy
