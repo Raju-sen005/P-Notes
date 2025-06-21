@@ -119,7 +119,7 @@ const PreviousPapers = () => {
                     href={`https://p-notes-backend.onrender.com${paper.pdfUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto bg-primary text-white py-1 px-1 rounded text-center hover:bg-blue-700 transition text-decoration-none"
+                    className="rx mt-auto bg-primary text-white py-1 px-1 rounded text-center hover:bg-blue-700 transition text-decoration-none"
                     style={{ width: "44%" }}
                   >
                     Download PDF
