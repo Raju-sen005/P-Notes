@@ -29,7 +29,7 @@ const AdminLogin = () => {
       }
 
       localStorage.setItem("token", res.data.token);
-      navigate("/admin/dashboard");
+      navigate("https://p-notes-backend.onrender.com/admin/dashboard");
     } catch (err) {
       setError(err.response?.data?.msg || "Login failed");
     }
