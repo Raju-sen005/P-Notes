@@ -100,7 +100,7 @@ const Dashboard = () => {
   const fetchBooks = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/books", books, setBooks), [token, books.page, books.search]);
   const fetchNotes = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/notes", notes, setNotes), [token, notes.page, notes.search]);
   const fetchQuizzes = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/quizzes", quizzes, setQuizzes), [token, quizzes.page, quizzes.search]);
-  const fetchOrders = useCallback(() => handleFetch("http://localhost:5000https://p-notes-backend.onrender.com/api/admin/orders", orders, setOrders), [token, orders.page]);
+  const fetchOrders = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/orders", orders, setOrders), [token, orders.page]);
   const fetchArticles = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/articles", articles, setArticles), [token, articles.page, articles.search]);
   const fetchSamples = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/sample-papers", samples, setSamples), [token, samples.page, samples.search]);
   const fetchPrevious = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/previous-papers", previous, setPrevious), [token, previous.page, previous.search]);
