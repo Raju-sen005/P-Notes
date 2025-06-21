@@ -223,7 +223,7 @@ router.put("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
   }
 });
 
-router.delete("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
+router.delete("/:id", verifyToken, verifyAdmin, async (req, res) => {
   try {
     await Course.findByIdAndDelete(req.params.id);
     res.json({ message: "Course deleted" });
