@@ -26,16 +26,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ Get a course by ID
-router.get("/:id", async (req, res) => {
-  try {
-    const course = await Course.findById(req.params.id);
-    if (!course) return res.status(404).json({ msg: "Course not found" });
-    res.status(200).json(course);
-  } catch (err) {
-    res.status(500).json({ msg: "Failed to fetch course" });
-  }
-});
+// ✅ पहले /by-subject route
 router.get("/by-subject", verifyToken, async (req, res) => {
   const subjectName = req.query.subject;
   if (!subjectName) return res.status(400).json({ message: "Subject is required" });
@@ -51,5 +42,17 @@ router.get("/by-subject", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Failed to fetch quizzes by subject" });
   }
 });
+
+// ✅ फिर /:id वाला route
+router.get("/:id", async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) return res.status(404).json({ msg: "Course not found" });
+    res.status(200).json(course);
+  } catch (err) {
+    res.status(500).json({ msg: "Failed to fetch course" });
+  }
+});
+
 
 export default router;
