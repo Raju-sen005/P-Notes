@@ -43,7 +43,18 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ Get single book by ID
+// ✅ पहले course वाले route को रखें
+router.get("/course/:courseId", async (req, res) => {
+  try {
+    const books = await Book.find({ courseId: req.params.courseId }).populate("courseId", "title");
+    res.status(200).json(books);
+  } catch (err) {
+    console.error("Error fetching books by course:", err);
+    res.status(500).json({ msg: "Failed to fetch books" });
+  }
+});
+
+// ✅ फिर single book by ID route रखें
 router.get("/:id", async (req, res) => {
   try {
     const book = await Book.findById(req.params.id).populate("courseId", "title");
@@ -55,15 +66,5 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// ✅ Get books by course ID
-router.get("/course/:courseId", async (req, res) => {
-  try {
-    const books = await Book.find({ courseId: req.params.courseId }).populate("courseId", "title");
-    res.status(200).json(books);
-  } catch (err) {
-    console.error("Error fetching books by course:", err);
-    res.status(500).json({ msg: "Failed to fetch books" });
-  }
-});
 
 export default router;
