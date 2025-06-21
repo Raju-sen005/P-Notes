@@ -45,7 +45,7 @@ const Testimonials = () => {
       }}
     >
       <div
-        className="container text-center"
+        className="containe text-center"
         style={{ borderRadius: "1rem", padding: "2rem" }}
       >
         <motion.h2
