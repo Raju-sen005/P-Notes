@@ -54,7 +54,7 @@ const Courses = () => {
             No courses found.
           </motion.p>
         ) : (
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="op grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <AnimatePresence>
               {courses.map((course, index) => (
                 <motion.div
