@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { ChevronDown, ChevronUp, LoaderCircle } from "lucide-react";
+import { ChevronDown, ChevronUp, Loader } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion"; // ✅ Import Framer Motion
 
 const PharmacySubjectsPage = () => {
@@ -82,7 +82,7 @@ const PharmacySubjectsPage = () => {
               style={{ display: "contents", }}>
               <p className="text-lg font-semibold text-gray-800">{subject}</p>
               {loadingSubjects[subject] ? (
-                <LoaderCircle className="animate-spin text-blue-600" size={20} />
+                <Loader className="animate-spin text-blue-600" size={20} />
               ) : expandedSubjects[subject] ? (
                 <ChevronUp className="text-blue-600" size={20} />
               ) : (
