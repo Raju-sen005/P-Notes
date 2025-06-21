@@ -91,7 +91,7 @@ const cardData = [
 const Features = () => (
   <motion.div
     className="py-5 text-center"
-    style={{ fontFamily: 'Poppins, sans-serif', position: 'relative', top: '0px',
+    style={{ fontFamily: 'Poppins, sans-serif', position: 'relative', top: '0px', overflow: 'hidden'
      }}
     initial="hidden"
     whileInView="visible"
