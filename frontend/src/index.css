@@ -17,17 +17,50 @@
     width: 75% !important;
     text-align: initial;
   }
- a.btn {
+  a.btn {
     font-family: Poppins, sans-serif;
     position: relative;
     top: -80px;
   }
-  .container{
+  .container {
     display: none;
   }
-  h2{
-        font-size: 2rem !important;
+  h2 {
+    font-size: 2rem !important;
     opacity: 1;
     transform: none;
+  }
+  a.mt-auto {
+    width: 71% !important;
+  }
+  /* button.btn {
+    position: relative;
+    left: 280px !important;
+    padding: 3px !important;
+  } */
+  .grid {
+    display: grid;
+    grid-template-columns: 2fr 2fr !important;
+    gap: 1rem !important;
+  }
+  .mt-auto {
+    display: flex !important;
+    flex-direction: row !important;
+    width: 276% !important;
+    position: relative !important;
+    left: -8px !important;
+  }
+  a.inline-flex{
+    margin-inline: 0px !important;
+  }
+  .div.bg-transparent{
+        
+    width: 100% !important;
+  }
+  a.rx {
+    width: 80% !important;
+  }
+  button.mt-4{
+    width: 24% !important;
   }
 }
