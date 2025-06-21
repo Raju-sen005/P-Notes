@@ -54,7 +54,7 @@ const Courses = () => {
             No courses found.
           </motion.p>
         ) : (
-          <div className="op grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <AnimatePresence>
               {courses.map((course, index) => (
                 <motion.div
@@ -74,7 +74,7 @@ const Courses = () => {
                   </p>
                   <Link
                     to={`/courses/${course._id}`}
-                    className="mt-auto inline-block text-center bg-primary text-white py-0 px-0 rounded hover:bg-blue-700 transition font-medium shadow text-decoration-none"
+                    className="op mt-auto inline-block text-center bg-primary text-white py-0 px-0 rounded hover:bg-blue-700 transition font-medium shadow text-decoration-none"
                     style={{ width: "12%" }}
                   >
                     View Content
