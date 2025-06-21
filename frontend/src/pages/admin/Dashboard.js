@@ -95,17 +95,17 @@ const Dashboard = () => {
     }
   };
 
-  const fetchUsers = useCallback(() => handleFetch("/api/admin/users", users, setUsers), [token, users.page, users.search]);
-  const fetchCourses = useCallback(() => handleFetch("/api/admin/courses", courses, setCourses), [token, courses.page, courses.search]);
-  const fetchBooks = useCallback(() => handleFetch("/api/admin/books", books, setBooks), [token, books.page, books.search]);
-  const fetchNotes = useCallback(() => handleFetch("/api/admin/notes", notes, setNotes), [token, notes.page, notes.search]);
-  const fetchQuizzes = useCallback(() => handleFetch("/api/admin/quizzes", quizzes, setQuizzes), [token, quizzes.page, quizzes.search]);
-  const fetchOrders = useCallback(() => handleFetch("http://localhost:5000/api/admin/orders", orders, setOrders), [token, orders.page]);
-  const fetchArticles = useCallback(() => handleFetch("/api/admin/articles", articles, setArticles), [token, articles.page, articles.search]);
-  const fetchSamples = useCallback(() => handleFetch("/api/admin/sample-papers", samples, setSamples), [token, samples.page, samples.search]);
-  const fetchPrevious = useCallback(() => handleFetch("/api/admin/previous-papers", previous, setPrevious), [token, previous.page, previous.search]);
-  // const fetchTests = useCallback(() => handleFetch("/api/admin/tests", tests, setTests), [token, tests.page, tests.search]);
-  // const fetchQuestions = useCallback(() => handleFetch("/api/admin/questions", questions, setQuestions), [token, questions.page, questions.search]);
+  const fetchUsers = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/users", users, setUsers), [token, users.page, users.search]);
+  const fetchCourses = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/courses", courses, setCourses), [token, courses.page, courses.search]);
+  const fetchBooks = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/books", books, setBooks), [token, books.page, books.search]);
+  const fetchNotes = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/notes", notes, setNotes), [token, notes.page, notes.search]);
+  const fetchQuizzes = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/quizzes", quizzes, setQuizzes), [token, quizzes.page, quizzes.search]);
+  const fetchOrders = useCallback(() => handleFetch("http://localhost:5000https://p-notes-backend.onrender.com/api/admin/orders", orders, setOrders), [token, orders.page]);
+  const fetchArticles = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/articles", articles, setArticles), [token, articles.page, articles.search]);
+  const fetchSamples = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/sample-papers", samples, setSamples), [token, samples.page, samples.search]);
+  const fetchPrevious = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/previous-papers", previous, setPrevious), [token, previous.page, previous.search]);
+  // const fetchTests = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/tests", tests, setTests), [token, tests.page, tests.search]);
+  // const fetchQuestions = useCallback(() => handleFetch("https://p-notes-backend.onrender.com/api/admin/questions", questions, setQuestions), [token, questions.page, questions.search]);
 
   useEffect(() => { if (view === "articles") fetchArticles(); }, [view, fetchArticles]);
   useEffect(() => { if (view === "users") fetchUsers(); }, [view, fetchUsers]);
@@ -127,9 +127,9 @@ const Dashboard = () => {
   const submitArticle = async (data) => {
     try {
       if (editArticle) {
-        await axios.put(`/api/admin/articles/${editArticle._id}`, data, cfg(token));
+        await axios.put(`https://p-notes-backend.onrender.com/api/admin/articles/${editArticle._id}`, data, cfg(token));
       } else {
-        await axios.post("/api/admin/articles", data, cfg(token));
+        await axios.post("https://p-notes-backend.onrender.com/api/admin/articles", data, cfg(token));
       }
       setShowAddArticle(false);
       setEditArticle(null);
@@ -142,9 +142,9 @@ const Dashboard = () => {
   const submitSample = async (formData) => {
     try {
       if (editSample) {
-        await axios.put(`/api/admin/sample-papers/${editSample._id}`, formData, cfg(token));
+        await axios.put(`https://p-notes-backend.onrender.com/api/admin/sample-papers/${editSample._id}`, formData, cfg(token));
       } else {
-        await axios.post("/api/admin/sample-papers", formData, cfg(token));
+        await axios.post("https://p-notes-backend.onrender.com/api/admin/sample-papers", formData, cfg(token));
       }
       setShowAddSample(false);
       setEditSample(null);
@@ -157,9 +157,9 @@ const Dashboard = () => {
   const submitPrevious = async (data) => {
     try {
       if (editprevious) {
-        await axios.put(`/api/admin/previous-papers/${editprevious._id}`, data, cfg(token));
+        await axios.put(`https://p-notes-backend.onrender.com/api/admin/previous-papers/${editprevious._id}`, data, cfg(token));
       } else {
-        await axios.post("/api/admin/previous-papers", data, cfg(token));
+        await axios.post("https://p-notes-backend.onrender.com/api/admin/previous-papers", data, cfg(token));
       }
       setShowAddprevious(false);
       setEditprevious(null);
@@ -172,9 +172,9 @@ const Dashboard = () => {
   // const submitTest = async (data) => {
   //   try {
   //     if (editTest) {
-  //       await axios.put(`/api/admin/tests/${editTest._id}`, data, cfg(token));
+  //       await axios.put(`https://p-notes-backend.onrender.com/api/admin/tests/${editTest._id}`, data, cfg(token));
   //     } else {
-  //       await axios.post("/api/admin/tests", data, cfg(token));
+  //       await axios.post("https://p-notes-backend.onrender.com/api/admin/tests", data, cfg(token));
   //     }
   //     setShowAddTest(false);
   //     setEditTest(null);
@@ -187,9 +187,9 @@ const Dashboard = () => {
   // const submitQuestion = async (data) => {
   //   try {
   //     if (editQuestion) {
-  //       await axios.put(`/api/admin/questions/${editQuestion._id}`, data, cfg(token));
+  //       await axios.put(`https://p-notes-backend.onrender.com/api/admin/questions/${editQuestion._id}`, data, cfg(token));
   //     } else {
-  //       await axios.post("/api/admin/questions", data, cfg(token));
+  //       await axios.post("https://p-notes-backend.onrender.com/api/admin/questions", data, cfg(token));
   //     }
   //     setShowAddQuestion(false);
   //     setEditQuestion(null);
@@ -293,7 +293,7 @@ const Dashboard = () => {
           setMeta={setUsers}
           onSearch={s => setUsers({ ...users, search: s, page: 1 })}
           renderItem={u => `${u.name} – ${u.email}`}
-          onDelete={id => handleDelete(id, `/api/admin/users/${id}`, fetchUsers)}
+          onDelete={id => handleDelete(id, `https://p-notes-backend.onrender.com/api/admin/users/${id}`, fetchUsers)}
         />
       )}
       {view === "articles" && (
@@ -303,7 +303,7 @@ const Dashboard = () => {
           setMeta={setArticles}
           onSearch={s => setArticles({ ...articles, search: s, page: 1 })}
           renderItem={a => `${a.title} – ${a.description?.slice(0, 40)}…`}
-          onDelete={id => handleDelete(id, `/api/admin/articles/${id}`, fetchArticles)}
+          onDelete={id => handleDelete(id, `https://p-notes-backend.onrender.com/api/admin/articles/${id}`, fetchArticles)}
           onEdit={article => { setEditArticle(article); setShowAddArticle(true); }}
           addBtnLabel="Add Article"
         >
@@ -327,7 +327,7 @@ const Dashboard = () => {
           setMeta={setTests}
           onSearch={s => setTests({ ...tests, search: s, page: 1 })}
           renderItem={t => `${t.title} – ${t.courseId?.name} – ${t.questions.length} questions`}
-          onDelete={id => handleDelete(id, `/api/admin/tests/${id}`, fetchTests)}
+          onDelete={id => handleDelete(id, `https://p-notes-backend.onrender.com/api/admin/tests/${id}`, fetchTests)}
           onEdit={test => { setEditTest(test); setShowAddTest(true); }}
           addBtnLabel="Add Test"
         >
@@ -353,7 +353,7 @@ const Dashboard = () => {
           setMeta={setSamples}
           onSearch={s => setSamples({ ...samples, search: s, page: 1 })}
           renderItem={s => `${s.title} – ${s.description} `}
-          onDelete={id => handleDelete(id, `/api/admin/sample-papers/${id}`, fetchSamples)}
+          onDelete={id => handleDelete(id, `https://p-notes-backend.onrender.com/api/admin/sample-papers/${id}`, fetchSamples)}
           onEdit={sample => { setEditSample(sample); setShowAddSample(true); }}
           addBtnLabel="Add Sample"
         >
@@ -377,7 +377,7 @@ const Dashboard = () => {
           setMeta={setPrevious}
           onSearch={s => setPrevious({ ...previous, search: s, page: 1 })}
           renderItem={p => `${p.title} – ${p.description} – ${p.year}`}
-          onDelete={id => handleDelete(id, `/api/admin/previous-papers/${id}`, fetchPrevious)}
+          onDelete={id => handleDelete(id, `https://p-notes-backend.onrender.com/api/admin/previous-papers/${id}`, fetchPrevious)}
           onEdit={paper => { setEditprevious(paper); setShowAddprevious(true); }}
           addBtnLabel="Add Previous Paper"
         >
