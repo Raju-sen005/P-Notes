@@ -199,6 +199,15 @@ router.get("/courses", verifyToken, verifyAdmin, async (req, res) => {
     res.status(500).json({ message: "Failed to fetch courses" });
   }
 });
+router.get("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) return res.status(404).json({ message: "Course not found" });
+    res.json(course);
+  } catch {
+    res.status(500).json({ message: "Failed to fetch course" });
+  }
+});
 
 router.post("/courses", verifyToken, verifyAdmin, async (req, res) => {
   try {
@@ -223,7 +232,7 @@ router.put("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
   }
 });
 
-router.delete("/:id", verifyToken, verifyAdmin, async (req, res) => {
+router.delete("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
   try {
     await Course.findByIdAndDelete(req.params.id);
     res.json({ message: "Course deleted" });
