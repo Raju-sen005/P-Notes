@@ -19,7 +19,7 @@ router.post("/upload", verifyToken, isAdmin, async (req, res) => {
   try {
     pdf.mv(uploadPath, async (err) => {
       if (err) return res.status(500).json({ msg: "File upload failed" });
-      const newNote = new Note({ title, course, subject, pdfUrl: /uploads/${filename} });
+      const newNote = new Note({ title, course, subject, pdfUrl: `/uploads/${filename}` });
       await newNote.save();
       res.status(201).json(newNote);
     });
@@ -39,7 +39,7 @@ router.get("/download/:filename", (req, res) => {
 
   // Set headers and send file
   res.set({
-    "Content-Disposition": attachment; filename="${filename}",
+    "Content-Disposition": `attachment; filename="${filename}"`,
     "Content-Type": "application/pdf",
   });
 
@@ -81,31 +81,5 @@ router.get("/course/:courseId", async (req, res) => {
     res.status(500).json({ msg: "Failed to fetch notes" });
   }
 });
-
-// ✅ DELETE note – Admin only
-router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
-  try {
-    const note = await Note.findById(req.params.id);
-    if (!note) return res.status(404).json({ msg: "Note not found" });
-
-    const filePath = path.join(process.cwd(), note.pdfUrl);
-    fs.unlink(filePath, (fsErr) => {
-      if (fsErr && fsErr.code !== "ENOENT") {
-        console.error("Error deleting file:", fsErr);
-      }
-      // Always proceed to remove from DB, regardless of fs deletion result
-      note.deleteOne()
-        .then(() => res.status(200).json({ msg: "Note and PDF deleted" }))
-        .catch((dbErr) => {
-          console.error("DB delete error:", dbErr);
-          res.status(500).json({ msg: "Failed to delete note" });
-        });
-    });
-  } catch (err) {
-    console.error("Delete note error:", err);
-    res.status(500).json({ msg: "Failed to delete note" });
-  }
-});
-
 
 export default router;
