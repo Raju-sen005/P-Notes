@@ -41,14 +41,12 @@ const BookOrderForm = ({ onSubmit }) => {
 
   return (
     <motion.div
-      className="containe mt-5 "
+      className="containe mt-0 "
       style={{backgroundImage:"url(https://img.freepik.com/premium-photo/light-blue-abstract-stylish-technological-art-background-34_769134-618.jpg?uid=R196801159&ga=GA1.1.1714141213.1744818376&semt=ais_hybrid&w=740)",
-       backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-          backgroundRepeat: 'no-repeat',
-          zIndex: 1,
-          width:"100%",}}
+      minHeight: "100vh",
+        width: "100%",
+        padding: "11px",
+         backgroundSize: "cover",}}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
