@@ -234,6 +234,7 @@ router.put("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
 
 router.delete("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
   try {
+      console.log("🔍 DELETE request hitting backend for ID:", req.params.id);
     console.log("Deleting course", req.params.id);
     const result = await Course.findByIdAndDelete(req.params.id);
     console.log("Delete result:", result);
