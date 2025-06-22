@@ -71,6 +71,23 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ msg: "Failed to fetch note" });
   }
 });
+// Delete note by ID – Admin only
+router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
+  try {
+    const deleted = await Note.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ msg: "Note not found" });
+    }
+    // Optionally delete PDF file too
+    const filePath = path.resolve("uploads", path.basename(deleted.pdfUrl));
+    fs.unlink(filePath, err => {
+      if (err) console.warn("Failed to delete PDF:", err);
+    });
+    res.status(200).json({ msg: "Note deleted", deleted });
+  } catch (err) {
+    res.status(500).json({ msg: "Failed to delete note" });
+  }
+});
 
 // Get notes by course
 router.get("/course/:courseId", async (req, res) => {
