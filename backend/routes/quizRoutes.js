@@ -35,6 +35,23 @@ router.get("/id/:quizId", verifyToken, async (req, res) => {
     res.status(500).json({ msg: "Failed to fetch quiz" });
   }
 });
+// Delete quiz by ID – Admin only
+router.delete(
+  "/:quizId",
+  verifyToken,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const deleted = await Quiz.findByIdAndDelete(req.params.quizId);
+      if (!deleted) {
+        return res.status(404).json({ msg: "Quiz not found" });
+      }
+      res.status(200).json({ msg: "Quiz deleted successfully", deleted });
+    } catch (err) {
+      res.status(500).json({ msg: "Failed to delete quiz" });
+    }
+  }
+);
 
 // Get quiz by course
 router.get("/:courseId", verifyToken, async (req, res) => {
