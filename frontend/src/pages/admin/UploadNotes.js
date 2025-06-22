@@ -22,7 +22,7 @@ const UploadNotes = () => {
     e.preventDefault();
     setMessage("");
     try {
-      await API.post("https://p-notes-backend.onrender.com/notes", formData);
+      await API.post("/notes", formData);
       setMessage("✅ Note uploaded successfully!");
       setFormData({
         title: "",
