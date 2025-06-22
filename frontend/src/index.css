@@ -31,7 +31,7 @@
     transform: none;
   }
   a.mt-auto {
-    width: 80% !important;
+    width: 71% !important;
   }
   /* button.btn {
     position: relative;
@@ -50,17 +50,29 @@
     position: relative !important;
     left: -8px !important;
   }
-  a.inline-flex{
+  a.inline-flex {
     margin-inline: 0px !important;
   }
-  .div.bg-transparent{
-        
+  .div.bg-transparent {
     width: 100% !important;
   }
   a.rx {
     width: 80% !important;
   }
-  button.mt-4{
+  button.mt-4 {
     width: 24% !important;
+  }
+  a.v-btn {
+    width: 27% !important;
+  }
+  button.b-btn {
+    left: 275px !important;
+  }
+  .a-container {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .inp {
+    width: 70% !important;
   }
 }
