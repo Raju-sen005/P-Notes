@@ -99,7 +99,7 @@ const Books = () => {
                   <p className="mb-4 text-gray-700">Price: ₹{book.price}</p>
                   <p className="card-text">{book.author}</p>
                   <button
-                    className="btn btn-sm btn-primary"
+                    className="b-btn btn btn-sm btn-primary"
                     onClick={(e) => {
                       e.stopPropagation();
                       navigate("/book-order", {
