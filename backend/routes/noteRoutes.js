@@ -1,6 +1,6 @@
-import express from "express";
-import fs from "fs";
 import path from "path";
+import fs from "fs";
+import express from "express";
 import Note from "../models/Note.js";
 import { verifyToken, isAdmin } from "../middlewares/auth.js";
 // (If you're also using file-upload middleware elsewhere, keep it imported)
@@ -12,7 +12,7 @@ const router = express.Router();
  * 📥 Route: Force-download a PDF from uploads folder
  * GET /download/:filename
  */
-router.get("/download/:filename", (req, res) => {
+router.get("/download/*", (req, res) => {
   const filename = req.params.filename;
   const filePath = path.resolve("uploads", filename);
 
