@@ -41,7 +41,7 @@ const BookOrderForm = ({ onSubmit }) => {
 
   return (
     <motion.div
-      className="container mt-5 "
+      className="containe mt-5 "
       style={{backgroundImage:"url(https://img.freepik.com/premium-photo/light-blue-abstract-stylish-technological-art-background-34_769134-618.jpg?uid=R196801159&ga=GA1.1.1714141213.1744818376&semt=ais_hybrid&w=740)",
        backgroundSize: "cover",
           backgroundPosition: "center",
