@@ -74,7 +74,7 @@ const Courses = () => {
                   </p>
                   <Link
                     to={`/courses/${course._id}`}
-                    className="op mt-auto inline-block text-center bg-primary text-white py-0 px-0 rounded hover:bg-blue-700 transition font-medium shadow text-decoration-none"
+                    className="v-btn mt-auto inline-block text-center bg-primary text-white py-0 px-0 rounded hover:bg-blue-700 transition font-medium shadow text-decoration-none"
                     style={{ width: "12%" }}
                   >
                     View Content
