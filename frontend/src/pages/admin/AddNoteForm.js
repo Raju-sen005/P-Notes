@@ -15,7 +15,7 @@ const AddNoteForm = ({ onAdd, onClose }) => {
 
   useEffect(() => {
     axios
-      .get("/api/admin/courses", {
+      .get("https://p-notes-backend.onrender.com/api/admin/courses", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -42,7 +42,7 @@ const AddNoteForm = ({ onAdd, onClose }) => {
     formData.append("pdf", pdf);
 
     try {
-      const { data } = await axios.post("/api/admin/notes", formData, {
+      const { data } = await axios.post("https://p-notes-backend.onrender.com/api/admin/notes", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
