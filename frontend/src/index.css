@@ -46,7 +46,7 @@
   .mt-auto {
     display: flex !important;
     flex-direction: row !important;
-    width: 290% !important;
+    width: 300% !important;
     position: relative !important;
     left: -8px !important;
   }
@@ -66,7 +66,7 @@
     width: 30% !important;
   }
   button.b-btn {
-    left: 275px !important;
+    left: 267px !important;
   }
   .a-container {
     display: flex !important;
