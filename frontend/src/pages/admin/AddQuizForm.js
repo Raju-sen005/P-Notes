@@ -14,7 +14,7 @@ const AddQuizForm = ({ onAdd, onClose }) => {
 
   useEffect(() => {
     axios
-      .get("/api/admin/courses", {
+      .get("https://p-notes-backend.onrender.com/api/admin/courses", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setCourses(res.data?.data || []))
