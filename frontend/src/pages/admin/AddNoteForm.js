@@ -44,7 +44,7 @@ const AddNoteForm = ({ onAdd, onClose }) => {
     try {
       const { data } = await axios.post("https://p-notes-backend.onrender.com/api/admin/notes", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          
           Authorization: `Bearer ${token}`,
         },
       });
