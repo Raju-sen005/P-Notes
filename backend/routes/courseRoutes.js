@@ -25,6 +25,31 @@ router.get("/", async (req, res) => {
     res.status(500).json({ msg: "Failed to fetch courses" });
   }
 });
+// Update course
+router.put("/:id", verifyToken, isAdmin, async (req, res) => {
+  try {
+    const course = await Course.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!course) return res.status(404).json({ msg: "Course not found" });
+    res.json(course);
+  } catch (err) {
+    res.status(500).json({ msg: "Failed to update course" });
+  }
+});
+
+// Delete course
+router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
+  try {
+    const deleted = await Course.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ msg: "Course not found" });
+    res.json({ message: "Course deleted" });
+  } catch (err) {
+    res.status(500).json({ msg: "Failed to delete course" });
+  }
+});
+
 
 // ✅ पहले /by-subject route
 router.get("/by-subject", verifyToken, async (req, res) => {
