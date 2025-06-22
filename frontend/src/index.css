@@ -57,13 +57,14 @@
     width: 100% !important;
   }
   a.rx {
-    width: 80% !important;
+    width: 100% !important;
   }
   button.mt-4 {
     width: 24% !important;
   }
   a.v-btn {
     width: 30% !important;
+    margin-left: 5px !important;
   }
   button.b-btn {
     left: 255px !important;
