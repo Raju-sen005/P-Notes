@@ -234,12 +234,16 @@ router.put("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
 
 router.delete("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
   try {
-    await Course.findByIdAndDelete(req.params.id);
+    console.log("Deleting course", req.params.id);
+    const result = await Course.findByIdAndDelete(req.params.id);
+    console.log("Delete result:", result);
     res.json({ message: "Course deleted" });
-  } catch {
-    res.status(500).json({ message: "Failed to delete course" });
+  } catch (err) {
+    console.error("Delete error:", err);
+    res.status(500).json({ message: "Failed to delete course", error: err.message });
   }
 });
+
 
 /* ────────────────────── BOOKS ───────────────────── */
 router.get("/books", verifyToken, verifyAdmin, async (req, res) => {
