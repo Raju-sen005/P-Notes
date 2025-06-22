@@ -75,7 +75,7 @@ const ContactPage = () => {
               onChange={handleChange}
               placeholder={field.charAt(0).toUpperCase() + field.slice(1) + (field !== 'phone' ? ' *' : '')}
               required={field !== 'phone'}
-              className="w-50 p-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-400 outline-none transition mb-2"
+              className="inp w-50 p-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-400 outline-none transition mb-2"
               whileFocus={{ scale: 1.01 }}
             />
           ))}
@@ -87,7 +87,7 @@ const ContactPage = () => {
             placeholder="Your Message *"
             required
             rows="5"
-            className="w-50 p-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-400 outline-none transition resize-none mb-2"
+            className="inp w-50 p-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-400 outline-none transition resize-none mb-2"
             whileFocus={{ scale: 1.01 }}
           />
 
