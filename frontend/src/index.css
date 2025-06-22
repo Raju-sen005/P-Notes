@@ -60,11 +60,12 @@
     width: 100% !important;
   }
   button.mt-4 {
-    width: 24% !important;
+    width: 30% !important;
   }
   a.v-btn {
     width: 30% !important;
-    margin-left: 5px !important;
+    position: relative !important;
+    left: 5px !important;
   }
   button.b-btn {
     left: 255px !important;
