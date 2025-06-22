@@ -43,7 +43,7 @@ const AddQuizForm = ({ onAdd, onClose }) => {
     };
 
     try {
-      await axios.post("/api/admin/quizzes", payload, {
+      await axios.post("https://p-notes-backend.onrender.com/api/admin/quizzes", payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
       onAdd();
