@@ -22,7 +22,7 @@ const Books = () => {
   }, []);
 
   return (
-    <div className="container  "
+    <div className="containe  "
       style={{
         minHeight: "100vh",
         width: "100%",
