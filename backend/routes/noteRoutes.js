@@ -1,5 +1,4 @@
 import express from "express";
-import axios from "axios";
 import fs from "fs";
 import path from "path";
 import Note from "../models/Note.js";
