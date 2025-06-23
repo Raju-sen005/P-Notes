@@ -32,6 +32,8 @@
   }
   a.mt-auto {
     width: 80% !important;
+    position: relative !important;
+    left: 3px !important;
   }
   /* button.btn {
     position: relative;
@@ -65,7 +67,7 @@
   a.v-btn {
     width: 30% !important;
     position: relative !important;
-    left: 5px !important;
+    left: 3px !important;
   }
   button.b-btn {
     left: 255px !important;
