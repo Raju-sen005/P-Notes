@@ -82,4 +82,8 @@
    .auth{
     display: flex !important;
   }
+  .users{
+    position: relative !important;
+    left: 50px !important;
+  }
 }
