@@ -37,17 +37,18 @@ const Hero = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    try {
-      const endpoint = isLogin ? "/auth/login" : "/auth/register";
-      const res = await API.post(endpoint, formData);
-      localStorage.setItem("token", res.data.token);
-      navigate("/");
-    } catch (err) {
-      setError(err.response?.data?.msg || (isLogin ? "Login failed" : "Registration failed"));
-    }
-  };
+  e.preventDefault();
+  setError("");
+  try {
+    const endpoint = isLogin ? "/auth/login" : "/auth/register";
+    const res = await API.post(endpoint, formData);
+    localStorage.setItem("token", res.data.token);
+    navigate("/quizzes"); 
+  } catch (err) {
+    setError(err.response?.data?.msg || (isLogin ? "Login failed" : "Registration failed"));
+  }
+};
+
 
   return (
     <motion.div 
