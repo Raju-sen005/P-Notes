@@ -152,15 +152,16 @@ const Navbar = () => {
           {/* Show user info or login/signup */}
           {user ? (
             <>
+              <h6 className="text-muted fw-bold mt-2">Welcome</h6>
               <span className="text-dark d-flex align-items-center">
                 <i className="bi bi-person-circle me-2"></i> {user.name}
               </span>
-              {/* <Link
+              <Link
                 to="/dashboard"
                 className="text-decoration-none text-primary fw-medium d-flex align-items-center"
-              > */}
-                {/* <i className="bi bi-speedometer2 me-2 text-primary"></i> Dashboard */}
-              {/* </Link> */}
+              > 
+                <i className="bi bi-speedometer2 me-2 text-primary"></i> Dashboard
+              </Link>
               <button
                 className="btn btn-outline-danger btn-sm mt-2"
                 onClick={handleLogout}
@@ -171,11 +172,12 @@ const Navbar = () => {
           ) : (
             <>
               {/* <h6 className="text-muted fw-bold mt-2"></h6> */}
-              {/* <Link
-                to="/"
-                className="text-decoration-none text-primary fw-medium d-flex align-items-center"
+              <Link
+                to="/auth/login"
+                className="auth text-decoration-none text-primary fw-medium d-none align-items-center"
               >
-              </Link> */}
+                <i className="bi bi-box-arrow-in-right me-2 text-primary"></i> Login
+              </Link>
             </>
           )}
 
