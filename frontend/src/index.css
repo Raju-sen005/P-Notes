@@ -77,4 +77,7 @@
   .inp {
     width: 70% !important;
   }
+   .auth{
+    display: flex !important;
+  }
 }
