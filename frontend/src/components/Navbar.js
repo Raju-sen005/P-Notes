@@ -152,7 +152,6 @@ const Navbar = () => {
           {/* Show user info or login/signup */}
           {user ? (
             <>
-              // <h6 className="text-muted fw-bold mt-2">Welcome</h6>
               <span className="text-dark d-flex align-items-center">
                 <i className="bi bi-person-circle me-2"></i> {user.name}
               </span>
