@@ -67,7 +67,7 @@ const Login = () => {
       style={{
         position: "absolute",
         top: "100px",
-        right: "0px",
+        right: "40px",
         maxWidth: "300px",
         background: "#ffffff",
         boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
