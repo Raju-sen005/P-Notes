@@ -1,13 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle";
+import { jwtDecode } from "jwt-decode";
 
 const Navbar = () => {
   const navbarHeight = 56;
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const offcanvasRef = useRef(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
+  // Handle Offcanvas toggle
   useEffect(() => {
     const offcanvasEl = offcanvasRef.current;
     if (!offcanvasEl) return;
@@ -22,6 +26,7 @@ const Navbar = () => {
     };
   }, []);
 
+  // Auto close menu on route change
   useEffect(() => {
     const offcanvasEl = offcanvasRef.current;
     if (offcanvasEl) {
@@ -30,15 +35,32 @@ const Navbar = () => {
     }
   }, [location]);
 
+  // Decode JWT and set user
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUser(decoded);
+      } catch (err) {
+        console.error("Invalid token");
+        setUser(null);
+      }
+    }
+  }, [location]); // rerun on route change
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+    navigate("/");
+  };
+
   return (
     <>
       {/* Top Navbar */}
       <nav
         className="navbar navbar-light bg-primary shadow-sm sticky-top border-bottom"
-        style={{
-          height: navbarHeight,
-          zIndex: 1045,
-        }}
+        style={{ height: navbarHeight, zIndex: 1045 }}
       >
         <div className="container-fluid d-flex justify-content-between align-items-center px-3">
           <Link
@@ -50,28 +72,18 @@ const Navbar = () => {
               <img
                 src="https://ik.imagekit.io/galffwd0jy/IMG-20250527-WA0015.jpg?updatedAt=1748351017935"
                 alt="Perfect Pharmacy"
-                style={{
-                  width: "36px",
-                  borderRadius: "100%",
-                  marginInline: "5px",
-                }}
+                style={{ width: "36px", borderRadius: "100%", marginInline: "5px" }}
               />
-              <span
-                className="fw-bold fs-5 text-white"
-                style={{ position: "absolute", left: "59px" }}
-              >
+              <span className="fw-bold fs-5 text-white" style={{ position: "absolute", left: "59px" }}>
                 Perfect Pharmacy
               </span>
-              <span
-                className="text-white"
-                style={{
-                  fontSize: "11px",
-                  fontWeight: "400",
-                  marginTop: "-14px",
-                  letterSpacing: "0.3px",
-                  marginInline: "44px",
-                }}
-              >
+              <span className="text-white" style={{
+                fontSize: "11px",
+                fontWeight: "400",
+                marginTop: "-14px",
+                letterSpacing: "0.3px",
+                marginInline: "44px",
+              }}>
                 by Sunita
               </span>
             </div>
@@ -117,6 +129,7 @@ const Navbar = () => {
         </div>
 
         <div className="offcanvas-body d-flex flex-column gap-3 px-4 py-3">
+          {/* Main Links */}
           {[
             { to: "/", icon: "house", text: "Home" },
             { to: "/articles", icon: "journal-text", text: "Articles" },
@@ -136,17 +149,42 @@ const Navbar = () => {
 
           <hr className="my-2" />
 
-          {/* Auth Links */}
-          {/* <h6 className="text-muted fw-bold mt-2">User Access</h6>
-          <Link to="/login" className="text-decoration-none text-primary fw-medium d-flex align-items-center">
-            <i className="bi bi-box-arrow-in-right me-2 text-primary"></i> User Login
-          </Link>
-          <Link to="/register" className="text-decoration-none text-primary fw-medium d-flex align-items-center">
-            <i className="bi bi-person-plus me-2 text-primary"></i> Register
-          </Link> */}
+          {/* Show user info or login/signup */}
+          {user ? (
+            <>
+              // <h6 className="text-muted fw-bold mt-2">Welcome</h6>
+              <span className="text-dark d-flex align-items-center">
+                <i className="bi bi-person-circle me-2"></i> {user.name}
+              </span>
+              {/* <Link
+                to="/dashboard"
+                className="text-decoration-none text-primary fw-medium d-flex align-items-center"
+              > */}
+                {/* <i className="bi bi-speedometer2 me-2 text-primary"></i> Dashboard */}
+              {/* </Link> */}
+              <button
+                className="btn btn-outline-danger btn-sm mt-2"
+                onClick={handleLogout}
+              >
+                <i className="bi bi-box-arrow-right me-2"></i> Logout
+              </button>
+            </>
+          ) : (
+            <>
+              {/* <h6 className="text-muted fw-bold mt-2"></h6> */}
+              {/* <Link
+                to="/"
+                className="text-decoration-none text-primary fw-medium d-flex align-items-center"
+              >
+              </Link> */}
+            </>
+          )}
 
-          {/* <h6 className="text-muted fw-bold mt-3">Admin Panel</h6> */}
-          <Link to="/admin/login" className="text-decoration-none text-primary fw-medium d-flex align-items-center">
+          <h6 className="text-muted fw-bold mt-3">Admin Panel</h6>
+          <Link
+            to="/admin/login"
+            className="text-decoration-none text-primary fw-medium d-flex align-items-center"
+          >
             <i className="bi bi-person-lock me-2 text-primary"></i> Admin Login
           </Link>
         </div>
