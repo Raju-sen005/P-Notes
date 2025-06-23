@@ -188,14 +188,14 @@ const Navbar = () => {
           ) : (
             <> */}
               {/* <h6 className="text-muted fw-bold mt-2"></h6> */}
-               <Link
+              <Link
                 to="/auth/login"
                 className="auth text-decoration-none text-primary fw-medium d-none align-items-center"
               >
                 <i className="bi bi-box-arrow-in-right me-2 text-primary"></i> Login
               </Link>
-          //   </>
-          // )} 
+            {/* </>
+          )} */}
 
           <h6 className="text-muted fw-bold mt-3">Admin Panel</h6>
           <Link
