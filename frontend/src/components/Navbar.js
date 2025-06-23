@@ -92,7 +92,7 @@ const Navbar = () => {
           </Link>
 
           {user && (
-            <div className="d-flex align-items-center gap-2 text-white">
+            <div className="users d-flex align-items-center gap-2 text-white">
               <i className="bi bi-person-circle"></i>
               <span className="fw-semibold">{user.name}</span>
               <button
