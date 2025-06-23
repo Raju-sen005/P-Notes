@@ -36,18 +36,20 @@ const Navbar = () => {
   }, [location]);
 
   // Decode JWT and set user
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        setUser(decoded);
-      } catch (err) {
-        console.error("Invalid token");
-        setUser(null);
-      }
+ useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      console.log("Decoded Token:", decoded); // 🔍 यहाँ चेक करें
+      setUser(decoded);
+    } catch (err) {
+      console.error("Invalid token", err);
+      setUser(null);
     }
-  }, [location]); // rerun on route change
+  }
+}, [location]);
+// rerun on route change
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -88,6 +90,20 @@ const Navbar = () => {
               </span>
             </div>
           </Link>
+
+          {user && (
+            <div className="d-flex align-items-center gap-2 text-white">
+              <i className="bi bi-person-circle"></i>
+              <span className="fw-semibold">{user.name}</span>
+              <button
+                className="btn btn-sm btn-outline-light rounded-pill"
+                onClick={handleLogout}
+                style={{ padding: "2px 10px", fontSize: "12px" }}
+              >
+                Logout
+              </button>
+            </div>
+          )}
 
           <button
             className="btn btn-outline-white btn-sm rounded-pill px-3"
@@ -150,7 +166,7 @@ const Navbar = () => {
           <hr className="my-2" />
 
           {/* Show user info or login/signup */}
-          {user ? (
+          {/* {user ? (
             <>
               <h6 className="text-muted fw-bold mt-2">Welcome</h6>
               <span className="text-dark d-flex align-items-center">
@@ -159,7 +175,7 @@ const Navbar = () => {
               <Link
                 to="/dashboard"
                 className="text-decoration-none text-primary fw-medium d-flex align-items-center"
-              > 
+              >
                 <i className="bi bi-speedometer2 me-2 text-primary"></i> Dashboard
               </Link>
               <button
@@ -170,16 +186,16 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            <>
+            <> */}
               {/* <h6 className="text-muted fw-bold mt-2"></h6> */}
-              <Link
+              {/* <Link
                 to="/auth/login"
                 className="auth text-decoration-none text-primary fw-medium d-none align-items-center"
               >
                 <i className="bi bi-box-arrow-in-right me-2 text-primary"></i> Login
               </Link>
             </>
-          )}
+          )} */}
 
           <h6 className="text-muted fw-bold mt-3">Admin Panel</h6>
           <Link
