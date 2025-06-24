@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion"; // ✅
+import { motion } from "framer-motion";
 
 const BookOrderForm = ({ onSubmit }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { bookTitle } = location.state || {};
+  const { bookTitle, bookId } = location.state || {}; // ✅ अब दोनों ले रहे हैं
 
   const [formData, setFormData] = useState({ name: "", mobile: "", address: "" });
   const [submitting, setSubmitting] = useState(false);
@@ -29,10 +29,11 @@ const BookOrderForm = ({ onSubmit }) => {
     setError("");
 
     try {
-      await onSubmit({ ...formData, bookTitle });
+      await onSubmit({ ...formData, bookId }); // ✅ bookId भेज रहे हैं
       alert("Order submitted!");
       navigate("/books");
-    } catch {
+    } catch (err) {
+      console.error("Order error:", err); // Debug के लिए
       setError("Order failed, try again.");
     }
 
@@ -41,12 +42,14 @@ const BookOrderForm = ({ onSubmit }) => {
 
   return (
     <motion.div
-      className="containe mt-0 "
-      style={{backgroundImage:"url(https://img.freepik.com/premium-photo/light-blue-abstract-stylish-technological-art-background-34_769134-618.jpg?uid=R196801159&ga=GA1.1.1714141213.1744818376&semt=ais_hybrid&w=740)",
-      minHeight: "100vh",
+      className="containe mt-0"
+      style={{
+        backgroundImage: "url(https://img.freepik.com/premium-photo/light-blue-abstract-stylish-technological-art-background-34_769134-618.jpg?uid=R196801159&ga=GA1.1.1714141213.1744818376&semt=ais_hybrid&w=740)",
+        minHeight: "100vh",
         width: "100%",
         padding: "11px",
-         backgroundSize: "cover",}}
+        backgroundSize: "cover",
+      }}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -94,7 +97,7 @@ const BookOrderForm = ({ onSubmit }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="text-white px-1 py-1 rounded"
-            style={{ background: "#0D6EFD", border:"transparent" }}
+            style={{ background: "#0D6EFD", border: "transparent" }}
             onClick={() => navigate("/books")}
           >
             Cancel
@@ -105,7 +108,7 @@ const BookOrderForm = ({ onSubmit }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="bg-green-600 text-white px-1 py-1 rounded"
-            style={{ background: "#0D6EFD", border:"transparent" }}
+            style={{ background: "#0D6EFD", border: "transparent" }}
             disabled={submitting}
           >
             {submitting ? "Ordering..." : "Order Now"}
