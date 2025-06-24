@@ -199,15 +199,6 @@ router.get("/courses", verifyToken, verifyAdmin, async (req, res) => {
     res.status(500).json({ message: "Failed to fetch courses" });
   }
 });
-router.get("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
-  try {
-    const course = await Course.findById(req.params.id);
-    if (!course) return res.status(404).json({ message: "Course not found" });
-    res.json(course);
-  } catch {
-    res.status(500).json({ message: "Failed to fetch course" });
-  }
-});
 
 router.post("/courses", verifyToken, verifyAdmin, async (req, res) => {
   try {
@@ -234,17 +225,12 @@ router.put("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
 
 router.delete("/courses/:id", verifyToken, verifyAdmin, async (req, res) => {
   try {
-      console.log("🔍 DELETE request hitting backend for ID:", req.params.id);
-    console.log("Deleting course", req.params.id);
-    const result = await Course.findByIdAndDelete(req.params.id);
-    console.log("Delete result:", result);
+    await Course.findByIdAndDelete(req.params.id);
     res.json({ message: "Course deleted" });
-  } catch (err) {
-    console.error("Delete error:", err);
-    res.status(500).json({ message: "Failed to delete course", error: err.message });
+  } catch {
+    res.status(500).json({ message: "Failed to delete course" });
   }
 });
-
 
 /* ────────────────────── BOOKS ───────────────────── */
 router.get("/books", verifyToken, verifyAdmin, async (req, res) => {
@@ -426,19 +412,22 @@ router.get("/orders", verifyToken, verifyAdmin, async (req, res) => {
       Model: Order,
       page: req.query.page,
       limit: req.query.limit,
-      searchFields: [], search: req.query.search,
+      searchFields: [],
+      search: req.query.search,
       populate: [
-        { path: "userId", select: "name email" },  // <-- यही सही path है
-        { path: "items.product", select: "title price" },
+        { path: "userId", select: "name email" },
+        { path: "bookId", select: "title price" }, // ✅ this was the fix
       ],
       sort: { createdAt: -1 },
     });
+
     res.json(result);
   } catch (err) {
     console.error("Error fetching orders:", err);
     res.status(500).json({ message: "Failed to fetch orders", error: err.message });
   }
 });
+
 
 /* ────────────────────── ARTICLES ───────────────────── */
 router.get("/articles", verifyToken, verifyAdmin, async (req, res) => {
