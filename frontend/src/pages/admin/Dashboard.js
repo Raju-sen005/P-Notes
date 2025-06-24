@@ -464,12 +464,12 @@ const Dashboard = () => {
           )}
         </PaginatedSection>
       )}
-      {view === "orders" && (
+       {view === "orders" && (
         <PaginatedSection
           title="🛒 Orders"
           meta={orders}
           setMeta={setOrders}
-          renderItem={(o) => {
+          renderItem={(o) => { console.log(o);
             const title = o.bookId?.title || "Book not found";
             const price = o.bookId?.price !== undefined ? `₹${o.bookId.price}` : "N/A";
             return `${title} – ${price} – ${o.address} – ${o.name} – ${o.mobile}`;
