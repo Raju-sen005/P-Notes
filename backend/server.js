@@ -38,7 +38,7 @@ app.use("/api/courses", courseRoutes);
 app.use("/api/notes", noteRoutes);
 app.use("/api/quizzes", quizRoutes);
 app.use("/api/books", bookRoutes);
-app.use("/api/admin", orderRoutes);
+app.use("/api/orders", orderRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/testimonials", testimonialsRouter);
 app.use("/api/stats", statsRoutes);
