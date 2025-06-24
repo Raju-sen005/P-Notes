@@ -1,16 +1,38 @@
 import express from "express";
-import mongoose from "mongoose";
 import Book from "../models/Book.js";
 import { verifyToken, isAdmin } from "../middlewares/auth.js";
 
 const router = express.Router();
 
-// 🛠️ Helper to validate ObjectId
-function isValidId(id) {
-  return mongoose.Types.ObjectId.isValid(id);
-}
+// // ✅ Admin: Add a book
+// router.get("/", verifyToken, isAdmin, async (req, res) => {
+//   const page = parseInt(req.query.page) || 1;
+//   const limit = parseInt(req.query.limit) || 10;
+//   const skip = (page - 1) * limit;
 
-// ✅ Public: Get all books
+//   try {
+//     const total = await Order.countDocuments(); // कुल orders की गिनती
+//     const orders = await Order.find()
+//       .populate("userId", "name email")
+//       .populate("bookId", "title price")
+//       .sort({ orderedAt: -1 })
+//       .skip(skip)
+//       .limit(limit);
+
+//     res.status(200).json({
+//       total,
+//       page,
+//       limit,
+//       orders,
+//     });
+//   } catch (err) {
+//     console.error("Fetch all orders error:", err);
+//     res.status(500).json({ msg: "Failed to fetch all orders", error: err.message });
+//   }
+// });
+
+
+// ✅ Get all books (Public)
 router.get("/", async (req, res) => {
   try {
     const books = await Book.find().populate("courseId", "title");
@@ -21,73 +43,26 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ Public: Get books by course
-router.get("/course/:courseId", async (req, res) => {
-  const { courseId } = req.params;
-  if (!isValidId(courseId)) return res.status(400).json({ msg: "Invalid course ID" });
-
-  try {
-    const books = await Book.find({ courseId }).populate("courseId", "title");
-    res.status(200).json(books);
-  } catch (err) {
-    console.error("Error fetching books by course:", err);
-    res.status(500).json({ msg: "Failed to fetch books" });
-  }
-});
-
-// ✅ Public: Get a single book by ID
+// ✅ Get single book by ID
 router.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  if (!isValidId(id)) return res.status(400).json({ msg: "Invalid book ID" });
-
   try {
-    const book = await Book.findById(id).populate("courseId", "title");
+    const book = await Book.findById(req.params.id).populate("courseId", "title");
     if (!book) return res.status(404).json({ msg: "Book not found" });
     res.status(200).json(book);
   } catch (err) {
-    console.error("Error fetching book:", err);
+    console.error("Error fetching book by ID:", err);
     res.status(500).json({ msg: "Failed to fetch book" });
   }
 });
 
-// ✅ Admin: Add a new book
-router.post("/", verifyToken, isAdmin, async (req, res) => {
+// ✅ Get books by course ID
+router.get("/course/:courseId", async (req, res) => {
   try {
-    const newBook = await Book.create(req.body);
-    res.status(201).json(newBook);
+    const books = await Book.find({ courseId: req.params.courseId }).populate("courseId", "title");
+    res.status(200).json(books);
   } catch (err) {
-    console.error("Error creating book:", err);
-    res.status(400).json({ msg: "Failed to create book", error: err.message });
-  }
-});
-
-// ✅ Admin: Update an existing book
-router.put("/:id", verifyToken, isAdmin, async (req, res) => {
-  const { id } = req.params;
-  if (!isValidId(id)) return res.status(400).json({ msg: "Invalid book ID" });
-
-  try {
-    const updated = await Book.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
-    if (!updated) return res.status(404).json({ msg: "Book not found" });
-    res.status(200).json(updated);
-  } catch (err) {
-    console.error("Error updating book:", err);
-    res.status(400).json({ msg: "Failed to update book", error: err.message });
-  }
-});
-
-// ✅ Admin: Delete a book
-router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
-  const { id } = req.params;
-  if (!isValidId(id)) return res.status(400).json({ msg: "Invalid book ID" });
-
-  try {
-    const removed = await Book.findByIdAndDelete(id);
-    if (!removed) return res.status(404).json({ msg: "Book not found" });
-    res.status(200).json({ msg: "Book deleted" });
-  } catch (err) {
-    console.error("Error deleting book:", err);
-    res.status(500).json({ msg: "Failed to delete book" });
+    console.error("Error fetching books by course:", err);
+    res.status(500).json({ msg: "Failed to fetch books" });
   }
 });
 
