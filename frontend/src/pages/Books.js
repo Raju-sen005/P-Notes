@@ -33,7 +33,7 @@ const Books = () => {
         backgroundSize: "cover",
         zIndex: 1,
       }}
-      >
+    >
       <motion.h2
         className="mb-4 fw-bold text-center text-black"
         initial={{ opacity: 0, y: -20 }}
@@ -96,8 +96,11 @@ const Books = () => {
                     <span className="fs-3 me-2">📖</span>
                     <h5 className="card-title mb-0">{book.title}</h5>
                   </div>
-                  <p className="mb-4 text-gray-700">Price: ₹{book.price}</p>
-                  <p className="card-text">{book.author}</p>
+                  <p className="mb-4 text-black" style={{
+                    position: "relative",
+                    top: "50px"
+                  }}>Price: ₹{book.price}</p>
+                  <p className="text-black">{book.author}</p>
                   <button
                     className="b-btn btn btn-sm btn-primary"
                     onClick={(e) => {
@@ -125,3 +128,4 @@ const Books = () => {
 };
 
 export default Books;
+
