@@ -28,7 +28,6 @@ import TestPage from './pages/TestPage';
 import PharmacySubjects from './pages/PharmacySubjects';
 import AskPage from './pages/AskPage';
 // import BookOrderForm from './pages/BookOrderForm';
-import UserDashboard from './components/UserDashboard';
 import BookOrderPage from './pages/BookOrderPage';
 function App() {
   return (
@@ -57,14 +56,7 @@ function App() {
           <Route path="/pharmacy" element={<PharmacySubjects />} />
           <Route path="/ask" element={<AskPage />} />
           <Route path="/book-order" element={<BookOrderPage />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <UserDashboard />
-              </ProtectedRoute>
-            }
-          />
+         
           <Route
             path="/quiz/:id"
             element={
