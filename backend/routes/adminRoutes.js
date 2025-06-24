@@ -426,20 +426,21 @@ router.get("/orders", verifyToken, verifyAdmin, async (req, res) => {
       Model: Order,
       page: req.query.page,
       limit: req.query.limit,
-      searchFields: [], search: req.query.search,
+      searchFields: [],
+      search: req.query.search,
       populate: [
-        { path: "userId", select: "name email" },  // <-- यही सही path है
-        { path: "items.product", select: "title price" },
+        { path: "userId", select: "name email" },
+        { path: "bookId", select: "title price" }, // ✅ this was the fix
       ],
       sort: { createdAt: -1 },
     });
+
     res.json(result);
   } catch (err) {
     console.error("Error fetching orders:", err);
     res.status(500).json({ message: "Failed to fetch orders", error: err.message });
   }
 });
-
 /* ────────────────────── ARTICLES ───────────────────── */
 router.get("/articles", verifyToken, verifyAdmin, async (req, res) => {
   try {
