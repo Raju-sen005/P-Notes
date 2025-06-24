@@ -5,7 +5,7 @@ import axios from "axios";
 const BookOrderPage = () => {
   const handleOrderSubmit = async (orderData) => {
     const token = localStorage.getItem("token");
-    await axios.post("/api/orders", orderData, {
+    await axios.post("https://p-notes-backend.onrender.com/api/orders/", orderData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
