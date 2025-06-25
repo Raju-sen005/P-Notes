@@ -8,7 +8,7 @@ const Login = () => {
   const [success, setSuccess] = useState("");
   const [forgotMode, setForgotMode] = useState(false);
   const [newPassword, setNewPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false); // Show signup first
 
   const navigate = useNavigate();
 
@@ -22,8 +22,15 @@ const Login = () => {
     try {
       const endpoint = isLogin ? "/auth/login" : "/auth/register";
       const res = await API.post(endpoint, formData);
-      localStorage.setItem("token", res.data.token);
-      navigate("/");
+      if (isLogin) {
+        localStorage.setItem("token", res.data.token);
+        navigate("/");
+      } else {
+        // Successful registration — switch to login
+        setSuccess("Registration successful! Please log in.");
+        setFormData({ name: "", email: "", password: "" });
+        setIsLogin(true);
+      }
     } catch (err) {
       setError(err.response?.data?.msg || (isLogin ? "Login failed" : "Registration failed"));
     }
@@ -43,23 +50,8 @@ const Login = () => {
     }
   };
 
-  const inputStyle = {
-    width: "100%",
-    padding: "10px",
-    margin: "10px 0",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-  };
-
-  const buttonStyle = {
-    // padding: "10px 15px",
-    borderRadius: "5px",
-    border: "none",
-    backgroundColor: "#007bff",
-    color: "white",
-    cursor: "pointer",
-    marginTop: "10px",
-  };
+  const inputStyle = { width: "100%", padding: 10, margin: "10px 0", borderRadius: 5, border: "1px solid #ccc" };
+  const buttonStyle = { borderRadius: 5, border: "none", backgroundColor: "#007bff", color: "white", cursor: "pointer", marginTop: 10 };
 
   return (
     <div
@@ -69,12 +61,11 @@ const Login = () => {
         top: "100px",
         right: "40px",
         maxWidth: "300px",
-        background: "#ffffff",
+        background: "#fff",
         boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-        padding: "20px",
-        borderRadius: "10px",
+        padding: 20,
+        borderRadius: 10,
         textAlign: "center",
-        color: "black",
         height: forgotMode ? "52%" : "auto",
       }}
     >
@@ -118,7 +109,7 @@ const Login = () => {
             {isLogin ? "Login" : "Register"}
           </button>
           <p
-            style={{ cursor: "pointer", color: " rgb(170 165 165 / 85%)", marginTop: "10px" }}
+            style={{ cursor: "pointer", color: "#aaa", marginTop: 10 }}
             onClick={() => setForgotMode(true)}
           >
             Forgot Password?
@@ -147,7 +138,7 @@ const Login = () => {
             Reset Password
           </button>
           <p
-            style={{ cursor: "pointer", color: "#555", marginTop: "10px" }}
+            style={{ cursor: "pointer", color: "#555", marginTop: 10 }}
             onClick={() => setForgotMode(false)}
           >
             Back to Login
@@ -156,7 +147,7 @@ const Login = () => {
       )}
 
       {!forgotMode && (
-        <div style={{ fontSize: "0.9rem", marginTop: "10px" }}>
+        <div style={{ fontSize: "0.9rem", marginTop: 10 }}>
           {isLogin ? "Don't have an account?" : "Already have an account?"}
           <button
             type="button"
@@ -166,14 +157,7 @@ const Login = () => {
               setError("");
               setSuccess("");
             }}
-            style={{
-              fontSize: "0.9rem",
-              background: "transparent",
-              border: "none",
-              color: "#007bff",
-              cursor: "pointer",
-              marginLeft: "5px",
-            }}
+            style={{ fontSize: "0.9rem", background: "transparent", border: "none", color: "#007bff", cursor: "pointer", marginLeft: 5 }}
           >
             {isLogin ? "Signup" : "Login"}
           </button>
