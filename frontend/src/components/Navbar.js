@@ -7,7 +7,9 @@ const Navbar = () => {
   const navbarHeight = 56;
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [showMenu, setShowMenu] = useState(false);
   const offcanvasRef = useRef(null);
+  const dropdownRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -17,45 +19,63 @@ const Navbar = () => {
     if (!offcanvasEl) return;
 
     const instance = bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
-    offcanvasEl.addEventListener("show.bs.offcanvas", () => setIsOpen(true));
-    offcanvasEl.addEventListener("hide.bs.offcanvas", () => setIsOpen(false));
+    const showHandler = () => setIsOpen(true);
+    const hideHandler = () => setIsOpen(false);
+
+    offcanvasEl.addEventListener("show.bs.offcanvas", showHandler);
+    offcanvasEl.addEventListener("hide.bs.offcanvas", hideHandler);
 
     return () => {
-      offcanvasEl.removeEventListener("show.bs.offcanvas", () => setIsOpen(true));
-      offcanvasEl.removeEventListener("hide.bs.offcanvas", () => setIsOpen(false));
+      offcanvasEl.removeEventListener("show.bs.offcanvas", showHandler);
+      offcanvasEl.removeEventListener("hide.bs.offcanvas", hideHandler);
     };
   }, []);
 
-  // Auto close menu on route change
+  // Decode JWT and set user
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUser(decoded);
+      } catch (err) {
+        console.error("Invalid token", err);
+        setUser(null);
+      }
+    } else {
+      setUser(null);
+    }
+  }, [location]);
+
+  // Close offcanvas and dropdown on route change
   useEffect(() => {
     const offcanvasEl = offcanvasRef.current;
     if (offcanvasEl) {
       const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
       bsOffcanvas?.hide();
     }
+    setShowMenu(false);
   }, [location]);
 
-  // Decode JWT and set user
- useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    try {
-      const decoded = jwtDecode(token);
-      console.log("Decoded Token:", decoded); // 🔍 यहाँ चेक करें
-      setUser(decoded);
-    } catch (err) {
-      console.error("Invalid token", err);
-      setUser(null);
-    }
-  }
-}, [location]);
-// rerun on route change
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
+    setShowMenu(false);
     navigate("/");
   };
+
+  const toggleMenu = () => setShowMenu((prev) => !prev);
 
   return (
     <>
@@ -65,11 +85,7 @@ const Navbar = () => {
         style={{ height: navbarHeight, zIndex: 1045 }}
       >
         <div className="container-fluid d-flex justify-content-between align-items-center px-3">
-          <Link
-            className="navbar-brand d-flex flex-column align-items-start"
-            to="/"
-            style={{ lineHeight: "1" }}
-          >
+          <Link className="navbar-brand d-flex flex-column align-items-start" to="/">
             <div className="d-flex flex-column">
               <img
                 src="https://ik.imagekit.io/galffwd0jy/IMG-20250527-WA0015.jpg?updatedAt=1748351017935"
@@ -79,42 +95,87 @@ const Navbar = () => {
               <span className="fw-bold fs-5 text-white" style={{ position: "absolute", left: "59px" }}>
                 Perfect Pharmacy
               </span>
-              <span className="text-white" style={{
-                fontSize: "11px",
-                fontWeight: "400",
-                marginTop: "-14px",
-                letterSpacing: "0.3px",
-                marginInline: "44px",
-              }}>
+              <span
+                className="text-white"
+                style={{
+                  fontSize: "11px",
+                  fontWeight: "400",
+                  marginTop: "-14px",
+                  letterSpacing: "0.3px",
+                  marginInline: "44px",
+                }}
+              >
                 by Sunita
               </span>
             </div>
           </Link>
 
+          {/* Show only if user is logged in */}
           {user && (
-            <div className="users d-flex align-items-center gap-2 text-white">
-              <i className="bi bi-person-circle"></i>
-              <span className="fw-semibold">{user.name}</span>
-              <button
-                className="btn btn-sm btn-outline-light rounded-pill"
-                onClick={handleLogout}
-                style={{ padding: "2px 10px", fontSize: "12px" }}
-              >
-                Logout
-              </button>
+            <div
+              className="u-icon position-relative"
+              ref={dropdownRef}
+              style={{
+                left: "23.5pc",
+                top: "-2px",
+              }}
+            >
+              <i
+                className="bi bi-person-circle text-white fs-4"
+                style={{ cursor: "pointer" }}
+                onClick={toggleMenu}
+              ></i>
+
+              {showMenu && (
+                <div
+                  className="position-absolute end-0 mt-2"
+                  style={{
+                    backgroundColor: "white",
+                    border: "1px solid #ddd",
+                    borderRadius: "10px",
+                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                    minWidth: "160px",
+                    zIndex: 9999,
+                  }}
+                >
+                  <div className="px-3 py-2">
+                    <div className="fw-semibold text-dark mb-2">
+                      <i
+                        className="bi bi-person-circle text-primary fs-5"
+                        style={{ position: "relative", left: "-3px", top: "2px" }}
+                      ></i>{" "}
+                      {user.name}
+                    </div>
+                    <button
+                      className="btn btn-sm btn-danger w-100 rounded-pill"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
+          {/* Menu toggle button */}
           <button
-            className="btn btn-outline-white btn-sm rounded-pill px-3"
+            className="btn btn-sm rounded-pill px-3"
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasMenu"
             aria-controls="offcanvasMenu"
             aria-label="Toggle menu"
+            style={{
+              border: "none",
+              backgroundColor: "transparent",
+              outline: "none",
+              boxShadow: "none",
+            }}
           >
             <i className="bi bi-list me-2 text-white"></i>
           </button>
+
         </div>
       </nav>
 
@@ -164,38 +225,12 @@ const Navbar = () => {
           ))}
 
           <hr className="my-2" />
-
-          {/* Show user info or login/signup */}
-          {/* {user ? (
-            <>
-              <h6 className="text-muted fw-bold mt-2">Welcome</h6>
-              <span className="text-dark d-flex align-items-center">
-                <i className="bi bi-person-circle me-2"></i> {user.name}
-              </span>
-              <Link
-                to="/dashboard"
-                className="text-decoration-none text-primary fw-medium d-flex align-items-center"
-              >
-                <i className="bi bi-speedometer2 me-2 text-primary"></i> Dashboard
-              </Link>
-              <button
-                className="btn btn-outline-danger btn-sm mt-2"
-                onClick={handleLogout}
-              >
-                <i className="bi bi-box-arrow-right me-2"></i> Logout
-              </button>
-            </>
-          ) : (
-            <> */}
-              {/* <h6 className="text-muted fw-bold mt-2"></h6> */}
-              <Link
-                to="/auth/login"
-                className="auth text-decoration-none text-primary fw-medium d-none align-items-center"
-              >
-                <i className="bi bi-box-arrow-in-right me-2 text-primary"></i> Login
-              </Link>
-            {/* </>
-          )} */}
+          <Link
+            to="/auth/login"
+            className="auth text-decoration-none text-primary fw-medium d-none align-items-center"
+          >
+            <i className="bi bi-box-arrow-in-right me-2 text-primary"></i> Login
+          </Link>
 
           <h6 className="text-muted fw-bold mt-3">Admin Panel</h6>
           <Link
