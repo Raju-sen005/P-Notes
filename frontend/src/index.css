@@ -89,4 +89,8 @@
     .u-icon{
     left: 5.5pc !important;
   }
+  .b-nav{
+    position: relative !important;
+    left: 5px !important;
+  }
 }
