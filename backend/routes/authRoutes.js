@@ -31,7 +31,7 @@ const newUser = new User({
 
     await newUser.save();
 
-    const token = jwt.sign({ id: newUser._id, role: newUser.role }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: newUser._id, name: newUser.name, role: newUser.role }, process.env.JWT_SECRET);
     res.status(201).json({ token });
   } catch (err) {
     console.error("Register Error:", err);
