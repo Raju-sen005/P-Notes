@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';  
-import { Autoplay, Pagination } from 'swiper';       
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import { Autoplay, Pagination } from 'swiper';
+import 'swiper/css/bundle';  // ✅ All necessary Swiper styles bundled together
 import { motion } from "framer-motion";
-
-// Core + module styles
-import "swiper/css";
-import "swiper/css/autoplay";
-import "swiper/css/pagination";
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("https://p-notes-backend.onrender.com/api/testimonials")
+    axios.get("https://p-notes-backend.onrender.com/api/testimonials")
       .then(res => setTestimonials(Array.isArray(res.data) ? res.data : []))
       .catch(err => {
         console.error("Error fetching testimonials:", err);
@@ -25,7 +20,7 @@ const Testimonials = () => {
   }, []);
 
   return (
-    <section className="testimonials-section py-5" style={{ /* your styles */ }}>
+    <section className="testimonials-section py-5">
       <div className="containe text-center py-4">
         <motion.h2
           className="fw-bold mb-5 text-primary"
@@ -52,7 +47,6 @@ const Testimonials = () => {
             }}
             autoplay={{ delay: 5000, disableOnInteraction: false }}
             pagination={{ clickable: true }}
-            // navigation prop removed to hide arrows
           >
             {testimonials.map((t, i) => (
               <SwiperSlide key={t.id || i}>
