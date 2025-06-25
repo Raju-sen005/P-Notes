@@ -86,4 +86,7 @@
     position: relative !important;
     left: 40px !important;
   }
+    .u-icon{
+    left: 5.5pc !important;
+  }
 }
