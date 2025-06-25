@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Swiper, SwiperSlide } from "swiper/react";            // React components
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';  // React components
 import { Autoplay, Pagination } from "swiper/modules";         // Only the modules we need
 import { motion } from "framer-motion";
 
