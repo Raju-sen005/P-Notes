@@ -160,7 +160,7 @@ const Navbar = () => {
 
           {/* Menu toggle button */}
           <button
-            className="btn btn-sm rounded-pill px-3"
+            className="b-nav btn btn-sm rounded-pill px-3"
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasMenu"
