@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 // import OpenAI from "openai"; 
 
 // Route imports
@@ -32,7 +34,7 @@ mongoose
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// 🌐 Routes
+// 🌐 API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/notes", noteRoutes);
@@ -72,12 +74,18 @@ app.use("/api/previous-papers", previousPaperRoutes);
 //   }
 // });
 
-// ❌ 404 Route
-app.use((req, res, next) => {
-  res.status(404).json({ success: false, message: "Route not found" });
+// 🏗️ Frontend static file serving (React build)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "frontend", "build")));
+
+// ✅ React frontend routing fallback
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
 });
 
-// 🛑 Error Handler
+// 🛑 Error handler (this will not override frontend routes)
 app.use((err, req, res, next) => {
   console.error("Internal Error:", err.stack);
   res.status(err.status || 500).json({
