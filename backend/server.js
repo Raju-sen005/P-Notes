@@ -8,7 +8,7 @@ import cors from "cors";
 import session from "express-session";
 import AdminJS from "adminjs";
 import AdminJSExpress from "@adminjs/express";
-import AdminJSMongoose from "@adminjs/mongoose";
+import * as AdminJSMongoose from "@adminjs/mongoose"; 
 
 // Your route imports
 import authRoutes from "./routes/authRoutes.js";
