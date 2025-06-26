@@ -8,7 +8,7 @@ import cors from "cors";
 import session from "express-session";
 import AdminJS from "adminjs";
 import AdminJSExpress from "@adminjs/express";
-import * as AdminJSMongoose from "@adminjs/mongoose"; 
+import * as AdminJSMongoose from "@adminjs/mongoose";  // 🔄 सही import
 
 // Your route imports
 import authRoutes from "./routes/authRoutes.js";
@@ -33,7 +33,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
-// 🛡️ Session setup for AdminJS
+// 🛡️ Session setup for AdminJS (Login सुरक्षित रखने के लिए ज़रूरी)
 app.use(session({
   secret: process.env.ADMIN_COOKIE_SECRET,
   resave: false,
@@ -42,8 +42,7 @@ app.use(session({
 }));
 
 // 🔌 MongoDB Connection
-mongoose
-  .connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB connection error:", err));
 
@@ -61,6 +60,7 @@ app.use("/api/articles", articleRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/sample-papers", samplePaperRoutes);
 app.use("/api/previous-papers", previousPaperRoutes);
+
 
 // 🤖 OpenAI Setup
 // const openai = new OpenAI({
@@ -86,12 +86,18 @@ app.use("/api/previous-papers", previousPaperRoutes);
 //   }
 // });
 
+
 // 🛠️ AdminJS Integration
-AdminJS.registerAdapter(AdminJSMongoose);
+AdminJS.registerAdapter({
+  Resource: AdminJSMongoose.Resource,
+  Database: AdminJSMongoose.Database,
+});  // 🔄 Adapter registration correct तरीक़ा :contentReference[oaicite:1]{index=1}
+
 const adminJs = new AdminJS({
   databases: [mongoose.connection],
   rootPath: "/admin",
 });
+
 const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
   adminJs,
   {
@@ -113,6 +119,7 @@ const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
     cookie: { httpOnly: true },
   }
 );
+
 app.use(adminJs.options.rootPath, adminRouter);
 
 // ❌ 404 Handler
