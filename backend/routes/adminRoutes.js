@@ -630,87 +630,87 @@ router.delete("/previous-papers/:id", verifyToken, verifyAdmin, async (req, res)
 
 
 
-// CREATE Test
-router.post("/", async (req, res) => {
-  try {
-    const newTest = new Test(req.body);
-    await newTest.save();
-    res.status(201).json(newTest);
-  } catch (err) {
-    res.status(400).json({ error: "Failed to create test", details: err });
-  }
-});
+// // CREATE Test
+// router.post("/", async (req, res) => {
+//   try {
+//     const newTest = new Test(req.body);
+//     await newTest.save();
+//     res.status(201).json(newTest);
+//   } catch (err) {
+//     res.status(400).json({ error: "Failed to create test", details: err });
+//   }
+// });
 
-// GET All Tests with Pagination and Search
-router.get("/", async (req, res) => {
-  try {
-    const { page = 1, limit = 10, search = "" } = req.query;
+// // GET All Tests with Pagination and Search
+// router.get("/", async (req, res) => {
+//   try {
+//     const { page = 1, limit = 10, search = "" } = req.query;
 
-    const query = {
-      title: { $regex: search, $options: "i" },
-    };
+//     const query = {
+//       title: { $regex: search, $options: "i" },
+//     };
 
-    const tests = await Test.find(query)
-      .populate("courseId", "title")
-      .skip((parseInt(page) - 1) * parseInt(limit))
-      .limit(parseInt(limit));
+//     const tests = await Test.find(query)
+//       .populate("courseId", "title")
+//       .skip((parseInt(page) - 1) * parseInt(limit))
+//       .limit(parseInt(limit));
 
-    const total = await Test.countDocuments(query);
+//     const total = await Test.countDocuments(query);
 
-    res.json({
-      data: tests,
-      total,
-      page: parseInt(page),
-      totalPages: Math.ceil(total / limit),
-    });
-  } catch (err) {
-    console.error("❌ Error in GET /api/admin/tests:", err); // Add this
-    res.status(500).json({ error: "Failed to fetch tests", details: err.message });
-  }
-});
-
-
-
-// GET Single Test by ID
-router.get("/:id", async (req, res) => {
-  try {
-    const test = await Test.findById(req.params.id).populate("courseId", "title");
-    if (!test) return res.status(404).json({ error: "Test not found" });
-    res.json(test);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch test", details: err });
-  }
-});
-
-// UPDATE Test
-router.put("/:id", async (req, res) => {
-  try {
-    // अगर payload में updatedAt था तो उसे हटा दो
-    delete req.body.updatedAt;
-    const updatedTest = await Test.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }  // updatedAt अपडेट और नया डॉक्यूमेंट वापस पाने के लिए ज़रूरी
-    );
-    if (!updatedTest) {
-      return res.status(404).json({ error: "Test not found" });
-    }
-    res.json(updatedTest);
-  } catch (err) {
-    res.status(400).json({ error: "Failed to update test", details: err });
-  }
-});
+//     res.json({
+//       data: tests,
+//       total,
+//       page: parseInt(page),
+//       totalPages: Math.ceil(total / limit),
+//     });
+//   } catch (err) {
+//     console.error("❌ Error in GET /api/admin/tests:", err); // Add this
+//     res.status(500).json({ error: "Failed to fetch tests", details: err.message });
+//   }
+// });
 
 
-// DELETE Test
-router.delete("/:id", async (req, res) => {
-  try {
-    await Test.findByIdAndDelete(req.params.id);
-    res.json({ message: "Test deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ error: "Failed to delete test", details: err });
-  }
-});
+
+// // GET Single Test by ID
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const test = await Test.findById(req.params.id).populate("courseId", "title");
+//     if (!test) return res.status(404).json({ error: "Test not found" });
+//     res.json(test);
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to fetch test", details: err });
+//   }
+// });
+
+// // UPDATE Test
+// router.put("/:id", async (req, res) => {
+//   try {
+//     // अगर payload में updatedAt था तो उसे हटा दो
+//     delete req.body.updatedAt;
+//     const updatedTest = await Test.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true }  // updatedAt अपडेट और नया डॉक्यूमेंट वापस पाने के लिए ज़रूरी
+//     );
+//     if (!updatedTest) {
+//       return res.status(404).json({ error: "Test not found" });
+//     }
+//     res.json(updatedTest);
+//   } catch (err) {
+//     res.status(400).json({ error: "Failed to update test", details: err });
+//   }
+// });
 
 
-export default router;
+// // DELETE Test
+// router.delete("/:id", async (req, res) => {
+//   try {
+//     await Test.findByIdAndDelete(req.params.id);
+//     res.json({ message: "Test deleted successfully" });
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to delete test", details: err });
+//   }
+// });
+
+
+// export default router;
