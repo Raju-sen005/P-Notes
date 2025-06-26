@@ -4,7 +4,13 @@ import mongoose from "mongoose";
 import cors from "cors";
 // import OpenAI from "openai"; 
 
-// Route imports
+// AdminJS imports
+import session from "express-session";
+import AdminJS from "adminjs";
+import AdminJSExpress from "@adminjs/express";
+import AdminJSMongoose from "@adminjs/mongoose";
+
+// Your route imports
 import authRoutes from "./routes/authRoutes.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import noteRoutes from "./routes/noteRoutes.js";
@@ -18,21 +24,30 @@ import articleRoutes from "./routes/articleRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import samplePaperRoutes from "./routes/samplePaperRoutes.js";
 import previousPaperRoutes from "./routes/previousPaperRoutes.js";
-// import testRoutes from "./routes/testRoutes.js";
 
 dotenv.config();
 const app = express();
+
+// CORS & JSON parsing
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
-// 🔌 MongoDB Connect
+// 🛡️ Session setup for AdminJS
+app.use(session({
+  secret: process.env.ADMIN_COOKIE_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { httpOnly: true },
+}));
+
+// 🔌 MongoDB Connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+  .catch(err => console.error("❌ MongoDB connection error:", err));
 
-// 🌐 Routes
+// 🌐 API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/notes", noteRoutes);
@@ -46,7 +61,6 @@ app.use("/api/articles", articleRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/sample-papers", samplePaperRoutes);
 app.use("/api/previous-papers", previousPaperRoutes);
-// app.use("/api/tests", testRoutes);
 
 // 🤖 OpenAI Setup
 // const openai = new OpenAI({
@@ -72,8 +86,37 @@ app.use("/api/previous-papers", previousPaperRoutes);
 //   }
 // });
 
-// ❌ 404 Route
-app.use((req, res, next) => {
+// 🛠️ AdminJS Integration
+AdminJS.registerAdapter(AdminJSMongoose);
+const adminJs = new AdminJS({
+  databases: [mongoose.connection],
+  rootPath: "/admin",
+});
+const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
+  adminJs,
+  {
+    authenticate: async (email, password) => {
+      if (
+        email === process.env.ADMIN_EMAIL &&
+        password === process.env.ADMIN_PASSWORD
+      ) return { email };
+      return null;
+    },
+    cookieName: "adminjs",
+    cookiePassword: process.env.ADMIN_COOKIE_SECRET,
+  },
+  null,
+  {
+    resave: false,
+    saveUninitialized: true,
+    secret: process.env.ADMIN_COOKIE_SECRET,
+    cookie: { httpOnly: true },
+  }
+);
+app.use(adminJs.options.rootPath, adminRouter);
+
+// ❌ 404 Handler
+app.use((req, res) => {
   res.status(404).json({ success: false, message: "Route not found" });
 });
 
