@@ -3,7 +3,8 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import "swiper/css";
+import "swiper/css/autoplay";
+
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
