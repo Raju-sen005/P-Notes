@@ -76,12 +76,12 @@ app.use("/api/previous-papers", previousPaperRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, "frontend", "build")));
+// app.use(express.static(path.join(__dirname, "frontend", "build")));
 
 // ✅ React frontend routing fallback
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
+// });
 
 // 🛑 Error handler (this will not override frontend routes)
 app.use((err, req, res, next) => {
