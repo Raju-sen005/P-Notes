@@ -1,23 +1,35 @@
 // adminPanel.js
+
 import AdminJS from "adminjs";
 import AdminJSExpress from "@adminjs/express";
-import AdminJSMongoose from "@adminjs/mongoose";
+import * as AdminJSMongoose from "@adminjs/mongoose"; // ✅ FIX for ESM (type: "module")
 import session from "express-session";
 import mongoose from "mongoose";
-import User from "./models/User.js"; // अपनी User model का path सही रखें
+
+// Models
+import User from "./models/User.js";
 import Course from "./models/Course.js";
 import Note from "./models/Note.js";
 import Quiz from "./models/Quiz.js";
 import Book from "./models/Book.js";
 import Order from "./models/Order.js";
 
+// Register Mongoose Adapter
 AdminJS.registerAdapter(AdminJSMongoose);
 
+// AdminJS Instance
 const adminJs = new AdminJS({
-  databases: [],
   rootPath: "/admin",
+  databases: [],
   resources: [
-    { resource: User, options: { properties: { password: { isVisible: false } } } },
+    {
+      resource: User,
+      options: {
+        properties: {
+          password: { isVisible: false }, // Hide password field in UI
+        },
+      },
+    },
     { resource: Course },
     { resource: Note },
     { resource: Quiz },
@@ -31,11 +43,13 @@ const adminJs = new AdminJS({
   },
 });
 
+// Default hardcoded Admin Credentials from .env
 const DEFAULT_ADMIN = {
   email: process.env.ADMIN_EMAIL,
   password: process.env.ADMIN_PASSWORD,
 };
 
+// Authenticated AdminJS Router
 const router = AdminJSExpress.buildAuthenticatedRouter(
   adminJs,
   {
@@ -56,6 +70,7 @@ const router = AdminJSExpress.buildAuthenticatedRouter(
   }
 );
 
+// Mount Admin Panel on Express App
 export const mountAdminPanel = (app) => {
   app.use(adminJs.options.rootPath, router);
 };
