@@ -20,6 +20,8 @@ import articleRoutes from "./routes/articleRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import samplePaperRoutes from "./routes/samplePaperRoutes.js";
 import previousPaperRoutes from "./routes/previousPaperRoutes.js";
+import { mountAdminPanel } from "./adminPanel.js";
+
 
 dotenv.config();
 const app = express();
@@ -47,6 +49,7 @@ app.use("/api/articles", articleRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/sample-papers", samplePaperRoutes);
 app.use("/api/previous-papers", previousPaperRoutes);
+mountAdminPanel(app); // AdminJS को /admin path पर serve करेगा
 
 // 🤖 OpenAI Setup
 // const openai = new OpenAI({
