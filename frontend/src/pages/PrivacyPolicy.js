@@ -38,7 +38,7 @@ const PrivacyPolicy = () => {
 
   return (
     <motion.div
-      className="container py-5 privacy-policy"
+      className="containe py-5 privacy-policy"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
