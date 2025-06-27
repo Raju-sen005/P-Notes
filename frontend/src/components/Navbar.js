@@ -116,7 +116,7 @@ const Navbar = () => {
               className="u-icon position-relative"
               ref={dropdownRef}
               style={{
-                left: "23.5pc",
+                left: "41%",
                 top: "-2px",
               }}
             >
@@ -232,13 +232,13 @@ const Navbar = () => {
             <i className="bi bi-box-arrow-in-right me-2 text-primary"></i> Login
           </Link>
 
-          <h6 className="text-muted fw-bold mt-3">Admin Panel</h6>
+          {/* <h6 className="text-muted fw-bold mt-3">Admin Panel</h6>
           <Link
             to="/admin/login"
             className="text-decoration-none text-primary fw-medium d-flex align-items-center"
           >
             <i className="bi bi-person-lock me-2 text-primary"></i> Admin Login
-          </Link>
+          </Link> */}
         </div>
       </div>
     </>

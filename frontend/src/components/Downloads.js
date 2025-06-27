@@ -34,16 +34,14 @@ const Downloads = () => {
     <div
       className="text-center py-5"
       style={{
-        // backgroundColor: "#f9fdfd",
         fontFamily: "Poppins, sans-serif",
         position: "relative",
         top: "0px",
-
       }}
     >
       <motion.h2
         className="fw-bold mb-4 text-primary"
-        style={{ fontSize: "2.4rem", }}
+        style={{ fontSize: "2.4rem" }}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -51,7 +49,10 @@ const Downloads = () => {
         Download PDF
       </motion.h2>
 
-      <div className="d-flex flex-wrap justify-content-center gap-4 px-3" style={{ width: "101%" }}>
+      <div
+        className=" d-flex flex-wrap justify-content-center gap-4 px-3"
+        style={{ maxWidth: "1200px", margin: "0 auto" }}
+      >
         {cards.map((card, i) => (
           <Link to={card.link} key={i} style={{ textDecoration: "none" }}>
             <motion.div
@@ -64,6 +65,7 @@ const Downloads = () => {
                 fontWeight: 600,
                 boxShadow: `0 4px 12px ${card.borderColor}25`,
                 backgroundColor: "transparent",
+                transition: "all 0.3s ease-in-out",
               }}
               whileHover={{
                 y: -8,

@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: i => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.5 },
-  }),
-  hover: { y: -5, boxShadow: "0 12px 28px rgba(0, 0, 0, 0.1)" },
-};
+import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     axios
@@ -33,7 +25,8 @@ const Testimonials = () => {
       className="testimonials-section py-5"
       style={{
         backgroundColor: "#f9fdfd",
-        backgroundImage: "url('https://img.freepik.com/free-vector/pharmacy-concept-illustration_114360-8892.jpg')",
+        backgroundImage:
+          "url('https://img.freepik.com/free-vector/pharmacy-concept-illustration_114360-8892.jpg')",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "cover",
@@ -41,7 +34,6 @@ const Testimonials = () => {
         position: "relative",
         top: "0px",
         zIndex: 1,
-
       }}
     >
       <div
@@ -69,68 +61,57 @@ const Testimonials = () => {
           >
             Loading testimonials...
           </motion.p>
-        ) : (
-          <div className="row g-4">
-            <AnimatePresence>
-              {testimonials.length > 0 ? (
-                testimonials.map((t, i) => (
-                  <motion.div
-                    className="col-md-6 col-lg-4"
-                    key={t.id || i}
-                    custom={i}
-                    initial="hidden"
-                    whileInView="visible"
-                    exit={{ opacity: 0, y: 20 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    variants={cardVariants}
-                    whileHover="hover"
-                    style={{ cursor: "pointer" }}
-                  >
-                    <motion.div
-                      className="card h-100 border-0 shadow-sm p-4"
-                      style={{
-                        borderRadius: "1rem",
-                        boxShadow: "0 8px 20px rgba(0,0,0,0.05)",
-                        backgroundColor: "#ffffff",
-                      }}
-                    >
-                      <motion.p
-                        className="card-text text-dark"
-                        style={{ fontStyle: "italic", fontSize: "1.05rem" }}
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true, amount: 0.2 }}
-                        transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
-                      >
-                        "{t.message}"
-                      </motion.p>
-                      <hr className="my-3" />
-                      <motion.div
-                        className="d-flex flex-column align-items-start"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true, amount: 0.2 }}
-                        transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
-                      >
-                        <h5 className="fw-bold text-success mb-0">{t.name}</h5>
-                        <small className="text-muted">{t.tag}</small>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
-                ))
-              ) : (
-                <motion.p
-                  className="text-muted"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4 }}
+        ) : testimonials.length > 0 ? (
+          <Swiper
+            modules={[Autoplay]}
+            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            loop={true}
+            spaceBetween={30}
+            slidesPerView={1}
+            breakpoints={{
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+          >
+            {testimonials.map((t, i) => (
+              <SwiperSlide key={t.id || i}>
+                <motion.div
+                  className="card h-100 border-0 shadow-sm p-4 mx-2"
+                  style={{
+                    borderRadius: "1rem",
+                    boxShadow: "0 8px 20px rgba(0,0,0,0.05)",
+                    backgroundColor: "#ffffff",
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
                 >
-                  No testimonials found.
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </div>
+                  <p
+                    className="card-text text-dark"
+                    style={{ fontStyle: "italic", fontSize: "1.05rem" }}
+                  >
+                    "{t.message}"
+                  </p>
+                  <hr className="my-3" />
+                  <div className="d-flex flex-column align-items-start">
+                    <h5 className="fw-bold text-success mb-0">{t.name}</h5>
+                    <small className="text-muted">{t.tag}</small>
+                  </div>
+                </motion.div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <motion.p
+            className="text-muted"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            No testimonials found.
+          </motion.p>
         )}
       </div>
     </section>

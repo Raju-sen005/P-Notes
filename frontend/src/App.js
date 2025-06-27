@@ -29,6 +29,12 @@ import PharmacySubjects from './pages/PharmacySubjects';
 import AskPage from './pages/AskPage';
 // import BookOrderForm from './pages/BookOrderForm';
 import BookOrderPage from './pages/BookOrderPage';
+import RefundPolicy from './pages/RefundPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
+import AboutUs from './pages/Aboutus';
+import Faq from './pages/Faq';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+
 function App() {
   return (
     <>
@@ -56,7 +62,12 @@ function App() {
           <Route path="/pharmacy" element={<PharmacySubjects />} />
           <Route path="/ask" element={<AskPage />} />
           <Route path="/book-order" element={<BookOrderPage />} />
-         
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/terms-&-conditions" element={<TermsAndConditions />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/faqs" element={<Faq />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
           <Route
             path="/quiz/:id"
             element={

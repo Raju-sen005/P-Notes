@@ -46,7 +46,7 @@ const adminJs = new AdminJS({
 ],
 
   branding: {
-    companyName: "P-Notes Admin",
+    companyName: "Perfect-Pharmacy-Admin",
     logo: false,
     softwareBrothers: false,
   },

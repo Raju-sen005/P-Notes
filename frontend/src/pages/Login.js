@@ -26,7 +26,6 @@ const Login = () => {
         localStorage.setItem("token", res.data.token);
         navigate("/");
       } else {
-        // Successful registration — switch to login
         setSuccess("Registration successful! Please log in.");
         setFormData({ name: "", email: "", password: "" });
         setIsLogin(true);
@@ -50,8 +49,27 @@ const Login = () => {
     }
   };
 
-  const inputStyle = { width: "100%", padding: 10, margin: "10px 0", borderRadius: 5, border: "1px solid #ccc" };
-  const buttonStyle = { borderRadius: 5, border: "none", backgroundColor: "#007bff", color: "white", cursor: "pointer", marginTop: 10 };
+  const inputStyle = {
+    width: "100%",
+    padding: 10,
+    margin: "10px 0",
+    borderRadius: 5,
+    border: "1px solid #ccc",
+    fontSize: "0.95rem",
+  };
+
+  const buttonStyle = {
+    borderRadius: 5,
+    border: "none",
+    backgroundColor: "#007bff",
+    color: "white",
+    cursor: "pointer",
+    marginTop: 10,
+    padding: "10px 20px",
+    width: "100%",
+    fontWeight: "500",
+    fontSize: "0.95rem",
+  };
 
   return (
     <div
@@ -60,13 +78,12 @@ const Login = () => {
         position: "absolute",
         top: "100px",
         right: "40px",
-        maxWidth: "300px",
+        maxWidth: "320px",
         background: "#fff",
         boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
         padding: 20,
         borderRadius: 10,
         textAlign: "center",
-        height: forgotMode ? "52%" : "auto",
       }}
     >
       <h3>{forgotMode ? "Reset Password" : isLogin ? "Login" : "Signup"}</h3>
@@ -109,8 +126,12 @@ const Login = () => {
             {isLogin ? "Login" : "Register"}
           </button>
           <p
-            style={{ cursor: "pointer", color: "#aaa", marginTop: 10 }}
-            onClick={() => setForgotMode(true)}
+            style={{ cursor: "pointer", color: "#007bff", marginTop: 10, fontSize: "0.9rem" }}
+            onClick={() => {
+              setForgotMode(true);
+              setError("");
+              setSuccess("");
+            }}
           >
             Forgot Password?
           </p>
@@ -120,7 +141,7 @@ const Login = () => {
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Registered Email"
             required
             value={formData.email}
             onChange={handleChange}
@@ -138,10 +159,15 @@ const Login = () => {
             Reset Password
           </button>
           <p
-            style={{ cursor: "pointer", color: "#555", marginTop: 10 }}
-            onClick={() => setForgotMode(false)}
+            style={{ cursor: "pointer", color: "#007bff", marginTop: 10, fontSize: "0.9rem" }}
+            onClick={() => {
+              setForgotMode(false);
+              setNewPassword("");
+              setError("");
+              setSuccess("");
+            }}
           >
-            Back to Login
+            ← Back to Login
           </p>
         </form>
       )}
@@ -157,7 +183,15 @@ const Login = () => {
               setError("");
               setSuccess("");
             }}
-            style={{ fontSize: "0.9rem", background: "transparent", border: "none", color: "#007bff", cursor: "pointer", marginLeft: 5 }}
+            style={{
+              fontSize: "0.9rem",
+              background: "transparent",
+              border: "none",
+              color: "#007bff",
+              cursor: "pointer",
+              marginLeft: 5,
+              fontWeight: "500",
+            }}
           >
             {isLogin ? "Signup" : "Login"}
           </button>

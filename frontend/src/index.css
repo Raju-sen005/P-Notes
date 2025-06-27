@@ -1,4 +1,4 @@
-@media (max-width: 768px) {
+@media (max-width: 426px) {
   img {
     max-width: 320px !important;
     position: relative;
@@ -79,18 +79,23 @@
   .inp {
     width: 70% !important;
   }
-   .auth{
+  .auth {
     display: flex !important;
   }
-  .users{
+  .users {
     position: relative !important;
     left: 40px !important;
   }
-    .u-icon{
+  .u-icon {
     left: 5.5pc !important;
   }
-  .b-nav{
+  .b-nav {
     position: relative !important;
     left: 15px !important;
+  }
+  .d-box {
+    overflow: hidden !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 }

@@ -31,7 +31,7 @@ const Stats = () => {
       .then((res) => setStats(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-   
+
   }, []);
 
   return (
@@ -71,9 +71,12 @@ const Stats = () => {
           Real‑Time Access Logs
         </motion.h2>
 
-        <div className="container d-flex flex-wrap justify-content-center gap-4 mt-4">
+        <div
+          className="d-box containe d-flex justify-content-center gap-4 mt-4"
+
+        >
           <AnimatePresence>
-            {statItemsConfig.map((item, i) => {
+            {statItemsConfig.map((item) => {
               const value = stats[item.key] ?? 0;
               return (
                 <motion.div
@@ -82,12 +85,12 @@ const Stats = () => {
                   style={{
                     width: "220px",
                     minHeight: "160px",
-                    display: "flex",
+                    display: "inline-flex", // Change to inline-flex to align in one row
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    // border: `1px solid ${item.color}33`,
                     boxShadow: `0 4px 12px ${item.color}22`,
+                    marginRight: "1rem", // Optional spacing between cards
                   }}
                   variants={cardVariants}
                   initial="hidden"
@@ -107,6 +110,7 @@ const Stats = () => {
             })}
           </AnimatePresence>
         </div>
+
       </div>
     </motion.div>
   );

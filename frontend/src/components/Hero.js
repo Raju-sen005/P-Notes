@@ -90,7 +90,7 @@ const Hero = () => {
       }}
     >
       {/* Heading */}
-      <h1 className="fw-bold mb-2" style={{ fontSize: '2.5rem', color: '#1F2937', position: "relative", top: "100px", textAlign: "initial", width: "50%" }}>
+      <h1 className="fw-bold mb-2" style={{ fontSize: '2.5rem', color: '#1F2937', position: "relative", top: "150px", textAlign: "initial", width: "50%" }}>
         Welcome to your Perfect Pharmacy
       </h1>
 
@@ -100,12 +100,12 @@ const Hero = () => {
       </h4>
 
       {/* Subheading */}
-      <p className="mt-3" style={{ fontSize: '1.3rem', color: '#636e72', position: "absolute", top: "243px", width: "29%", textAlign: "initial" }}>
+      <p className="mt-3" style={{ fontSize: '1.3rem', color: '#636e72', position: "absolute", top: "305px", width: "29%", textAlign: "initial" }}>
         <strong>Your One-Stop Solution for Pharmacy Education</strong>
       </p>
 
       {/* Buttons */}
-      <div className="d-flex justify-content-center flex-wrap gap-3 mt-4" style={{ position: "absolute", top: "336px" }}>
+      <div className="d-flex justify-content-center flex-wrap gap-3 mt-4" style={{ position: "absolute", top: "400px" }}>
         <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className="btn btn-outline-primary m-auto" style={{ fontFamily: 'Poppins, sans-serif' }}>
           Course Video
         </a>
@@ -114,76 +114,106 @@ const Hero = () => {
         </a>
       </div>
 
+
       {/* Auth Card */}
       {showAuthCard && (
-        <div className="container" style={{
-          position: "absolute",
-          top: "100px",
-          right: "80px",
-          maxWidth: "300px",
-          background: "#ffffff",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-          padding: "20px",
-          borderRadius: "10px",
-          textAlign: "center",
-          color: "black",
-          height: "48%"
-        }}>
-          <h3>{isLogin ? "Login" : "Signup"}</h3>
-          {error && <p style={{ color: "#ff3333", fontSize: "0.9rem" }}>{error}</p>}
-          <form onSubmit={handleSubmit}>
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="container auth-box"
+          style={{
+            position: 'absolute',
+            top: '150px',
+            right: '80px',
+            width: '300px',
+            background: '#ffffff',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            padding: '20px',
+            borderRadius: '10px',
+            color: 'black',
+          }}
+        >
+          <h3>{isLogin ? 'Login' : 'Signup'}</h3>
+          {error && <p style={{ color: '#ff3333', fontSize: '0.9rem' }}>{error}</p>}
+          <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
             {!isLogin && (
-              <input type="text" name="name" placeholder="Full Name" required value={formData.name} onChange={handleChange} style={inputStyle} />
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                required
+                value={formData.name}
+                onChange={handleChange}
+                style={inputStyle}
+              />
             )}
-            <input type="email" name="email" placeholder="Email" required value={formData.email} onChange={handleChange} style={inputStyle} />
-            <input type="password" name="password" placeholder="Password" required value={formData.password} onChange={handleChange} style={inputStyle} />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              style={inputStyle}
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+              style={inputStyle}
+            />
             <button type="submit" style={buttonStyle}>
-              {isLogin ? "Login" : "Register"}
+              {isLogin ? 'Login' : 'Register'}
             </button>
           </form>
-          <div style={{ fontSize: "0.9rem" }}>
-            {isLogin ? "Don't have an account?" : "Already have an account?"}
+
+          <div style={{ fontSize: '0.9rem', marginTop: '10px' }}>
+            {isLogin ? "Don't have an account?" : 'Already have an account?'}
             <button
               type="button"
               onClick={() => {
                 setIsLogin(!isLogin);
-                setFormData({ name: "", email: "", password: "" });
-                setError("");
+                setFormData({ name: '', email: '', password: '' });
+                setError('');
               }}
-              className="btn btn-sm btn-transparent mt-2"
               style={{
-                fontSize: "0.9rem",
-                position: "absolute",
-                left: "120px",
-                top: "280px",
-                border: "transparent"
+                marginLeft: '10px',
+                color: '#0d6efd',
+                background: 'transparent',
+                border: 'none',
+                fontWeight: 600,
               }}
             >
-              {isLogin ? "Signup" : "Login"}
+              {isLogin ? 'Signup' : 'Login'}
             </button>
           </div>
-        </div>
+        </motion.div>
       )}
     </motion.div>
   );
 };
 
+// Styles
 const inputStyle = {
-  borderRadius: "5px",
-  marginBottom: "11px",
-  padding: "8px",
-  border: "1px solid #ccc",
-  width: "100%",
+  borderRadius: '5px',
+  marginBottom: '10px',
+  padding: '10px',
+  border: '1px solid #ccc',
+  width: '100%',
 };
 
 const buttonStyle = {
-  borderRadius: "5px",
-  marginBottom: "11px",
-  padding: "8px",
-  background: "#0D6EFD",
-  color: "#ffffff",
-  border: "none",
-  width: "100%",
+  borderRadius: '5px',
+  padding: '10px',
+  background: '#0d6efd',
+  color: '#ffffff',
+  border: 'none',
+  width: '100%',
+  fontWeight: 600,
 };
 
 export default Hero;
