@@ -41,7 +41,7 @@ const FAQs = () => {
 
   return (
     <motion.div
-      className="container py-5 faq-page"
+      className="containe py-5 faq-page"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
