@@ -9,7 +9,7 @@ const sectionVariants = {
 const AboutUs = () => {
   return (
     <motion.div
-      className="container py-5 about-page"
+      className="containe py-5 about-page"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
